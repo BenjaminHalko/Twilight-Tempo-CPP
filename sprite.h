@@ -6,5 +6,7 @@ class Sprite {
 public:
 	Sprite();
 	Sprite(std::string filename);
-	sf::Sprite operator()();
+	sf::Sprite& operator()();
+	int getWidth();
+	int getHeight();
 };
