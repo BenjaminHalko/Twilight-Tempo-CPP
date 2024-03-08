@@ -1,7 +1,6 @@
 #pragma once
 #include "sprite.h"
 #include "object.h"
-#include "bezier.h"
 class Player : public Object {
 private:
 	Sprite cannonSprite;
@@ -24,8 +23,6 @@ private:
 	float penalty;
 
 	float startScale = 0;
-
-	bezier::Bezier<3> cubicBezier;
 public:
 	Player(float xPos, float yPos);
 	void update();

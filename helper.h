@@ -13,4 +13,5 @@ float lengthdir_y(float len, float dir);
 float random_range(float min, float max);
 int irandom(int max);
 float lerp(float a, float b, float t);
+float bezierCurve(float t);
 void debug(std::string message, float value);

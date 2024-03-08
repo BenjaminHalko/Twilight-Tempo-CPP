@@ -116,9 +116,6 @@
     <ClInclude Include="input.h">
       <Filter>Header Files\Global</Filter>
     </ClInclude>
-    <ClInclude Include="bezier.h">
-      <Filter>Header Files\Global</Filter>
-    </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>Header Files\Types</Filter>
     </ClInclude>

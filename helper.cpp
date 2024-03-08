@@ -22,7 +22,7 @@ float clamp(float value, float min, float max) {
 }
 
 float angleDifference(float a, float b) {
-	float difference = fmod(b - a + 180, 360) - 180;
+	float difference = (float)fmod(b - a + 180, 360) - 180;
 	if (difference < -180) {
 		difference += 360;
 	}
@@ -56,15 +56,15 @@ float approachCircleEase(float value, float target, float maxSpd, float ease) {
 }
 
 float point_direction(float x1, float y1, float x2, float y2) {
-	return atan2(y2 - y1, x2 - x1) * 180 / PI;
+	return (float)(atan2(y2 - y1, x2 - x1) * 180 / PI);
 }
 
 float lengthdir_x(float len, float dir) {
-	return cos(dir * PI / 180) * len;
+	return (float)cos(dir * PI / 180) * len;
 }	
 
 float lengthdir_y(float len, float dir) {
-	return sin(dir * PI / 180) * len;
+	return (float)sin(dir * PI / 180) * len;
 }
 
 float random_range(float min, float max) {
@@ -81,4 +81,32 @@ float lerp(float a, float b, float t) {
 
 void debug(std::string message, float value) {
 	std::cout << message << ": " << value << std::endl;
+}
+
+float bezierCurve(float t) {
+	float x1 = 0;
+	float y1 = 0;
+	float x2 = 0.3f;
+	float y2 = 0;
+	float x3 = 0.318f;
+	float y3 = 1.461f;
+	float x4 = 1;
+	float y4 = 1;
+
+	float p1x1 = lerp(x1, x2, t);
+	float p1y1 = lerp(y1, y2, t);
+	float p1x2 = lerp(x2, x3, t);
+	float p1y2 = lerp(y2, y3, t);
+	float p1x3 = lerp(x3, x4, t);
+	float p1y3 = lerp(y3, y4, t);
+
+	float p2x1 = lerp(p1x1, p1x2, t);
+	float p2y1 = lerp(p1y1, p1y2, t);
+	float p2x2 = lerp(p1x2, p1x3, t);
+	float p2y2 = lerp(p1y2, p1y3, t);
+
+	float p3x = lerp(p2x1, p2x2, t);
+	float p3y = lerp(p2y1, p2y2, t);
+
+	return p3y;
 }

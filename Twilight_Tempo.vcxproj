@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="beat_controller.h" />
-    <ClInclude Include="bezier.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="game_controller.h" />

@@ -4,7 +4,6 @@
 #include "helper.h"
 #include "global.h"
 #include "beat_controller.h"
-#include "bezier.h"
 #include <stdlib.h>
 
 Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png") {
@@ -24,9 +23,6 @@ Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png")
 	startScale = 0;
 	xscale = 0;
 	yscale = 0;
-
-	// Bezier curve
-	bezier::Bezier<3> cubicBezier({ {0, 0}, { 0.3, 0 }, { 0.318, 1.461 }, {1, 1}});
 }
 
 void Player::update() {
@@ -82,11 +78,8 @@ void Player::update() {
 		yscale = approachEase(yscale, 1+cannonMove/3.0f*(yscale > 0.75f)+(1-(float)fmin(30, deathSpd)/30.0f), 0.05f, 0.3f);
 	}
 	else {
-		
 		startScale = approach(startScale, 1.6f, 0.05f);
-
-		// Unfortunately the bezier curve does not work
-		xscale = (float)fmin(1, startScale);//cubicBezier.valueAt(fmin(1, startScale)).x;
+		xscale = bezierCurve((float)fmin(1, startScale));
 		yscale = xscale;
 
 		if (startScale == 1.6f) {
