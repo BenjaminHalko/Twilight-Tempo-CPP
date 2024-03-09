@@ -6,27 +6,30 @@
 #include "beat_controller.h"
 #include <stdlib.h>
 
+// Creates the player, and sets all values
 Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png") {
 	cannonSprite = Sprite("player/cannon.png");
 	cannonSprite().setOrigin(0, 3);
-	dir = 0;
-	dirDraw = 0;
-	lastDir = -1;
-	shootPercent = 1;
+	dir = 0; // Direction the player is pointing
+	dirDraw = 0; // Allows the sprite to smoothly turn
+	lastDir = -1; // Last known direction by player (SFML detects button being held down)
+	shootPercent = 1; // Squash and stretch animation for sprite
+	// Amount of shake recieved depending on the direction that the palyer is hit from
 	shake[0] = 0;
 	shake[1] = 0;
 	shake[2] = 0;
 	shake[3] = 0;
-	generalShake = 0;
-	cannonMove = 0;
-	penalty = 0;
-	startScale = 0;
+	generalShake = 0; // Shake from all directions
+	cannonMove = 0; 
+	penalty = 0; // Current pentaly for missed shots
+	startScale = 0; // Variable to control opening animation
+	// Sprite size
 	xscale = 0;
 	yscale = 0;
 }
 
 void Player::update() {
-	
+	// If player is alive
 	if (Global::lives > 0) {
 		// Input
 		bool key_left = inputLeft();
@@ -68,11 +71,14 @@ void Player::update() {
 	}
 	else {
 		// TODO
+		// Dying logic
 	}
 
 	cannonMove = approachEase(cannonMove, 0, 0.3f, 0.6f);
 	shootPercent = approachEase(shootPercent, 1, 0.1f, 0.6f);
 
+
+	// Start the game
 	if (startScale == 1.6f) {
 		xscale = approachEase(xscale, 1+cannonMove/3.0f*(xscale > 0.75f)+(1-(float)fmin(30, deathSpd)/30.0f), 0.05f, 0.3f);
 		yscale = approachEase(yscale, 1+cannonMove/3.0f*(yscale > 0.75f)+(1-(float)fmin(30, deathSpd)/30.0f), 0.05f, 0.3f);
@@ -95,6 +101,7 @@ void Player::update() {
 		}
 	}
 
+	// Reset shake
 	for (int i = 0; i < 4; i++) {
 		shake[i] = approach(shake[i], 0, 0.06f);
 	}
@@ -121,6 +128,7 @@ void Player::draw() {
 	Global::window.draw(player);
 }
 
+// Moving the cannon distance from the player
 void Player::setCannonMove(float val) {
 	cannonMove = val;
 }

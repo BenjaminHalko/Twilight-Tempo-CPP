@@ -4,10 +4,12 @@
 
 Sprite::Sprite() {}
 
+// Load in texture from the file name
 Sprite::Sprite(const std::string filename) {
 	texture.loadFromFile("sprites/"+filename);
 }
 
+// Load sprite from a texture
 sf::Sprite& Sprite::operator()() {
 	sprite.setTexture(texture);
 	return sprite;

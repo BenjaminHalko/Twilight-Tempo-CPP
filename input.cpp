@@ -1,5 +1,7 @@
 #include "input.h"
 #include <SFML/Graphics.hpp>
+
+// Manages directional inputs
 bool inputLeft() {
 	return sf::Keyboard::isKeyPressed(sf::Keyboard::Left) or sf::Keyboard::isKeyPressed(sf::Keyboard::A);
 }

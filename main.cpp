@@ -7,10 +7,12 @@
 #include "sound.h"
 #include <iostream>
 
+// Function to create the game window
 void setupWindow() {
+	// Create and resize windows
 	Global::window.create(sf::VideoMode(256, 224), "Twilight Tempo");
 	Global::window.setSize(sf::Vector2u(768, 672));
-	Global::window.setFramerateLimit(60);
+	Global::window.setFramerateLimit(60); 
 	
 	// Set the window icon
 	sf::Image icon;
@@ -53,12 +55,10 @@ int main() {
 		BeatController::update();
 		Global::player.update();
 
-
 		// Draw the game
 		Background::draw();
 		Global::player.draw();
 		Global::window.display();
 	}
-   
     return 0;
 }

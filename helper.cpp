@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 
+// Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
 	int r = (hex >> 16) & 0xFF;
 	int g = (hex >> 8) & 0xFF;
@@ -11,6 +12,7 @@ sf::Color hexColor(int hex) {
 	return sf::Color(r, g, b);
 }
 
+// Clamp between two values
 float clamp(float value, float min, float max) {
 	if (value < min) {
 		return min;
@@ -21,6 +23,7 @@ float clamp(float value, float min, float max) {
 	return value;
 }
 
+// Get's the difference between two angles
 float angleDifference(float a, float b) {
 	float difference = (float)fmod(b - a + 180, 360) - 180;
 	if (difference < -180) {
@@ -29,6 +32,7 @@ float angleDifference(float a, float b) {
 	return difference;
 }
 
+// Move towards value a to move towards b at speed of amount 
 float approach(float a, float b, float amount) {
 	if (a < b) {
 		a += amount;
@@ -55,34 +59,42 @@ float approachCircleEase(float value, float target, float maxSpd, float ease) {
 	return value;
 }
 
+// Returns the direction when given two points
 float point_direction(float x1, float y1, float x2, float y2) {
 	return (float)(atan2(y2 - y1, x2 - x1) * 180 / PI);
 }
 
+// Given a length and direction, return x component
 float lengthdir_x(float len, float dir) {
 	return (float)cos(dir * PI / 180) * len;
 }	
 
+// Given a length and direction, return x component
 float lengthdir_y(float len, float dir) {
 	return (float)sin(dir * PI / 180) * len;
 }
 
+// Returns a random number between min and max
 float random_range(float min, float max) {
 	return min + (max - min) * (float)rand() / RAND_MAX;
 }
 
+// Gives a random number between 0 and max
 int irandom(int max) {
 	return rand() % max;
 }
 
+// Performs linear interpolation between two floats, in reference to t, time
 float lerp(float a, float b, float t) {
 	return a + (b - a) * t;
 }
 
+// Can output debug message
 void debug(std::string message, float value) {
 	std::cout << message << ": " << value << std::endl;
 }
 
+// Idk man that's Benjamins thing
 float bezierCurve(float t) {
 	float x1 = 0;
 	float y1 = 0;
