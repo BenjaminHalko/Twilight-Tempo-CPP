@@ -36,7 +36,7 @@ void Player::update() {
 
 		// Direction
 		bool shoot = false;
-		if (abs(key_right - key_left) != 0 or abs(key_down - key_up) != 0) {
+		if (abs(key_right - key_left) != abs(key_down - key_up)) {
 			dir = (int)point_direction(0, 0, (float)key_right - key_left, (float)key_down - key_up);
 			if (dir != lastDir) {
 				lastDir = dir;
