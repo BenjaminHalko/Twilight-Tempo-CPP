@@ -1,8 +1,10 @@
 #include "helper.h"
+#include "global.h"
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <cmath>
 #include <iostream>
+
 
 // Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
@@ -87,6 +89,12 @@ int irandom(int max) {
 // Performs linear interpolation between two floats, in reference to t, time
 float lerp(float a, float b, float t) {
 	return a + (b - a) * t;
+}
+
+// Waves between two values
+float wave(float from, float to, float duration, float offset) {
+	float a4 = (to - from) * 0.5f;
+	return (float)(from + a4 + a4 * sin((float)(Global::time_running + duration * offset) / duration * 2 * PI));
 }
 
 // Can output debug message

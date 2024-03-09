@@ -1,7 +1,9 @@
+// https://github.com/BenjaminHalko/Twilight-Tempo/tree/After-Jam/objects/oBeatController
 #include "beat_controller.h"
 #include "global.h"
 #include "sound.h"
 #include "helper.h"
+#include "enemy.h"
 #include <SFML/Audio.hpp>
 #include <string>
 
@@ -12,6 +14,7 @@ int BeatController::aheadLastBeat = 100;
 int BeatController::beats[BEAT_COUNT] = {4,4,4,4,4,4,4,4};
 int BeatController::mode = 0;
 const std::string BeatController::dirSounds[4] = {"left.ogg", "up.ogg", "right.ogg", "down.ogg"};
+const float BeatController::aheadTime = 0.73f;
 
 void BeatController::resetSong() {
 	music.stop();
@@ -40,7 +43,7 @@ void BeatController::setTrackPos(float pos) {
 }
 
 int BeatController::getBPM() {
-	return BeatController::BPM;
+	return BPM;
 }
 
 void BeatController::stopMusic() {
@@ -53,9 +56,9 @@ void BeatController::update() {
 		if (musicPos < 0) {
 			musicPos += music.getDuration().asSeconds();
 		}
-		double timepos = (musicPos / 60.0) * BPM;
-		int beat = (int)timepos % BEAT_COUNT * 2;
-		int aheadBeat = (int)(timepos + aheadLastBeat) % BEAT_COUNT * 2;
+		Global::beatTime = (float)(musicPos / 60.0) * BPM;
+		int beat = (int)Global::beatTime % BEAT_COUNT * 2;
+		int aheadBeat = (int)(Global::beatTime + aheadTime) % BEAT_COUNT * 2;
 
 		if (beat < lastBeat) {
 			for (int i = 0; i < BEAT_COUNT; i++) {
@@ -78,6 +81,13 @@ void BeatController::update() {
 					playSound(dirSounds[beats[beat]], 65);
 				}
 			}
+		}
+
+
+
+		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat-BEAT_COUNT] != 4) {
+			int _dir = beats[aheadBeat-BEAT_COUNT] * 90;
+			Global::enemies.push_back(new Enemy(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
 		}
 
 		lastBeat = beat;

@@ -75,6 +75,9 @@
     <ClCompile Include="sound.cpp">
       <Filter>Source Files\Types</Filter>
     </ClCompile>
+    <ClCompile Include="after_image.cpp">
+      <Filter>Source Files\Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>Header Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="after_image.h">
+      <Filter>Header Files\Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,17 @@
 #include "global.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "enemy.h"
 
 sf::RenderWindow Global::window;
 std::vector<Sound*> Global::sounds;
 Player Global::player = Player(0,0);
+std::vector<Bullet*> Global::bullets;
+std::vector<Enemy*> Global::enemies;
+float Global::time_running = 0;
 int Global::score = 0;
 int Global::lives = 12;
 bool Global::inTutorial = false;
 bool Global::hardMode = false;
 bool Global::newGame = true;
+float Global::beatTime = 0;

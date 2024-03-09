@@ -56,6 +56,9 @@ void Player::update() {
 			Sound& shootSound = playSound("player_shoot.wav", 18);
 			shootSound().setPitch(0.8f + random_range(-0.1f, 0.1f));
 
+			// Create bullet
+			Global::bullets.push_back(new Bullet(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
+
 
 			if ((dir / 90) % 2 == 0) {
 				xscale = 0.3f;

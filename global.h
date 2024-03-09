@@ -1,17 +1,23 @@
 #pragma once
 #include "sound.h"
 #include "player.h"
+#include "bullet.h"
+#include "enemy.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 class Global {
 public:
 	static const int RESW = 256;
 	static const int RESH = 224;
+	static float time_running;
 
 	static sf::RenderWindow window;
 	static std::vector<Sound*> sounds;
 	static Player player;
-
+	static std::vector<Bullet*> bullets;
+	static std::vector<Enemy*> enemies;
+	
+	static float beatTime;
 	static int lives;
 	static int score;
 	static bool inTutorial;

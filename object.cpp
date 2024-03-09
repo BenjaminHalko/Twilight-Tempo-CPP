@@ -4,14 +4,14 @@
 #include <iostream>
 
 Object::Object(float xstart, float ystart, std::string sprite_path, float sprite_xoffset, float sprite_yoffset) {
+	destroyed = false;
 	x = xstart;
 	y = ystart;
-	sprite = Sprite(sprite_path);
+	sprite = Sprite(sprite_path, sprite_xoffset, sprite_yoffset);
 	xscale = 1;
 	yscale = 1;
 	sprite_width = sprite.getWidth();
 	sprite_height = sprite.getHeight();
-	sprite().setOrigin(sprite_width*sprite_xoffset, sprite_height*sprite_yoffset);
 }
 
 void Object::update() {}
@@ -21,4 +21,8 @@ void Object::draw() {
 	mySprite.setPosition(x, y);
 	mySprite.setScale(xscale, yscale);
 	Global::window.draw(mySprite);
+}
+
+bool Object::isDestroyed() {
+	return destroyed;
 }

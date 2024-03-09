@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="after_image.cpp" />
     <ClCompile Include="background.cpp" />
     <ClCompile Include="beat_controller.cpp" />
     <ClCompile Include="bullet.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="after_image.h" />
     <ClInclude Include="background.h" />
     <ClInclude Include="beat_controller.h" />
     <ClInclude Include="bullet.h" />

@@ -54,11 +54,18 @@ int main() {
 		// Update the game
 		BeatController::update();
 		Global::player.update();
+		updateObjects(Global::bullets);
+		updateObjects(Global::enemies);
 
 		// Draw the game
 		Background::draw();
 		Global::player.draw();
+		drawObjects(Global::bullets);
+		drawObjects(Global::enemies);
 		Global::window.display();
+
+		// Update the time
+		Global::time_running += 1.0f / 60.0f;
 	}
     return 0;
 }
