@@ -5,12 +5,12 @@
 #include "global.h"
 #include "object.h"
 #include "sound.h"
-#include <iostream>
 
 // Function to create the game window
 void setupWindow() {
 	// Create and resize windows
 	Global::window.create(sf::VideoMode(256, 224), "Twilight Tempo");
+	Global::render.create(256, 224);
 	Global::window.setSize(sf::Vector2u(768, 672));
 	Global::window.setFramerateLimit(60); 
 	
@@ -62,6 +62,12 @@ int main() {
 		Global::player.draw();
 		drawObjects(Global::bullets);
 		drawObjects(Global::enemies);
+
+		// Draw the window
+		sf::Sprite renderSprite(Global::render.getTexture());
+		renderSprite.setPosition(0, 224);
+		renderSprite.setScale(1, -1);
+		Global::window.draw(renderSprite);
 		Global::window.display();
 
 		// Update the time

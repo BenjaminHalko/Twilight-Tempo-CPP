@@ -62,14 +62,19 @@ void Enemy::draw() {
 		float _length = lerp(wave(4.0f, 6.0f, 0.5f, i / 4.0f), 10, deadPercent);
 		corner.setPosition(x + lengthdir_x(_length, (float)(45 + i * 90)), y + lengthdir_y(_length, (float)(45 + i * 90)));
 		corner.setRotation((float)(45 + i * 90));
-		Global::window.draw(corner);
+		Global::render.draw(corner);
 	}
 
 	if (!dead) {
 		spr.setPosition(x, y);
 		spr.setScale(xscale, yscale);
 		spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)(255 * alpha)));
-		Global::window.draw(spr);
+		Global::render.draw(spr);
 	}
 
+}
+
+void Enemy::killEnemy() {
+	dead = true;
+	speed = 0;
 }

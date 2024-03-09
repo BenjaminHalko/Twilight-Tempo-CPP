@@ -18,4 +18,5 @@ public:
 	Enemy(float xPos, float yPos, float dir);
 	void update();
 	void draw();
+	void killEnemy();
 };

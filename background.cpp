@@ -35,12 +35,12 @@ void Background::updateBG(int index) {
 }
 
 void Background::draw() {
-	Global::window.clear(backgroundColors[backgroundIndex]);
+	Global::render.clear(backgroundColors[backgroundIndex]);
 
 	sf::Sprite background = backgroundSprite[backgroundIndex]();
 	sf::Sprite cloud = cloudSprite();
 	cloud.setColor(cloudColors[backgroundIndex]);
 
-	Global::window.draw(cloud);
-	Global::window.draw(background);
+	Global::render.draw(cloud);
+	Global::render.draw(background);
 }

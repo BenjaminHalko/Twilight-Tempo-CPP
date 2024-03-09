@@ -4,6 +4,7 @@
 #include "enemy.h"
 
 sf::RenderWindow Global::window;
+sf::RenderTexture Global::render;
 std::vector<Sound*> Global::sounds;
 Player Global::player = Player(0,0);
 std::vector<Bullet*> Global::bullets;

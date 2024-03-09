@@ -20,7 +20,7 @@ void Object::draw() {
 	sf::Sprite &mySprite = sprite();
 	mySprite.setPosition(x, y);
 	mySprite.setScale(xscale, yscale);
-	Global::window.draw(mySprite);
+	Global::render.draw(mySprite);
 }
 
 bool Object::isDestroyed() {

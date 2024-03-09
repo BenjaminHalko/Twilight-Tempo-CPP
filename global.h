@@ -12,6 +12,7 @@ public:
 	static float time_running;
 
 	static sf::RenderWindow window;
+	static sf::RenderTexture render;
 	static std::vector<Sound*> sounds;
 	static Player player;
 	static std::vector<Bullet*> bullets;

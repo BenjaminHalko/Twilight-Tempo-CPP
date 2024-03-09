@@ -39,11 +39,7 @@ void Bullet::update() {
 			image.push_back(AfterImage(x, y, direction));
 			if (spd == 0)
 				break;
-		}
-
-		if (x < -8 || x > Global::RESW + 8 || y < -8 || y > Global::RESH + 8) {
-			spd = 0;
-		}
+		}		
 
 		for (int j = 0; j < fmin(i + 1, 3); j++) {
 			waveX += lengthdir_x(8, direction);
@@ -54,11 +50,15 @@ void Bullet::update() {
 			float _x = waveX + lengthdir_x(_wave, direction + 90);
 			float _y = waveY + lengthdir_y(_wave, direction + 90);
 
-			image.push_back(AfterImage(_x, _y, point_direction(x, y, lastX, lastY)));
+			image.push_back(AfterImage(_x, _y, point_direction(lastX, lastY, x, y)));
 			lastX = _x;
 			lastY = _y;
 
 			time++;
+		}
+
+		if (x < -16 || x > Global::RESW + 16 || y < -16 || y > Global::RESH + 16) {
+			spd = 0;
 		}
 	}
 	else if (image.size() == 0) {
@@ -72,6 +72,6 @@ void Bullet::draw() {
 		spr.setPosition(image[i].x, image[i].y);
 		spr.setRotation(image[i].dir);
 		spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)image[i].alpha));
-		Global::window.draw(spr);
+		Global::render.draw(spr);
 	}
 }

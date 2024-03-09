@@ -127,8 +127,8 @@ void Player::draw() {
 	player.setPosition(_x1, _y1);
 	player.setScale(xscale * (1 - generalShake / 12.0f), yscale * (1 - generalShake / 12.0f));
 
-	Global::window.draw(cannon);
-	Global::window.draw(player);
+	Global::render.draw(cannon);
+	Global::render.draw(player);
 }
 
 // Moving the cannon distance from the player
