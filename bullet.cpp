@@ -37,6 +37,16 @@ void Bullet::update() {
 			x += lengthdir_x(spd, direction);
 			y += lengthdir_y(spd, direction);
 			image.push_back(AfterImage(x, y, direction));
+
+			// Hit Enemy
+			for (int j = 0; j < (signed)Global::enemies.size(); j++) {
+				Enemy &enemy = *Global::enemies[j];
+				if (isColliding(enemy) and !enemy.isDead()) {
+					enemy.killEnemy();
+					spd = 0;
+				}
+			}
+
 			if (spd == 0)
 				break;
 		}		
@@ -57,7 +67,7 @@ void Bullet::update() {
 			time++;
 		}
 
-		if (x < -16 || x > Global::RESW + 16 || y < -16 || y > Global::RESH + 16) {
+		if (waveX < -8 || waveX > Global::RESW + 8 || waveY < -8 || waveY > Global::RESH + 8) {
 			spd = 0;
 		}
 	}

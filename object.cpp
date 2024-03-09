@@ -26,3 +26,10 @@ void Object::draw() {
 bool Object::isDestroyed() {
 	return destroyed;
 }
+
+bool Object::isColliding(Object& other) {
+	return (x - sprite_width / 2 < other.x + other.sprite_width / 2 &&
+				x + sprite_width / 2 > other.x - other.sprite_width / 2 &&
+				y - sprite_height / 2 < other.y + other.sprite_height / 2 &&
+				y + sprite_height / 2 > other.y - other.sprite_height / 2);
+}

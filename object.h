@@ -16,4 +16,5 @@ public:
 	void update();
 	void draw();
 	bool isDestroyed();
+	bool isColliding(Object& other);
 };

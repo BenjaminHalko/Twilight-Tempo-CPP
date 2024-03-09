@@ -19,4 +19,5 @@ public:
 	void update();
 	void draw();
 	void killEnemy();
+	bool isDead();
 };

@@ -29,4 +29,5 @@ public:
 	void draw();
 
 	void setCannonMove(float val);
+	void applyShake(int dir);
 };

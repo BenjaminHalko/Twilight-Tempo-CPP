@@ -111,6 +111,8 @@ void Player::update() {
 }
 
 void Player::draw() {
+	sf::Color blend = sf::Color(255, (sf::Uint32)(255.0f * (1-fmin(1, generalShake / 2))), (sf::Uint32)(255.0f * (1 - fmin(1, generalShake / 2))), 255);
+
 	float _x1 = x + random_range(-shake[0]-generalShake, shake[2]+generalShake);
 	float _y1 = y + random_range(-shake[3]-generalShake, shake[1]+generalShake);
 	float _x2 = x + random_range(-shake[0] - generalShake, shake[2] + generalShake);
@@ -122,10 +124,12 @@ void Player::draw() {
 	cannon.setPosition(_x2, _y2);
 	cannon.setScale(lerp(0.1f, 1, shootPercent), 1);
 	cannon.setRotation(dirDraw);
+	cannon.setColor(blend);
 
 	sf::Sprite player = sprite();
 	player.setPosition(_x1, _y1);
 	player.setScale(xscale * (1 - generalShake / 12.0f), yscale * (1 - generalShake / 12.0f));
+	player.setColor(blend);
 
 	Global::render.draw(cannon);
 	Global::render.draw(player);
@@ -134,4 +138,9 @@ void Player::draw() {
 // Moving the cannon distance from the player
 void Player::setCannonMove(float val) {
 	cannonMove = val;
+}
+
+void Player::applyShake(int dir) {
+	shake[dir] = 2;
+	generalShake = 2;
 }
