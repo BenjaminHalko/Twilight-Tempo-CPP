@@ -11,6 +11,7 @@ private:
 	static int mode;
 	static const std::string dirSounds[4];
 public:
+	~BeatController();
 	static void resetSong();
 	static void update();
 	static void setTrackPos(float pos);

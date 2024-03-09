@@ -33,3 +33,6 @@ bool Sound::isPlaying() {
 	return sound.getStatus() == sf::Sound::Playing;
 }
 
+Sound::~Sound() {
+	sound.stop();
+}

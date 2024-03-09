@@ -7,6 +7,7 @@ private:
 	sf::Sound sound;
 public:
 	Sound(std::string filename, int volume);
+	~Sound();
 	sf::Sound& operator()();
 	bool isPlaying();
 };
