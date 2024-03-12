@@ -5,10 +5,8 @@
 #include "global.h"
 #include "object.h"
 #include "sound.h"
-
-// Temp
-#include "helper.h";
-#include <iostream>
+#include "shadow.h"
+#include "gui.h"
 
 // Function to create the game window
 void setupWindow() {
@@ -34,6 +32,9 @@ void setupWindow() {
 int main() {
 	// Create the window
 	setupWindow();
+
+	// Create the shadow
+	Shadow::init();
 
 	// Start Game
 	startGame();
@@ -61,12 +62,15 @@ int main() {
 		Global::player.update();
 		updateObjects(Global::bullets);
 		updateObjects(Global::enemies);
+		Shadow::update();
 
 		// Draw the game
 		Background::draw();
 		Global::player.draw();
 		drawObjects(Global::bullets);
 		drawObjects(Global::enemies);
+		//Shadow::draw();
+		GUI::draw();
 
 		// Draw the window
 		sf::Sprite renderSprite(Global::render.getTexture());

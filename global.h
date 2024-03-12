@@ -3,6 +3,7 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "shadow.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 class Global {

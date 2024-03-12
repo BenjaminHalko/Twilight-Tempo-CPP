@@ -6,9 +6,11 @@ private:
 	static int BPM;
 	static int lastBeat;
 	static int aheadLastBeat;
-	static int beats[8];
-	static int mode;
+	static std::vector<int> beats;
+	static std::vector<int> extraBeats;
+	static float mode;
 	static const std::string dirSounds[4];
+	static int barNumber;
 public:
 	static const float aheadTime;
 	static const int BEAT_COUNT = 8;

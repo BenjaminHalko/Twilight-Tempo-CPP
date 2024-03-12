@@ -133,9 +133,9 @@ float bezierCurve(float t) {
 }
 
 void save(const std::string& fileName, int score) {
-	std::ofstream outFile(fileName + ".txt", std::ios::trunc);
+	std::ofstream outFile(fileName + ".sav", std::ios::trunc);
 	if(!outFile.is_open()){
-		std::cerr << "Error opening file: " << fileName << ".txt" << std::endl;
+		std::cerr << "Error opening file: " << fileName << ".sav" << std::endl;
 		return;
 	}
 	outFile << score;
@@ -146,17 +146,15 @@ int load(std::string fileName) {
 	int score;
 	std::ifstream inFile;
 
-	if (fileExists(fileName + ".txt")) {
-		inFile.open(fileName + ".txt");
+	if (fileExists(fileName + ".sav")) {
+		inFile.open(fileName + ".sav");
 		if (inFile >> score) {
 			return score;
 		}
 	}
-	else
-	{
-		std::cerr << "Error: File " << fileName << ".txt does not exist." << std::endl;
-		return -1;
-	}
+
+	std::cerr << "Error: File " << fileName << ".sav does not exist." << std::endl;
+	return -1;
 }
 
 bool fileExists(const std::string& fileName) {
