@@ -162,3 +162,9 @@ bool fileExists(const std::string& fileName) {
 	std::ifstream file(fileName);
 	return file.good();
 }
+
+std::string formatScore(int score, int stringLength) {
+	std::string formattedScore = std::to_string(score);
+	formattedScore = std::string(stringLength - formattedScore.length(), '0') + formattedScore;
+	return formattedScore;
+}
