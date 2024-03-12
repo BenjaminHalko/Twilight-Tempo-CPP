@@ -54,6 +54,11 @@ void BeatController::stopMusic() {
 }
 
 void BeatController::update() {
+	if (Global::lives <= 0) {
+		music.stop();
+		return;
+	}
+
 	if (music.getStatus() == sf::Music::Playing) {
 		double musicPos = music.getPlayingOffset().asSeconds();
 		if (musicPos < 0) {
@@ -164,7 +169,7 @@ void BeatController::update() {
 		}
 
 		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat-BEAT_COUNT] != 4) {
-			int _dir = -beats[aheadBeat-BEAT_COUNT] * 90;
+			int _dir = 180 + beats[aheadBeat-BEAT_COUNT] * 90;
 			Global::enemies.push_back(new Enemy(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
 		}
 

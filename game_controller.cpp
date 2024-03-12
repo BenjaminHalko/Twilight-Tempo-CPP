@@ -7,7 +7,7 @@
 void startGame() {
 	BeatController::stopMusic();
 	
-	Global::lives = 12;
+	Global::lives = 1;
 	Global::score = 0;
 	Global::inTutorial = false;
 	Global::hardMode = false;

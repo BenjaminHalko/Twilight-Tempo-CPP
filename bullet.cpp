@@ -5,6 +5,7 @@
 #include "helper.h"
 #include "after_image.h"
 #include "beat_controller.h"
+#include "shadow.h"
 
 Bullet::Bullet(float xPos, float yPos, float dir) : Object(xPos, yPos, "player/bullet.png", 1.0f, 0.5f) {
 	direction = dir;
@@ -79,9 +80,18 @@ void Bullet::update() {
 void Bullet::draw() {
 	sf::Sprite spr = sprite();
 	for (int i = 0; i < (signed)image.size(); i++) {
+		spr.setScale(1, 1);
 		spr.setPosition(image[i].x, image[i].y);
 		spr.setRotation(image[i].dir);
 		spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)image[i].alpha));
 		Global::render.draw(spr);
+
+		if (image[i].dir == direction and !Global::inTutorial) {
+			for (int j = 0; j < 6; j++) {
+				spr.setScale(1, (float)(2 + j * 2));
+				spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)(image[i].alpha * (1 - j * 0.1))));
+				Shadow::shadow.draw(spr, Shadow::blendSubtractive);
+			}
+		}
 	}
 }

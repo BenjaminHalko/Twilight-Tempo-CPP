@@ -19,5 +19,6 @@ public:
 	void update();
 	void draw();
 	void killEnemy();
-	bool isDead();
+	const bool isDead();
+	const float getDirection();
 };

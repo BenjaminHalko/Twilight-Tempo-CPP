@@ -13,7 +13,7 @@ Sprite Background::backgroundSprite[4] = {
 
 Sprite Background::cloudSprite = Sprite("background/clouds.png");
 
-int Background::backgroundIndex = 0;
+int Background::backgroundIndex = 4;
 
 sf::Color Background::backgroundColors[4] = {
 	hexColor(0x251932),
@@ -35,12 +35,14 @@ void Background::updateBG(int index) {
 }
 
 void Background::draw() {
-	Global::render.clear(backgroundColors[backgroundIndex]);
+	Global::render.clear(backgroundColors[(int)fmin(3, backgroundIndex)]);
 
-	sf::Sprite background = backgroundSprite[backgroundIndex]();
 	sf::Sprite cloud = cloudSprite();
 	cloud.setColor(cloudColors[backgroundIndex]);
-
 	Global::render.draw(cloud);
-	Global::render.draw(background);
+
+	if (backgroundIndex < 4) {
+		sf::Sprite background = backgroundSprite[backgroundIndex]();
+		Global::render.draw(background);
+	}
 }

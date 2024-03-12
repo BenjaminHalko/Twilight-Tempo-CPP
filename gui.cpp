@@ -2,6 +2,10 @@
 #include "gui.h"
 #include "global.h"
 
+void GUI::init() {
+
+}
+
 void GUI::draw() {
-	
+    
 }

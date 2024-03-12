@@ -2,10 +2,11 @@
 #include <SFML/Graphics.hpp>
 class Shadow {
 private:
-	static sf::RenderTexture shadow;
 	static float darkness;
 	static float radius;
 public:
+	static sf::RenderTexture shadow;
+	static const sf::BlendMode blendSubtractive;
 	static void init();
 	static void update();
 	static void draw();
