@@ -14,6 +14,7 @@ Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png")
 	dirDraw = 0; // Allows the sprite to smoothly turn
 	lastDir = -1; // Last known direction by player (SFML detects button being held down)
 	shootPercent = 1; // Squash and stretch animation for sprite
+	deathSpd = 45;
 	// Amount of shake recieved depending on the direction that the palyer is hit from
 	shake[0] = 0;
 	shake[1] = 0;
@@ -53,8 +54,25 @@ void Player::update() {
 		// Shooting
 		if (shoot) {
 
-			Sound& shootSound = playSound("player_shoot.wav", 18);
-			shootSound().setPitch(0.8f + random_range(-0.1f, 0.1f));
+			bool hit = false;
+
+			for (int i = 0; i < (signed)Global::enemies.size(); i++) {
+				Enemy &enemy = *Global::enemies[i];
+				if (((int)enemy.getDirection() % 360) == (dir + 360) % 360) {
+					hit = true;
+					break;
+				}
+			}
+
+			if (hit) {
+				playSound("enemy_destroy.wav", 33);
+				Sound& shootSound = playSound("player_shoot.wav", 18);
+				shootSound().setPitch(random_range(0.5f, 1.3f));
+			}
+			else {
+				Sound& shootSound = playSound("player_fail.wav", 80);
+				shootSound().setPitch(random_range(0.4f, 0.5f));
+			}
 
 			// Create bullet
 			Global::bullets.push_back(new Bullet(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
@@ -73,8 +91,9 @@ void Player::update() {
 		generalShake = approach(generalShake, 0, 0.06f);
 	}
 	else {
-		// TODO
-		// Dying logic
+		deathSpd = approachEase(deathSpd, 0, 0.3f, 0.5f);
+		dirDraw -= (float)(fmin(30, deathSpd) * 1.5f);
+		generalShake = approach(generalShake, (float)fmin(30, deathSpd) / 15.0f, 0.06f);
 	}
 
 	cannonMove = approachEase(cannonMove, 0, 0.3f, 0.6f);

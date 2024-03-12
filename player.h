@@ -18,7 +18,7 @@ private:
 
 	float cannonMove;
 
-	static const int deathSpd = 45;
+	float deathSpd;
 
 	float penalty;
 

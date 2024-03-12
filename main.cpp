@@ -75,7 +75,7 @@ int main() {
 
 		// Draw the window
 		sf::Sprite renderSprite(Global::render.getTexture());
-		renderSprite.setPosition(0, 224);
+		renderSprite.setPosition(0, Global::RESH);
 		renderSprite.setScale(1, -1);
 		Global::window.draw(renderSprite);
 		Global::window.display();

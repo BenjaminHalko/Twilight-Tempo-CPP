@@ -4,6 +4,7 @@
 #include "helper.h"
 
 sf::RenderTexture Shadow::shadow;
+const sf::BlendMode Shadow::blendSubtractive = sf::BlendMode(sf::BlendMode::Zero, sf::BlendMode::OneMinusSrcColor);
 float Shadow::darkness = 1;
 float Shadow::radius = 0;
 
@@ -17,7 +18,8 @@ void Shadow::update() {
 
 void Shadow::draw() {
 	sf::Sprite renderSprite(shadow.getTexture());
-	renderSprite.setPosition(0, 0);
+	renderSprite.setPosition(0, Global::RESH);
+	renderSprite.setScale(1, -1);
 	renderSprite.setColor(sf::Color(255, 255, 255, (sf::Uint8)(255.0f * darkness)));
 	Global::render.draw(renderSprite);
 	shadow.clear(sf::Color::Black);
@@ -25,19 +27,17 @@ void Shadow::draw() {
 }
 
 void Shadow::drawCircle(float x, float y, float radius, float alpha) {
-	sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::DstAlpha, sf::BlendMode::Subtract);
 	sf::CircleShape circle;
 	for (int i = 0; i < 6; i++) {
 		circle.setRadius(radius + i * 3);
 		circle.setPosition(x - radius - i * 3, y - radius - i * 3);
-		circle.setFillColor(sf::Color(255, 255, 255, (sf::Uint8)(255.0f * (0.8 - i * 0.1) * alpha)));
-		shadow.draw(circle);
+		circle.setFillColor(sf::Color(0, 0, 0, (sf::Uint8)(255.0f * (0.8 - i * 0.1) * alpha)));
+		shadow.draw(circle, blendSubtractive);
 	}
 	circle.setRadius(radius);
 	circle.setPosition(x - radius, y - radius);
-	circle.setFillColor(sf::Color(255, 255, 255, (sf::Uint8)(255.0f * alpha)));
-	shadow.draw(circle);
-	sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::DstAlpha, sf::BlendMode::Add);
+	circle.setFillColor(sf::Color(0, 0, 0, (sf::Uint8)(255.0f * 0)));
+	shadow.draw(circle, blendSubtractive);
 }
 
 void Shadow::setDarkness(float dark) {

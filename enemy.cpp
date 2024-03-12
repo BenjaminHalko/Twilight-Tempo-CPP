@@ -3,6 +3,8 @@
 #include "global.h"
 #include "beat_controller.h"
 #include "helper.h"
+#include "shadow.h"
+#include "background.h"
 #include <SFML/Graphics.hpp>
 
 Enemy::Enemy(float xPos, float yPos, float dir) : Object(xPos, yPos, "enemy/enemy.png") {
@@ -55,13 +57,17 @@ void Enemy::update() {
 
 	if (!hit && !dead && Global::lives > 0) {
 		if (isColliding(Global::player)) {
-			//Global::lives--;
+			Global::lives--;
 			hit = true;
 			Global::player.applyShake((int)direction / 90);
 			sf::Sound& hitNoise = playSound("player_hurt.wav", 100)();
 			hitNoise.setPitch(random_range(0.8f, 1.2f));
 			if (Global::lives == 0) {
 				playSound("player_die.wav", 100);
+				if (Global::inTutorial) {
+					Background::updateBG(1);
+				}
+				
 			}
 		}
 	}
@@ -87,6 +93,10 @@ void Enemy::draw() {
 		spr.setRotation(angle);
 		Global::render.draw(spr);
 	}
+	else if (!Global::inTutorial) {
+		//Remove Dark
+		Shadow::drawCircle(x, y, 16, 1 - circlePercent);
+	}
 
 }
 
@@ -95,6 +105,10 @@ void Enemy::killEnemy() {
 	speed = 0;
 }
 
-bool Enemy::isDead() {
+const bool Enemy::isDead() {
 	return dead;
+}
+
+const float Enemy::getDirection() {
+	return direction;
 }
