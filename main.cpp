@@ -33,8 +33,9 @@ int main() {
 	// Create the window
 	setupWindow();
 
-	// Create the shadow
+	// Create the shadow & GUI
 	Shadow::init();
+	GUI::init();
 
 	// Start Game
 	startGame();
