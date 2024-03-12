@@ -4,6 +4,7 @@
 #include <string>
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 
 // Converts hexColor to SFML color
@@ -129,4 +130,18 @@ float bezierCurve(float t) {
 	float p3y = lerp(p2y1, p2y2, t);
 
 	return p3y;
+}
+
+void save(std::string fileName, int score) {
+	std::ofstream outFile(fileName + ".txt", std::ios::trunc);
+	if(!outFile.is_open()){
+		std::cerr << "Error opening file: " << fileName << ".txt" << std::endl;
+		return;
+	}
+	outFile << score;
+	outFile.close();
+}
+
+int load(std::string fileName) {
+	
 }
