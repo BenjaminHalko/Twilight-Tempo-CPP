@@ -6,6 +6,10 @@
 #include "object.h"
 #include "sound.h"
 
+// Temp
+#include "helper.h";
+#include <iostream>
+
 // Function to create the game window
 void setupWindow() {
 	// Create and resize windows
