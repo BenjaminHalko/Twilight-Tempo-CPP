@@ -9,4 +9,5 @@ private:
 public:
 	static void init();
 	static void draw();
+	static void drawText(sf::Font font, std::string textString, int characterSize, int x, int y, bool horizCentered, bool vertCentered, sf::Color = sf::Color::White);
 };
