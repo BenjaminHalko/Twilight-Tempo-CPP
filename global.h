@@ -22,7 +22,10 @@ public:
 	static float beatTime;
 	static int lives;
 	static int score;
+	static int highScore;
+	static bool practiceMode;
 	static bool inTutorial;
 	static bool hardMode;
 	static bool newGame;
+
 };
