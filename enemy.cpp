@@ -5,7 +5,7 @@
 #include "helper.h"
 #include "shadow.h"
 #include "background.h"
-#include "score.h"
+#include "score_popup.h"
 #include "gui.h"
 #include <SFML/Graphics.hpp>
 
@@ -108,7 +108,7 @@ void Enemy::killEnemy(int amountOfPoints) {
 	speed = 0;
 
 	int points = (int)floor(fmax(0, 1 - fmin(abs(amountOfPoints - timePoints), abs(amountOfPoints - timePoints - 8)) / 1.5f) * 100.0f);
-	Global::scoreObjects.push_back(new Score(x, y, points));
+	Global::scorePopups.push_back(new ScorePopup(x, y, points));
 }
 
 bool Enemy::isDead() const {

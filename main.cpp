@@ -65,7 +65,7 @@ int main() {
 		Global::player.update();
 		updateObjects(Global::bullets);
 		updateObjects(Global::enemies);
-		updateObjects(Global::scoreObjects);
+		updateObjects(Global::scorePopups);
 		Shadow::update();
 		GUI::update();
 
@@ -74,7 +74,7 @@ int main() {
 		Global::player.draw();
 		drawObjects(Global::bullets);
 		drawObjects(Global::enemies);
-		drawObjects(Global::scoreObjects);
+		drawObjects(Global::scorePopups);
 		//Shadow::draw();
 		GUI::draw();
 

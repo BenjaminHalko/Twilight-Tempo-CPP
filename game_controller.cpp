@@ -3,7 +3,7 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy.h"
-#include "score.h"
+#include "score_popup.h"
 
 void updateObjects(std::vector<Bullet*>& objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
@@ -27,7 +27,7 @@ void updateObjects(std::vector<Enemy*>& objects) {
 	}
 }
 
-void updateObjects(std::vector<Score*>& objects) {
+void updateObjects(std::vector<ScorePopup*>& objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		objects[i]->update();
 		if (objects[i]->isDestroyed()) {
@@ -50,7 +50,7 @@ void drawObjects(std::vector<Enemy*>& objects) {
 	}
 }
 
-void drawObjects(std::vector<Score*>& objects) {
+void drawObjects(std::vector<ScorePopup*>& objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		objects[i]->draw();
 	}
@@ -70,7 +70,7 @@ static void deleteObjects(std::vector<Enemy*>& objects) {
 	objects.clear();
 }
 
-static void deleteObjects(std::vector<Score*>& objects) {
+static void deleteObjects(std::vector<ScorePopup*>& objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		delete objects[i];
 	}
@@ -88,14 +88,14 @@ static void deleteSounds() {
 void cleanUp() {
 	deleteObjects(Global::bullets);
 	deleteObjects(Global::enemies);
-	deleteObjects(Global::scoreObjects);
+	deleteObjects(Global::scorePopups);
 	deleteSounds();
 }
 
 void startGame() {
 	deleteObjects(Global::bullets);
 	deleteObjects(Global::enemies);
-	deleteObjects(Global::scoreObjects);
+	deleteObjects(Global::scorePopups);
 	deleteSounds();
 
 	Global::lives = 8;

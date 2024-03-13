@@ -1,9 +1,9 @@
 #pragma once
 #include "object.h"
-class Score : public Object {
+class ScorePopup : public Object {
 	std::string points;
 public:
-	Score(float x, float y, int points);
+	ScorePopup(float x, float y, int points);
 	void update();
 	void draw();
 };

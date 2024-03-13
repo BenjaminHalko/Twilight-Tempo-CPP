@@ -84,7 +84,7 @@
     <ClCompile Include="shadow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="score.cpp">
+    <ClCompile Include="score_popup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="star_generator.cpp">
@@ -143,7 +143,7 @@
     <ClInclude Include="death_particle.h">
       <Filter>Header Files\Global</Filter>
     </ClInclude>
-    <ClInclude Include="score.h">
+    <ClInclude Include="score_popup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="star_generator.h">
