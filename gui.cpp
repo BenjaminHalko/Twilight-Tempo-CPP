@@ -37,7 +37,7 @@ void GUI::draw() {
 	}
 
 	for (size_t i = 0; i < 3; i++) {
-		sf::Sprite heart = (*hearts[clamp(Global::lives - i * 4 * (1 + Global::practiceMode) * (2 - Global::practiceMode), 0, 8)]);
+		sf::Sprite heart = (*hearts[clamp(Global::lives - i * 4 * (1 + Global::practiceMode) * (2 - Global::practiceMode), 0, 8)])();
 
 		heart.setPosition(Global::RESW - 10 - i * 14, 10);
 		heart.setScale(heartScale[i], heartScale[i]);
