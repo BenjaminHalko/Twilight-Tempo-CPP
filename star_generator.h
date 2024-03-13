@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 struct Star {
-	float x;
-	float y;
-	sf::Color color;
-	float alpha1;
-	float alpha2;
-	float alphaSpd;
-	float alphaOffset;
+	float x = 0;
+	float y = 0;
+	sf::Color color = sf::Color::White;
+	float alpha1 = 0;
+	float alpha2 = 0;
+	float alphaSpd = 0;
+	float alphaOffset = 0;
 };
 class StarGenerator {
 private:
