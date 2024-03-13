@@ -147,12 +147,14 @@
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="star_generator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="after_image.h" />
     <ClInclude Include="background.h" />
     <ClInclude Include="beat_controller.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="death_particle.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="game_controller.h" />
     <ClInclude Include="global.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="shadow.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="star_generator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Twilight_Tempo.rc" />

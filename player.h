@@ -1,6 +1,7 @@
 #pragma once
 #include "sprite.h"
 #include "object.h"
+#include "death_particle.h"
 class Player : public Object {
 private:
 	Sprite cannonSprite;
@@ -22,7 +23,11 @@ private:
 
 	float penalty;
 
-	float startScale = 0;
+	float startScale;
+
+	bool dead;
+
+	std::vector<DeathParticle*> deathParticles;
 public:
 	Player(float xPos, float yPos);
 	void update();

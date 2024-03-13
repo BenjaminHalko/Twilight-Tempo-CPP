@@ -3,6 +3,7 @@
 #include "helper.h"
 #include <SFML/Graphics.hpp>
 #include "global.h"
+#include "star_generator.h"
 
 Sprite Background::backgroundSprite[4] = {
 	Sprite("background/0.png"),
@@ -36,6 +37,10 @@ void Background::updateBG(int index) {
 
 void Background::draw() {
 	Global::render.clear(backgroundColors[(int)fmin(3, backgroundIndex)]);
+
+	if (backgroundIndex != 0) {
+		StarGenerator::drawStarsBack(backgroundIndex / 4.0f);
+	}
 
 	sf::Sprite cloud = cloudSprite();
 	cloud.setColor(cloudColors[backgroundIndex]);

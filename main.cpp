@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "shadow.h"
 #include "gui.h"
+#include "star_generator.h"
 
 // Function to create the game window
 void setupWindow() {
@@ -36,6 +37,7 @@ int main() {
 	// Create the shadow & GUI
 	Shadow::init();
 	GUI::init();
+	StarGenerator::init();
 
 	// Start Game
 	startGame();

@@ -15,7 +15,6 @@ void startGame() {
 	Global::player = Player(Global::RESW / 2.0, Global::RESH / 2.0);
 }
 
-
 void updateObjects(std::vector<Bullet*>& objects) {
 	for (int i = 0; i < (signed)objects.size(); i++) {
 		objects[i]->update();

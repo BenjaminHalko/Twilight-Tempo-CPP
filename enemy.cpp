@@ -63,7 +63,7 @@ void Enemy::update() {
 			sf::Sound& hitNoise = playSound("player_hurt.wav", 100)();
 			hitNoise.setPitch(random_range(0.8f, 1.2f));
 			if (Global::lives == 0) {
-				playSound("player_die.wav", 100);
+				playSound("player_die.wav", 30);
 				if (Global::inTutorial) {
 					Background::updateBG(1);
 				}
