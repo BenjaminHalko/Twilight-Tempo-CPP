@@ -4,6 +4,7 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "shadow.h"
+#include "score.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 class Global {
@@ -18,6 +19,7 @@ public:
 	static Player player;
 	static std::vector<Bullet*> bullets;
 	static std::vector<Enemy*> enemies;
+	static std::vector<Score*> scoreObjects;
 	
 	static float beatTime;
 	static int lives;

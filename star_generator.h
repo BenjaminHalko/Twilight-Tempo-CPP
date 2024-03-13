@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 struct Star {
-	float x = 0;
-	float y = 0;
+	int x = 0;
+	int y = 0;
 	sf::Color color = sf::Color::White;
 	float alpha1 = 0;
 	float alpha2 = 0;
@@ -18,4 +18,5 @@ public:
 	static void update();
 	static void drawStarsBack(float alpha);
 	static void drawStarsFront();
+	static void deleteStars();
 };

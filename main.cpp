@@ -65,13 +65,16 @@ int main() {
 		Global::player.update();
 		updateObjects(Global::bullets);
 		updateObjects(Global::enemies);
+		updateObjects(Global::scoreObjects);
 		Shadow::update();
+		GUI::update();
 
 		// Draw the game
 		Background::draw();
 		Global::player.draw();
 		drawObjects(Global::bullets);
 		drawObjects(Global::enemies);
+		drawObjects(Global::scoreObjects);
 		//Shadow::draw();
 		GUI::draw();
 
@@ -85,5 +88,10 @@ int main() {
 		// Update the time
 		Global::time_running += 1.0f / 60.0f;
 	}
+
+	// Clean up
+	StarGenerator::deleteStars();
+	cleanUp();
+
     return 0;
 }

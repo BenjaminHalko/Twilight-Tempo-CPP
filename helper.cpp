@@ -165,7 +165,7 @@ bool fileExists(const std::string& fileName) {
 
 std::string formatScore(int score, int stringLength) {
 	std::string formattedScore = std::to_string(score);
-	if (formattedScore.length() >= stringLength) {
+	if ((int)formattedScore.length() >= stringLength) {
 		return formattedScore;
 	}
 	else {
@@ -174,12 +174,12 @@ std::string formatScore(int score, int stringLength) {
 	}
 }
 
-void drawText(sf::Font font, std::string textString, int characterSize, int x, int y, bool horizCentered, bool vertCentered, sf::Color colour = sf::Color::White) {
+void drawText(sf::Font font, std::string textString, int characterSize, int x, int y, bool horizCentered, bool vertCentered, sf::Color colour) {
 	sf::Text text;
 	text.setFont(font);
 	text.setString(textString);
 	text.setCharacterSize(characterSize);
-	text.setPosition(x - (int)(horizCentered * (text.getGlobalBounds().width / 2)), y - (int)(vertCentered * (text.getGlobalBounds().height / 2)));
+	text.setPosition(floor(x - (horizCentered * (text.getGlobalBounds().width / 2))), floor(y - (vertCentered * (text.getGlobalBounds().height / 2))));
 	text.setFillColor(colour); // Set the fill color
 
 	Global::render.draw(text);

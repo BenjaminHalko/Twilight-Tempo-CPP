@@ -34,7 +34,7 @@ Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png")
 
 void Player::update() {
 	if (dead) {
-		for (int i = 0; i < (signed)deathParticles.size(); i++) {
+		for (size_t i = 0; i < deathParticles.size(); i++) {
 			DeathParticle *particle = deathParticles[i];
 			particle->x += lengthdir_x(particle->spd, particle->dir);
 			particle->y += lengthdir_y(particle->spd, particle->dir);
@@ -74,7 +74,7 @@ void Player::update() {
 
 				bool hit = false;
 
-				for (int i = 0; i < (signed)Global::enemies.size(); i++) {
+				for (size_t i = 0; i < Global::enemies.size(); i++) {
 					Enemy& enemy = *Global::enemies[i];
 					if (((int)enemy.getDirection() % 360) == (dir + 360) % 360) {
 						hit = true;
@@ -120,8 +120,8 @@ void Player::update() {
 						DeathParticle* particle = new DeathParticle;
 						particle->i = i - sprite.getWidth() / 2;
 						particle->j = j - sprite.getHeight() / 2;
-						particle->x = x + sprite.getWidth() / 2;
-						particle->y = y + sprite.getHeight() / 2;
+						particle->x = x + sprite.getWidth() / 2.0f;
+						particle->y = y + sprite.getHeight() / 2.0f;
 						particle->spd = random_range(0, 4);
 						particle->dir = point_direction(15, 15, (float)i, (float)j) + random_range(-20, 20);
 						particle->time = 0;
@@ -168,7 +168,7 @@ void Player::update() {
 void Player::draw() {
 	if (dead) {
 		sf::Sprite player = sprite();
-		for (int i = 0; i < (signed)deathParticles.size(); i++) {
+		for (size_t i = 0; i < deathParticles.size(); i++) {
 			DeathParticle particle = *deathParticles[i];
 			player.setTextureRect(sf::IntRect(particle.i, particle.j, 1, 1));
 			player.setPosition(particle.x, particle.y);
@@ -209,4 +209,10 @@ void Player::setCannonMove(float val) {
 void Player::applyShake(int dir) {
 	shake[dir] = 2;
 	generalShake = 2;
+}
+
+Player::~Player() {
+	for (size_t i = 0; i < deathParticles.size(); i++) {
+		delete deathParticles[i];
+	}
 }

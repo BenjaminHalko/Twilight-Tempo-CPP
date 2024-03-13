@@ -22,7 +22,7 @@ Bullet::Bullet(float xPos, float yPos, float dir) : Object(xPos, yPos, "player/b
 }
 
 void Bullet::update() {
-	for (int i = 0; i < (signed)image.size(); i++) {
+	for (size_t i = 0; i < image.size(); i++) {
 		image[i].alpha -= 0.15f * 255.0f;
 		if (image[i].alpha <= 0) {
 			image.erase(image.begin() + i);
@@ -40,10 +40,10 @@ void Bullet::update() {
 			image.push_back(AfterImage(x, y, direction));
 
 			// Hit Enemy
-			for (int j = 0; j < (signed)Global::enemies.size(); j++) {
+			for (size_t j = 0; j < Global::enemies.size(); j++) {
 				Enemy &enemy = *Global::enemies[j];
 				if (isColliding(enemy) and !enemy.isDead()) {
-					enemy.killEnemy();
+					enemy.killEnemy(amountOfPoints);
 					spd = 0;
 				}
 			}
@@ -79,7 +79,7 @@ void Bullet::update() {
 
 void Bullet::draw() {
 	sf::Sprite spr = sprite();
-	for (int i = 0; i < (signed)image.size(); i++) {
+	for (size_t i = 0; i < image.size(); i++) {
 		spr.setScale(1, 1);
 		spr.setPosition(image[i].x, image[i].y);
 		spr.setRotation(image[i].dir);

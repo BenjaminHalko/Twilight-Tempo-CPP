@@ -30,6 +30,7 @@ private:
 	std::vector<DeathParticle*> deathParticles;
 public:
 	Player(float xPos, float yPos);
+	~Player();
 	void update();
 	void draw();
 

@@ -10,7 +10,7 @@ Sound& playSound(std::string filename, int volume) {
 }
 
 void checkSounds() {
-	for (int i = 0; i < (signed)Global::sounds.size(); i++) {
+	for (size_t i = 0; i < Global::sounds.size(); i++) {
 		if (!Global::sounds[i]->isPlaying()) {
 			delete Global::sounds[i];
 			Global::sounds.erase(Global::sounds.begin() + i);

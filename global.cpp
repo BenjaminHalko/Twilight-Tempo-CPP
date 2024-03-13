@@ -6,9 +6,10 @@
 sf::RenderWindow Global::window;
 sf::RenderTexture Global::render;
 std::vector<Sound*> Global::sounds;
-Player Global::player = Player(0,0);
+Player Global::player = Player(0, 0);
 std::vector<Bullet*> Global::bullets;
 std::vector<Enemy*> Global::enemies;
+std::vector<Score*> Global::scoreObjects;
 float Global::time_running = 0;
 int Global::score = 0;
 int Global::highScore = 0;

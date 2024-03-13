@@ -12,9 +12,9 @@ protected:
 	int sprite_height;
 	bool destroyed;
 public:
-	Object(float xstart, float ystart, std::string sprite_path, float sprite_xoffset=0.5, float sprite_yoffset=0.5);
+	Object(float xstart, float ystart, std::string sprite_path="", float sprite_xoffset = 0.5, float sprite_yoffset = 0.5);
 	void update();
 	void draw();
-	bool isDestroyed();
+	bool isDestroyed() const;
 	bool isColliding(Object& other);
 };

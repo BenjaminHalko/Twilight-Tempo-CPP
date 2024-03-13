@@ -5,6 +5,8 @@
 #include "helper.h"
 #include "shadow.h"
 #include "background.h"
+#include "score.h"
+#include "gui.h"
 #include <SFML/Graphics.hpp>
 
 Enemy::Enemy(float xPos, float yPos, float dir) : Object(xPos, yPos, "enemy/enemy.png") {
@@ -62,6 +64,7 @@ void Enemy::update() {
 			Global::player.applyShake((int)direction / 90);
 			sf::Sound& hitNoise = playSound("player_hurt.wav", 100)();
 			hitNoise.setPitch(random_range(0.8f, 1.2f));
+			GUI::pulseHeart();
 			if (Global::lives == 0) {
 				playSound("player_die.wav", 30);
 				if (Global::inTutorial) {
@@ -100,15 +103,18 @@ void Enemy::draw() {
 
 }
 
-void Enemy::killEnemy() {
+void Enemy::killEnemy(int amountOfPoints) {
 	dead = true;
 	speed = 0;
+
+	int points = (int)floor(fmax(0, 1 - fmin(abs(amountOfPoints - timePoints), abs(amountOfPoints - timePoints - 8)) / 1.5f) * 100.0f);
+	Global::scoreObjects.push_back(new Score(x, y, points));
 }
 
-const bool Enemy::isDead() {
+bool Enemy::isDead() const {
 	return dead;
 }
 
-const float Enemy::getDirection() {
+float Enemy::getDirection() const {
 	return direction;
 }

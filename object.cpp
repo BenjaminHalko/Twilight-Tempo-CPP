@@ -7,29 +7,26 @@ Object::Object(float xstart, float ystart, std::string sprite_path, float sprite
 	destroyed = false;
 	x = xstart;
 	y = ystart;
-	sprite = Sprite(sprite_path, sprite_xoffset, sprite_yoffset);
 	xscale = 1;
 	yscale = 1;
-	sprite_width = sprite.getWidth();
-	sprite_height = sprite.getHeight();
+	if (sprite_path != "") {
+		sprite = Sprite(sprite_path, sprite_xoffset, sprite_yoffset);
+		sprite_width = sprite.getWidth();
+		sprite_height = sprite.getHeight();
+	}
 }
 
 void Object::update() {}
 
-void Object::draw() {
-	sf::Sprite &mySprite = sprite();
-	mySprite.setPosition(x, y);
-	mySprite.setScale(xscale, yscale);
-	Global::render.draw(mySprite);
-}
+void Object::draw() {}
 
-bool Object::isDestroyed() {
+bool Object::isDestroyed() const {
 	return destroyed;
 }
 
 bool Object::isColliding(Object& other) {
-	return (x - sprite_width / 2 < other.x + other.sprite_width / 2 &&
-				x + sprite_width / 2 > other.x - other.sprite_width / 2 &&
-				y - sprite_height / 2 < other.y + other.sprite_height / 2 &&
-				y + sprite_height / 2 > other.y - other.sprite_height / 2);
+	return (x - sprite_width / 2.0f < other.x + other.sprite_width / 2.0f &&
+				x + sprite_width / 2.0f > other.x - other.sprite_width / 2.0f &&
+				y - sprite_height / 2.0f < other.y + other.sprite_height / 2.0f &&
+				y + sprite_height / 2.0f > other.y - other.sprite_height / 2.0f);
 }

@@ -84,8 +84,11 @@
     <ClCompile Include="shadow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="star_generator.cpp">
-      <Filter>Source Files\Global</Filter>
+      <Filter>Source Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,11 +140,14 @@
     <ClInclude Include="shadow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="star_generator.h">
-      <Filter>Header Files\Global</Filter>
-    </ClInclude>
     <ClInclude Include="death_particle.h">
       <Filter>Header Files\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="star_generator.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
