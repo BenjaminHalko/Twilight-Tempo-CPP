@@ -20,3 +20,4 @@ void save(const std::string& fileName, int score);
 int load(std::string fileName);
 bool fileExists(const std::string& fileName);
 std::string formatScore(int score, int stringLength);
+void drawText(sf::Font font, std::string textString, int characterSize, int x, int y, bool horizCentered, bool vertCentered, sf::Color colour = sf::Color::White);

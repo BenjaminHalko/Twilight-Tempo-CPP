@@ -7,11 +7,17 @@
 
 sf::Font GUI::pressStart;
 sf::Font GUI::m3x6;
+std::vector<Sprite*> GUI::hearts;
 
 void GUI::init() {
 	// May need a failstate
 	m3x6.loadFromFile("fonts/m3x6.ttf");
 	pressStart.loadFromFile("fonts/press_start.ttf");
+
+	for (size_t i = 0; i < 9; i++)
+	{
+		hearts.push_back(new Sprite("gui/health/" + std::to_string(i) + ".png"));
+	}
 }
 
 void GUI::draw() {
@@ -31,18 +37,13 @@ void GUI::draw() {
 	}
 
 	for (size_t i = 0; i < 3; i++) {
-		
+		sf::Sprite heart = (*hearts[clamp(Global::lives - i * 4 * (1 + Global::practiceMode) * (2 - Global::practiceMode), 0, 8)]);
+
+		heart.setPosition(Global::RESW - 10 - i * 14, 10);
+		heart.setScale(heartScale[i], heartScale[i]);
+		Global::render.draw(heart);
 	}
 	
-}
 
-void GUI::drawText(sf::Font font, std::string textString, int characterSize, int x, int y, bool horizCentered, bool vertCentered, sf::Color colour) {
-	sf::Text text;
-	text.setFont(font);
-	text.setString(textString);
-	text.setCharacterSize(characterSize);
-	text.setPosition(x - (int)(horizCentered * (text.getGlobalBounds().width/2)), y - (int)(vertCentered * (text.getGlobalBounds().height/2)));
-	text.setFillColor(colour); // Set the fill color
-
-	Global::render.draw(text);
+	sf::Sprite mySprite = (*hearts[0])();
 }
