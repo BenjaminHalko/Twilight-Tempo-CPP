@@ -14,6 +14,7 @@ float Title::logoY = 0;
 float Title::bounce = 0;
 int Title::timer = 0;
 int Title::lastInput = 0;
+bool Title::lastConfirm = false;
 sf::Music Title::music;
 std::vector<Star*>Title::stars;
 Sprite Title::twilight;
@@ -52,7 +53,17 @@ void Title::update() {
 	bounce = approachEase(bounce, 1, 0.05f, 0.6f);
 
 	if (show && selected == 0) {
+		bool confirm = false;
 		if (inputConfirm()) {
+			if (!lastConfirm) {
+				confirm = true;
+				lastConfirm = true;
+			}
+		}
+		else
+			lastConfirm = false;
+
+		if (confirm) {
 			if (choice == 2) {
 				Global::practiceMode = !Global::practiceMode;
 				playSound("blip.ogg", 100);
@@ -91,6 +102,7 @@ void Title::update() {
 				clean();
 				Global::inTitle = false;
 				Global::highScore = load(Global::hardMode ? "hard.sav" : "normal.sav");
+				startGame();
 			}
 			selected++;
 			timer = 5;

@@ -137,16 +137,25 @@ float bezierCurve(float t) {
 	return p3y;
 }
 
-static bool usingWindows() {
-	//return getenv("windir") != NULL;
-}
-
 void save(std::string fileName, int score) {
-
+	if (WINDOWS) {
+		char* pValue;
+		size_t len;
+		_dupenv_s(&pValue, &len, "APPDATA");
+		if (pValue != NULL) {
+			std::string appdata = pValue;
+			std::string folder = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight_Tempo_CPP\\";
+			if (!fileExists(folder)) {
+				std::string command = "mkdir " + folder;
+				system(command.c_str());
+			}
+			fileName = folder + fileName;
+		}
+	}
 	fileName = fileName + ".sav";
-	std::ofstream outFile(fileName + ".sav", std::ios::trunc);
+	std::ofstream outFile(fileName, std::ios::trunc);
 	if(!outFile.is_open()){
-		std::cerr << "Error opening file: " << fileName << ".sav" << std::endl;
+		std::cerr << "Error opening file: " << fileName << std::endl;
 		return;
 	}
 	outFile << score;
@@ -154,18 +163,25 @@ void save(std::string fileName, int score) {
 }
 
 int load(std::string fileName) {
+	if (WINDOWS) {
+		char* pValue;
+		size_t len;
+		_dupenv_s(&pValue, &len, "APPDATA");
+		if (pValue != NULL) {
+			std::string appdata = pValue;
+			fileName = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight Tempo C++\\" + fileName;
+		}
+	}
+	fileName = fileName + ".sav";
 	int score;
 	std::ifstream inFile;
-
-	if (fileExists(fileName + ".sav")) {
-		inFile.open(fileName + ".sav");
+	if (fileExists(fileName)) {
+		inFile.open(fileName);
 		if (inFile >> score) {
 			return score;
 		}
 	}
-
-	std::cerr << "Error: File " << fileName << ".sav does not exist." << std::endl;
-	return -1;
+	return 0;
 }
 
 bool fileExists(const std::string& fileName) {

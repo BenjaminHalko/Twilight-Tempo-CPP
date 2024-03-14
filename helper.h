@@ -1,5 +1,10 @@
 #pragma once
 #define PI 3.14159265358979323846
+#ifdef _WIN32
+#define WINDOWS true
+#else
+#define WINDOWS false
+#endif
 #include <SFML/Graphics.hpp>
 sf::Color hexColor(int hex);
 float clamp(float value, float min, float max);
@@ -22,3 +27,4 @@ int load(std::string fileName);
 bool fileExists(const std::string& fileName);
 std::string formatScore(int score, int stringLength);
 void drawText(std::string textString, int x, int y, bool horizCentered=false, bool vertCentered=false, bool useM3x6=false, sf::Color colour = sf::Color::White);
+

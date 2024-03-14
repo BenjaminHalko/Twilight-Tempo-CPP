@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "score_popup.h"
 #include "background.h"
+#include "helper.h"
 
 void deleteSounds() {
 	for (size_t i = 0; i < Global::sounds.size(); i++) {
@@ -25,7 +26,7 @@ void cleanUp() {
 void restartGame() {
 	cleanUp();
 
-	Global::lives = 12;
+	Global::lives = 12 * (1 + Global::practiceMode);
 	Global::score = 0;
 	Global::player = Player(Global::RESW / 2.0, Global::RESH / 2.0);
 	Background::init();

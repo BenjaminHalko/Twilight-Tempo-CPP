@@ -12,6 +12,7 @@ private:
 	static int lastBeat;
 	static int timer;
 	static int lastInput;
+	static bool lastConfirm;
 	static const int bpm = 130;
 	static sf::Music music;
 	static std::vector<Star*> stars;

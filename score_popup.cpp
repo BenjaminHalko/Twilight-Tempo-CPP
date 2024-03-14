@@ -10,15 +10,13 @@ ScorePopup::ScorePopup(float xPos, float yPos, int points) : Object(xPos, yPos) 
 }
 
 void ScorePopup::update() {
-	alpha -= 0.05;
+	alpha -= 0.05f;
 	if (alpha <= 0)
-	{
 		destroyed = true;
-	}
 }
 
 void ScorePopup::draw() {
 	sf::Color col = sf::Color::White;
-	col.a = (255.0f * alpha);
-	drawText(points, x, y - floor((1-alpha) * 3), true, false, true, col);
+	col.a = (sf::Uint8)(255.0f * alpha);
+	drawText(points, (int)x, (int)(y - floor((1-alpha) * 3)), true, true, true, col);
 }

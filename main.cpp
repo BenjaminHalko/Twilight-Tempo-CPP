@@ -52,7 +52,7 @@ int main() {
 	// Main loop
 	while (Global::window.isOpen()) {
 		// Event handling
-		sf::Event event;
+		sf::Event event{};
 		while (Global::window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				Global::window.close();
