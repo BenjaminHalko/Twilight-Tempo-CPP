@@ -175,7 +175,7 @@
     <ResourceCompile Include="Twilight_Tempo.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="sprites\icon.ico" />
+    <Image Include="sprites\icon.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

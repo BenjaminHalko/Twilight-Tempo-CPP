@@ -46,7 +46,7 @@ void GUI::draw() {
 	}
 	else {
 		drawText("HIGH SCORE:", Global::RESW / 2, 6, true);
-		drawText(formatScore(Global::score, 5), Global::RESW / 2, 15, true);
+		drawText(formatScore(Global::highScore, 5), Global::RESW / 2, 15, true);
 	}
 
 	for (int i = 0; i < 3; i++) {
