@@ -12,6 +12,8 @@ int Title::selected = 0;
 float Title::logoX = 0;
 float Title::logoY = 0;
 float Title::bounce = 0;
+int Title::timer = 0;
+int Title::lastInput = 0;
 sf::Music Title::music;
 std::vector<Star*>Title::stars;
 Sprite Title::twilight;
@@ -53,8 +55,45 @@ void Title::update() {
 		if (inputConfirm()) {
 			if (choice == 2) {
 				Global::practiceMode = !Global::practiceMode;
-				playSound("blip.wav", 100);
+				playSound("blip.ogg", 100);
 			}
+			else {
+				Global::hardMode = choice;
+				selected = 1;
+				timer = 5;
+				music.stop();
+				playSound("select.wav", 30);
+			}
+		}
+
+		int input = (inputDown() || inputRight()) - (inputUp() || inputLeft());
+		if (input != lastInput)
+			lastInput = input;
+		else
+			input = 0;
+
+		if (input == -1) {
+			choice--;
+			if (choice < 0)
+				choice = 2;
+			playSound("blip.ogg", 100);
+		}
+		else if (input == 1) {
+			choice++;
+			if (choice > 2)
+				choice = 0;
+			playSound("blip.ogg", 100);
+		}
+	}
+	else if (show) {
+		if (--timer <= 0) {
+			if (selected == 16) {
+				clean();
+				Global::inTitle = false;
+				Global::highScore = load(Global::hardMode ? "hard.sav" : "normal.sav");
+			}
+			selected++;
+			timer = 5;
 		}
 	}
 

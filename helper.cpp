@@ -5,7 +5,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-
+#include <cstdlib>
 
 // Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
@@ -137,7 +137,13 @@ float bezierCurve(float t) {
 	return p3y;
 }
 
-void save(const std::string& fileName, int score) {
+static bool usingWindows() {
+	//return getenv("windir") != NULL;
+}
+
+void save(std::string fileName, int score) {
+
+	fileName = fileName + ".sav";
 	std::ofstream outFile(fileName + ".sav", std::ios::trunc);
 	if(!outFile.is_open()){
 		std::cerr << "Error opening file: " << fileName << ".sav" << std::endl;

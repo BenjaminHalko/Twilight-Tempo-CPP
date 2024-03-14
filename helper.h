@@ -17,7 +17,7 @@ float lerp(float a, float b, float t);
 float wave(float from, float to, float duration, float offset);
 float bezierCurve(float t);
 void debug(std::string message, float value);
-void save(const std::string& fileName, int score);
+void save(std::string fileName, int score);
 int load(std::string fileName);
 bool fileExists(const std::string& fileName);
 std::string formatScore(int score, int stringLength);

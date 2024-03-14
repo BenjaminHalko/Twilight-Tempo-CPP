@@ -29,6 +29,7 @@ static void setupWindow() {
 	windowPosition.x = (desktop.width - Global::window.getSize().x) / 2;
 	windowPosition.y = (desktop.height - Global::window.getSize().y) / 2;
 	Global::window.setPosition(windowPosition);
+	Global::window.clear(sf::Color::Black);
 }
 
 int main() {
