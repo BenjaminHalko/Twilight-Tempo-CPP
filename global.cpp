@@ -19,5 +19,5 @@ int Global::lives = 12;
 bool Global::practiceMode = false;
 bool Global::inTutorial = false;
 bool Global::hardMode = false;
-bool Global::newGame = true;
+bool Global::inTitle = false;
 float Global::beatTime = 0;

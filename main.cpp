@@ -8,9 +8,10 @@
 #include "shadow.h"
 #include "gui.h"
 #include "star_generator.h"
+#include "title.h"
 
 // Function to create the game window
-void setupWindow() {
+static void setupWindow() {
 	// Create and resize windows
 	Global::window.create(sf::VideoMode(256, 224), "Twilight Tempo");
 	Global::render.create(256, 224);
@@ -38,51 +39,64 @@ int main() {
 	Global::m3x6.loadFromFile("fonts/m3x6.ttf");
 	Global::pressStart.loadFromFile("fonts/press_start.ttf");
 
-	// Create the shadow & GUI
+	// Init objects
 	Shadow::init();
 	GUI::init();
 	StarGenerator::init();
+	Title::init();
 
 	// Start Game
 	startGame();
 
 	// Main loop
-    while (Global::window.isOpen()) {
+	while (Global::window.isOpen()) {
 		// Event handling
 		sf::Event event;
-        while (Global::window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+		while (Global::window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
 				Global::window.close();
 			}
 		}
 
-		// Debug Restart
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-			restartGame();
-		}
-
 		// Check for stopped sounds
 		checkSounds();
+		
+		if (Global::inTitle) {
+			// Title
+			Title::update();
+			Title::draw();
 
-		// Update the game
-		BeatController::update();
-		Background::update();
-		Global::player.update();
-		updateObjects(Global::bullets);
-		updateObjects(Global::enemies);
-		updateObjects(Global::scorePopups);
-		Shadow::update();
-		GUI::update();
+			// Debug Restart
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+				Title::clean();
+				Title::goToTitle();
+			}
+		} else {
+			// Debug Restart
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+				restartGame();
+			}
 
-		// Draw the game
-		StarGenerator::update();
-		Background::draw();
-		Global::player.draw();
-		drawObjects(Global::bullets);
-		drawObjects(Global::enemies);
-		drawObjects(Global::scorePopups);
-		Shadow::draw();
-		GUI::draw();
+			// Update the game
+			BeatController::update();
+			Background::update();
+			Global::player.update();
+			updateObjects(Global::bullets);
+			updateObjects(Global::enemies);
+			updateObjects(Global::scorePopups);
+			Shadow::update();
+			GUI::update();
+
+			// Draw the game
+			StarGenerator::update();
+			Background::draw();
+			Global::player.draw();
+			drawObjects(Global::bullets);
+			drawObjects(Global::enemies);
+			drawObjects(Global::scorePopups);
+			Shadow::draw();
+			GUI::draw();
+		}
 
 		// Draw the window
 		sf::Sprite renderSprite(Global::render.getTexture());
@@ -97,6 +111,7 @@ int main() {
 
 	// Clean up
 	StarGenerator::deleteStars();
+	Title::clean();
 	cleanUp();
 
     return 0;

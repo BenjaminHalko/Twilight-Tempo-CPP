@@ -90,6 +90,9 @@
     <ClCompile Include="star_generator.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,4 @@
+#include "game_controller.h"
 #include "global.h"
 #include "beat_controller.h"
 #include "player.h"
@@ -6,79 +7,7 @@
 #include "score_popup.h"
 #include "background.h"
 
-void updateObjects(std::vector<Bullet*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		objects[i]->update();
-		if (objects[i]->isDestroyed()) {
-			delete objects[i];
-			objects.erase(objects.begin() + i);
-			i--;
-		}
-	}
-}
-
-void updateObjects(std::vector<Enemy*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		objects[i]->update();
-		if (objects[i]->isDestroyed()) {
-			delete objects[i];
-			objects.erase(objects.begin() + i);
-			i--;
-		}
-	}
-}
-
-void updateObjects(std::vector<ScorePopup*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		objects[i]->update();
-		if (objects[i]->isDestroyed()) {
-			delete objects[i];
-			objects.erase(objects.begin() + i);
-			i--;
-		}
-	}
-}
-
-void drawObjects(std::vector<Bullet*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		objects[i]->draw();
-	}
-}
-
-void drawObjects(std::vector<Enemy*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		objects[i]->draw();
-	}
-}
-
-void drawObjects(std::vector<ScorePopup*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		objects[i]->draw();
-	}
-}
-
-static void deleteObjects(std::vector<Bullet*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		delete objects[i];
-	}
-	objects.clear();
-}
-
-static void deleteObjects(std::vector<Enemy*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		delete objects[i];
-	}
-	objects.clear();
-}
-
-static void deleteObjects(std::vector<ScorePopup*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		delete objects[i];
-	}
-	objects.clear();
-}
-
-static void deleteSounds() {
+void deleteSounds() {
 	for (size_t i = 0; i < Global::sounds.size(); i++) {
 		delete Global::sounds[i];
 	}
@@ -94,10 +23,7 @@ void cleanUp() {
 }
 
 void restartGame() {
-	deleteObjects(Global::bullets);
-	deleteObjects(Global::enemies);
-	deleteObjects(Global::scorePopups);
-	deleteSounds();
+	cleanUp();
 
 	Global::lives = 12;
 	Global::score = 0;

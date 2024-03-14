@@ -31,6 +31,5 @@ public:
 	static bool practiceMode;
 	static bool inTutorial;
 	static bool hardMode;
-	static bool newGame;
-
+	static bool inTitle;
 };

@@ -173,7 +173,7 @@ void BeatController::update() {
 					int dir = beats[beat] * 90;
 					if (Global::inTutorial || Global::practiceMode)
 						GUI::pulseWarning(beats[beat]);
-					playSound(dirSounds[beats[beat]], 65);
+					playSound(dirSounds[beats[beat]], 100);
 				}
 			}
 		}
