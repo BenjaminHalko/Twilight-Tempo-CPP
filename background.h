@@ -10,8 +10,11 @@ private:
 	static int backgroundIndex;
 	static sf::Texture texture;
 	static sf::Sprite sprite;
+	static bool isNight;
+	static int timer;
 public:
-	Background();
-	static void updateBG(int index);
+	static void init();
+	static void setNight(bool night);
+	static void update();
 	static void draw();
 };

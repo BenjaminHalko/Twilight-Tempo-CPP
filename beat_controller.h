@@ -18,6 +18,7 @@ public:
 	static void resetSong();
 	static void update();
 	static void setTrackPos(float pos);
+	static int getBarNumber();
 	static int getBPM();
 	static void stopMusic();
 };

@@ -29,7 +29,18 @@ void StarGenerator::init() {
 }
 
 void StarGenerator::update() {
-	
+	for (size_t i = 0; i < frontStars.size(); i++) {
+		Star* s = frontStars[i];
+		s->alpha1 += s->alphaSpd;
+		if (s->alpha1 > 2) {
+			do {
+				s->x = rand() % Global::RESW;
+				s->y = rand() % Global::RESH;
+			} while (point_distance((float)s->x, (float)s->y, Global::RESW / 2.0f, Global::RESH / 2.0f) < 16);
+			s->alpha1 = 0;
+			s->alphaSpd = random_range(0.005f, 0.01f);
+		}
+	}
 }
 
 void StarGenerator::drawStarsBack(float alpha) {
@@ -46,8 +57,16 @@ void StarGenerator::drawStarsBack(float alpha) {
 }
 
 
-void StarGenerator::drawStarsFront() {
-
+void StarGenerator::drawStarsFront(float alpha) {
+	for (size_t i = 0; i < frontStars.size(); i++) {
+		Star* s = frontStars[i];
+		sf::Color c = s->color;
+		c.a = (sf::Uint8)((1-abs(1-s->alpha1)) * 255.0f);
+		sf::RectangleShape rect(sf::Vector2f(1, 1));
+		rect.setPosition((float)s->x, (float)s->y);
+		rect.setFillColor(c);
+		Global::render.draw(rect);
+	}
 }
 
 void StarGenerator::deleteStars() {

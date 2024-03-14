@@ -67,6 +67,11 @@ float point_direction(float x1, float y1, float x2, float y2) {
 	return (float)(atan2(y2 - y1, x2 - x1) * 180 / PI);
 }
 
+// Returns the distance when given two points
+float point_distance(float x1, float y1, float x2, float y2) {
+	return (float)sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+}
+
 // Given a length and direction, return x component
 float lengthdir_x(float len, float dir) {
 	return (float)cos(dir * PI / 180) * len;
@@ -174,11 +179,11 @@ std::string formatScore(int score, int stringLength) {
 	}
 }
 
-void drawText(sf::Font font, std::string textString, int characterSize, int x, int y, bool horizCentered, bool vertCentered, sf::Color colour) {
+void drawText(std::string textString, int x, int y, bool horizCentered, bool vertCentered, bool useM3x6, sf::Color colour) {
 	sf::Text text;
-	text.setFont(font);
+	text.setFont(useM3x6 ? Global::m3x6 : Global::pressStart);
 	text.setString(textString);
-	text.setCharacterSize(characterSize);
+	text.setCharacterSize(useM3x6 ? 16 : 8);
 	text.setPosition(floor(x - (horizCentered * (text.getGlobalBounds().width / 2))), floor(y - (vertCentered * (text.getGlobalBounds().height / 2))));
 	text.setFillColor(colour); // Set the fill color
 

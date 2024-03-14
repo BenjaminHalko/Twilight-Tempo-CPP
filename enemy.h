@@ -8,7 +8,7 @@ private:
 	bool hit;
 	float circlePercent;
 	float speed;
-	int timePoints;
+	float timePoints;
 	bool flash;
 	Sprite flashSprite;
 	Sprite cornerSprite;

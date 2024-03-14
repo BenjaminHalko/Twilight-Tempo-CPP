@@ -5,6 +5,7 @@
 #include "helper.h"
 #include "enemy.h"
 #include "shadow.h"
+#include "gui.h"
 #include <SFML/Audio.hpp>
 #include <string>
 
@@ -12,8 +13,8 @@ sf::Music BeatController::music;
 int BeatController::BPM = 130;
 int BeatController::lastBeat = 100;
 int BeatController::aheadLastBeat = 100;
-std::vector<int> BeatController::beats = {4,4,4,4,4,4,4,4};
-std::vector<int> BeatController::extraBeats = { 0, 0, 0, 0 };
+std::vector<int> BeatController::beats(8, 4);
+std::vector<int> BeatController::extraBeats(4, 0);
 float BeatController::mode = 0;
 const std::string BeatController::dirSounds[4] = {"left.ogg", "up.ogg", "right.ogg", "down.ogg"};
 const float BeatController::aheadTime = 0.73f;
@@ -43,6 +44,10 @@ BeatController::~BeatController() {
 
 void BeatController::setTrackPos(float pos) {
 	music.setPlayingOffset(sf::seconds(pos));
+}
+
+int BeatController::getBarNumber() {
+	return barNumber;
 }
 
 int BeatController::getBPM() {
@@ -121,8 +126,8 @@ void BeatController::update() {
 			if (barNumber == 9 && Global::inTutorial) {
 				return;
 			}
-			else if (barNumber == 8) {
-				beats = { 0, 4, 3, 4, 2, 4, 1, 4 };
+			else if (barNumber == 8 && Global::inTutorial) {
+				beats = { 2, 4, 3, 4, 0, 4, 1, 4 };
 			}
 			else {
 				for (int i = 0; i < 4; i++) {
@@ -163,6 +168,8 @@ void BeatController::update() {
 			if (beat < BEAT_COUNT) {
 				if (beats[beat] != 4) {
 					int dir = beats[beat] * 90;
+					if (Global::inTutorial || Global::practiceMode)
+						GUI::pulseWarning(beats[beat]);
 					playSound(dirSounds[beats[beat]], 65);
 				}
 			}
@@ -176,7 +183,7 @@ void BeatController::update() {
 		lastBeat = beat;
 		aheadLastBeat = aheadBeat;
 	}
-	else if (Global::inTutorial && music.getStatus() != sf::Music::Playing) {
+	else if (Global::inTutorial && music.getStatus() != sf::Music::Playing && barNumber != 0) {
 		barNumber = 9;
 	}
 }

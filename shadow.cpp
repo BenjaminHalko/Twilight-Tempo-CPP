@@ -2,6 +2,7 @@
 #include "shadow.h"
 #include "global.h"
 #include "helper.h"
+#include "star_generator.h"
 
 sf::RenderTexture Shadow::shadow;
 const sf::BlendMode Shadow::blendSubtractive = sf::BlendMode(sf::BlendMode::Zero, sf::BlendMode::OneMinusSrcColor);
@@ -24,6 +25,7 @@ void Shadow::draw() {
 	Global::render.draw(renderSprite);
 	shadow.clear(sf::Color::Black);
 	drawCircle(Global::RESW / 2.0f, Global::RESH / 2.0f, 16, 1 + radius * 0.7f);
+	StarGenerator::drawStarsFront(darkness);
 }
 
 void Shadow::drawCircle(float x, float y, float radius, float alpha) {

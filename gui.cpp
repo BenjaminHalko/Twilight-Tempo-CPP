@@ -5,17 +5,11 @@
 #include "sprite.h"
 #include <SFML/Graphics.hpp>
 
-sf::Font GUI::pressStart;
-sf::Font GUI::m3x6;
 std::vector<Sprite*> GUI::hearts;
-std::vector<float> GUI::heartScale;
+std::vector<float> GUI::heartScale(3, 1);
+std::vector<float> GUI::warningPulse(4, 0);
 
 void GUI::init() {
-	// May need a failstate
-	m3x6.loadFromFile("fonts/m3x6.ttf");
-	pressStart.loadFromFile("fonts/press_start.ttf");
-	heartScale = { 1, 1, 1 };
-
 	for (int i = 0; i < 9; i++) {
 		hearts.push_back(new Sprite("gui/health/" + std::to_string(i) + ".png", 0.55f, 0.55f));
 	}
@@ -32,22 +26,27 @@ void GUI::update() {
 	for (int i = 0; i < 3; i++) {
 		heartScale[i] = approach(heartScale[i], 1, 0.05f);
 	}
+
+	// Update warning pulses
+	for (int i = 0; i < 4; i++) {
+		warningPulse[i] = approach(warningPulse[i], 0, 0.1f);
+	}
 }
 
 void GUI::draw() {
-	drawText(pressStart, "SCORE:", 8, 6, 6, false, false);
-	drawText(pressStart, "   " + formatScore(Global::score, 4), 8, 6, 15, false, false);
+	drawText("SCORE:", 6, 6);
+	drawText("   " + formatScore(Global::score, 4), 6, 15);
 	if (Global::inTutorial) {
-		drawText(pressStart, "TUTORIAL", 8, Global::RESW/2, 6, true, false);
-		drawText(pressStart, "LEVEL", 8, Global::RESW / 2, 15, true, false);
+		drawText("TUTORIAL", Global::RESW/2, 6, true);
+		drawText("LEVEL", Global::RESW / 2, 15, true);
 	}
-	else if(true) {
-		drawText(pressStart, "PRACTICE", 8, Global::RESW / 2, 6, true, false);
-		drawText(pressStart, "MODE", 8, Global::RESW / 2, 15, true, false);
+	else if(Global::practiceMode) {
+		drawText("PRACTICE", Global::RESW / 2, 6, true);
+		drawText("MODE", Global::RESW / 2, 15, true);
 	}
 	else {
-		drawText(pressStart, "HIGH SCORE:", 8, Global::RESW / 2, 6, true, false);
-		drawText(pressStart, formatScore(Global::score, 5), 8, Global::RESW / 2, 15, true, false);
+		drawText("HIGH SCORE:", Global::RESW / 2, 6, true);
+		drawText(formatScore(Global::score, 5), Global::RESW / 2, 15, true);
 	}
 
 	for (int i = 0; i < 3; i++) {
@@ -61,4 +60,8 @@ void GUI::draw() {
 
 void GUI::pulseHeart() {
 	heartScale[Global::lives / (4 * (1 + Global::practiceMode))] = 1.4f;
+}
+
+void GUI::pulseWarning(int i) {
+	warningPulse[i] = 1;
 }

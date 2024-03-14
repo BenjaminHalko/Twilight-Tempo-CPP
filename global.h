@@ -13,6 +13,9 @@ public:
 	static const int RESH = 224;
 	static float time_running;
 
+	static sf::Font pressStart;
+	static sf::Font m3x6;
+
 	static sf::RenderWindow window;
 	static sf::RenderTexture render;
 	static std::vector<Sound*> sounds;

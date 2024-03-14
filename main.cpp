@@ -34,6 +34,10 @@ int main() {
 	// Create the window
 	setupWindow();
 
+	// Load the fonts
+	Global::m3x6.loadFromFile("fonts/m3x6.ttf");
+	Global::pressStart.loadFromFile("fonts/press_start.ttf");
+
 	// Create the shadow & GUI
 	Shadow::init();
 	GUI::init();
@@ -54,7 +58,7 @@ int main() {
 
 		// Debug Restart
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-			startGame();
+			restartGame();
 		}
 
 		// Check for stopped sounds
@@ -70,6 +74,7 @@ int main() {
 		GUI::update();
 
 		// Draw the game
+		StarGenerator::update();
 		Background::draw();
 		Global::player.draw();
 		drawObjects(Global::bullets);

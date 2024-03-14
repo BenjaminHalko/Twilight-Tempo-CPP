@@ -17,6 +17,6 @@ public:
 	static void init();
 	static void update();
 	static void drawStarsBack(float alpha);
-	static void drawStarsFront();
+	static void drawStarsFront(float alpha);
 	static void deleteStars();
 };

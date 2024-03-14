@@ -21,7 +21,7 @@ private:
 
 	float deathSpd;
 
-	float penalty;
+	int penalty;
 
 	float startScale;
 

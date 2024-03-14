@@ -5,6 +5,8 @@
 
 sf::RenderWindow Global::window;
 sf::RenderTexture Global::render;
+sf::Font Global::pressStart;
+sf::Font Global::m3x6;
 std::vector<Sound*> Global::sounds;
 Player Global::player = Player(0, 0);
 std::vector<Bullet*> Global::bullets;

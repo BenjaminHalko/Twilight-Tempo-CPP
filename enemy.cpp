@@ -16,7 +16,7 @@ Enemy::Enemy(float xPos, float yPos, float dir) : Object(xPos, yPos, "enemy/enem
 	hit = false;
 	circlePercent = 0;
 	speed = (float)(- 3 - Global::hardMode);
-	timePoints = (int)((Global::beatTime + BeatController::aheadTime) * 2) % BeatController::BEAT_COUNT;
+	timePoints = (float)fmod((Global::beatTime + BeatController::aheadTime) * 2, BeatController::BEAT_COUNT);
 	flash = false;
 	flashSprite = Sprite("enemy/enemy_flash.png", 0.5, 0.5);
 	cornerSprite = Sprite("enemy/enemy_spike.png", 0, 0.5);
@@ -67,10 +67,6 @@ void Enemy::update() {
 			GUI::pulseHeart();
 			if (Global::lives == 0) {
 				playSound("player_die.wav", 30);
-				if (Global::inTutorial) {
-					Background::updateBG(1);
-				}
-				
 			}
 		}
 	}

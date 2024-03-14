@@ -1,9 +1,10 @@
 // https://github.com/BenjaminHalko/Twilight-Tempo/tree/After-Jam/objects/oBackground
 #include "background.h"
 #include "helper.h"
-#include <SFML/Graphics.hpp>
 #include "global.h"
 #include "star_generator.h"
+#include "beat_controller.h"
+#include <SFML/Graphics.hpp>
 
 Sprite Background::backgroundSprite[4] = {
 	Sprite("background/0.png"),
@@ -14,7 +15,9 @@ Sprite Background::backgroundSprite[4] = {
 
 Sprite Background::cloudSprite = Sprite("background/clouds.png");
 
-int Background::backgroundIndex = 4;
+int Background::backgroundIndex = 0;
+bool Background::isNight = false;
+int Background::timer = 30;
 
 sf::Color Background::backgroundColors[4] = {
 	hexColor(0x251932),
@@ -31,8 +34,23 @@ sf::Color Background::cloudColors[5] = {
 	hexColor(0x161433),
 };	
 
-void Background::updateBG(int index) {
-	backgroundIndex = index;
+void Background::init() {
+	isNight = !Global::inTutorial;
+	backgroundIndex = isNight * 8;
+	timer = 30;
+}
+
+void Background::setNight(bool night) {
+	isNight = night;
+}
+
+void Background::update() {
+	if (Global::inTutorial && Global::enemies.size() == 0 && BeatController::getBarNumber() == 9)
+		isNight = true;
+
+	if (backgroundIndex != isNight * 8 && --timer <= 0) {
+
+	}
 }
 
 void Background::draw() {
@@ -43,7 +61,7 @@ void Background::draw() {
 	}
 
 	sf::Sprite cloud = cloudSprite();
-	cloud.setColor(cloudColors[backgroundIndex]);
+	cloud.setColor(cloudColors[(int)fmin(4, backgroundIndex)]);
 	Global::render.draw(cloud);
 
 	if (backgroundIndex < 4) {

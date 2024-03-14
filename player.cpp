@@ -83,12 +83,15 @@ void Player::update() {
 				}
 
 				if (hit) {
+					penalty = 0;
 					playSound("enemy_destroy.wav", 33);
 					Sound& shootSound = playSound("player_shoot.wav", 18);
 					shootSound().setPitch(random_range(0.5f, 1.3f));
 				}
 				else {
-					Sound& shootSound = playSound("player_fail.wav", 80);
+					penalty -= 100;
+					Global::scorePopups.push_back(new ScorePopup(x, y - 10, penalty));
+					Sound& shootSound = playSound("player_shoot_fail.ogg", 80);
 					shootSound().setPitch(random_range(0.4f, 0.5f));
 				}
 
