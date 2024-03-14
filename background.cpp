@@ -48,8 +48,23 @@ void Background::update() {
 	if (Global::inTutorial && Global::enemies.size() == 0 && BeatController::getBarNumber() == 9)
 		isNight = true;
 
-	if (backgroundIndex != isNight * 8 && --timer <= 0) {
-
+	if ((backgroundIndex != isNight * 8 || timer != 30) && --timer <= 0) {
+		if (backgroundIndex == 8) {
+			BeatController::resetSong();
+			timer = 30;
+		}
+		else {
+			if (backgroundIndex >= 4)
+				Shadow::setDarkness((backgroundIndex - 3) / 4.0f);
+			backgroundIndex++;
+			timer = 30;
+			if (backgroundIndex == 8) {
+				Global::inTutorial = false;
+				Global::score = 0;
+				Global::lives = 12 * (1 + Global::practiceMode);
+				timer--;
+			}
+		}
 	}
 }
 

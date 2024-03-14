@@ -66,6 +66,7 @@ int main() {
 
 		// Update the game
 		BeatController::update();
+		Background::update();
 		Global::player.update();
 		updateObjects(Global::bullets);
 		updateObjects(Global::enemies);
@@ -80,7 +81,7 @@ int main() {
 		drawObjects(Global::bullets);
 		drawObjects(Global::enemies);
 		drawObjects(Global::scorePopups);
-		//Shadow::draw();
+		Shadow::draw();
 		GUI::draw();
 
 		// Draw the window

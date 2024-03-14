@@ -21,6 +21,8 @@ const float BeatController::aheadTime = 0.73f;
 int BeatController::barNumber = 0;
 
 void BeatController::resetSong() {
+	barNumber = 0;
+	mode = 0;
 	music.stop();
 
 	std::string song = "song";
@@ -124,6 +126,7 @@ void BeatController::update() {
 			}
 
 			if (barNumber == 9 && Global::inTutorial) {
+				music.stop();
 				return;
 			}
 			else if (barNumber == 8 && Global::inTutorial) {
