@@ -201,11 +201,11 @@ std::string formatScore(int score, int stringLength) {
 	}
 }
 
-void drawText(std::string textString, int x, int y, bool horizCentered, bool vertCentered, bool useM3x6, sf::Color colour) {
+void drawText(std::string textString, int x, int y, bool horizCentered, bool vertCentered, bool useM3x6, sf::Color colour, int scale) {
 	sf::Text text;
 	text.setFont(useM3x6 ? Global::m3x6 : Global::pressStart);
 	text.setString(textString);
-	text.setCharacterSize(useM3x6 ? 16 : 8);
+	text.setCharacterSize((useM3x6 ? 16 : 8) * scale);
 	text.setPosition(floor(x - (horizCentered * (text.getGlobalBounds().width / 2))), floor(y - (vertCentered * (text.getGlobalBounds().height / 2))));
 	text.setFillColor(colour); // Set the fill color
 
