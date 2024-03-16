@@ -1,7 +1,6 @@
 #include "sound.h"
 #include "global.h"
 #include <SFML/Audio.hpp>
-#include <iostream>
 
 sf::Sound& playSound(std::string filename, int volume) {
 	std::shared_ptr<Sound> s = std::make_unique<Sound>(filename, volume);

@@ -15,6 +15,7 @@ std::vector<std::shared_ptr<ScorePopup>> Global::scorePopups;
 Player Global::player(Global::RESW / 2.0f, Global::RESH / 2.0f);
 
 float Global::time_running = 0;
+bool Global::fullscreen = false;
 int Global::score = 0;
 int Global::highScore = 0;
 int Global::lives = 12;

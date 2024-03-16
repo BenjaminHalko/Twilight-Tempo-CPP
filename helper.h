@@ -1,10 +1,5 @@
 #pragma once
 #define PI 3.14159265358979323846
-#ifdef _WIN32
-#define WINDOWS true
-#else
-#define WINDOWS false
-#endif
 #include <SFML/Graphics.hpp>
 sf::Color hexColor(int hex);
 float clamp(float value, float min, float max);
@@ -21,7 +16,6 @@ int irandom(int max);
 float lerp(float a, float b, float t);
 float wave(float from, float to, float duration, float offset);
 float bezierCurve(float t);
-void debug(std::string message, float value);
 void save(std::string fileName, int score);
 int load(std::string fileName);
 bool fileExists(const std::string& fileName);

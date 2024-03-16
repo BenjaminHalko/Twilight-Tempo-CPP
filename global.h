@@ -11,6 +11,7 @@ class Global {
 public:
 	static const int RESW = 256;
 	static const int RESH = 224;
+	static const int WINDOW_SCALE = 3;
 	static float time_running;
 
 	static sf::Font pressStart;
@@ -18,6 +19,7 @@ public:
 
 	static sf::RenderWindow window;
 	static sf::RenderTexture render;
+	static bool fullscreen;
 
 	static std::vector<std::shared_ptr<Sound>> sounds;
 	static std::vector<std::shared_ptr<Bullet>> bullets;

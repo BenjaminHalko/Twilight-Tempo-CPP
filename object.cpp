@@ -1,7 +1,6 @@
 #include "global.h"
 #include "object.h"
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 Object::Object(float xstart, float ystart, std::string sprite_path, float sprite_xoffset, float sprite_yoffset) {
 	destroyed = false;

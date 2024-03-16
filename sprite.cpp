@@ -1,5 +1,4 @@
 #include "sprite.h"
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 Sprite::Sprite() {}

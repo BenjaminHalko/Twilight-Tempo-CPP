@@ -156,6 +156,7 @@
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="star_generator.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="after_image.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="sprite.h" />
     <ClInclude Include="star_generator.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Twilight_Tempo.rc" />

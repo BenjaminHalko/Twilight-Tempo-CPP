@@ -9,32 +9,12 @@
 #include "gui.h"
 #include "star_generator.h"
 #include "title.h"
-
-// Function to create the game window
-static void setupWindow() {
-	// Create and resize windows
-	Global::window.create(sf::VideoMode(256, 224), "Twilight Tempo");
-	Global::render.create(256, 224);
-	Global::window.setSize(sf::Vector2u(768, 672));
-	Global::window.setFramerateLimit(60); 
-	
-	// Set the window icon
-	sf::Image icon;
-	icon.loadFromFile("sprites/icon/icon.png");
-	Global::window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-	// Center the window
-	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	sf::Vector2i windowPosition;
-	windowPosition.x = (desktop.width - Global::window.getSize().x) / 2;
-	windowPosition.y = (desktop.height - Global::window.getSize().y) / 2;
-	Global::window.setPosition(windowPosition);
-	Global::window.clear(sf::Color::Black);
-}
+#include "window.h"
 
 int main() {
 	// Create the window
-	setupWindow();
+	Global::render.create(Global::RESW, Global::RESH);
+	createWindow();
 
 	// Load the fonts
 	Global::m3x6.loadFromFile("fonts/m3x6.ttf");
@@ -49,6 +29,9 @@ int main() {
 	// Start Game
 	startGame();
 
+	// Check for fullscreen
+	bool holdingFullscreen = false;
+
 	// Main loop
 	while (Global::window.isOpen()) {
 		// Event handling
@@ -57,6 +40,16 @@ int main() {
 			if (event.type == sf::Event::Closed) {
 				Global::window.close();
 			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
+			if (!holdingFullscreen) {
+				toggleFullscreen();
+				holdingFullscreen = true;
+			}
+		}
+		else {
+			holdingFullscreen = false;
 		}
 
 		// Check for stopped sounds
@@ -99,11 +92,7 @@ int main() {
 		}
 
 		// Draw the window
-		sf::Sprite renderSprite(Global::render.getTexture());
-		renderSprite.setPosition(0, Global::RESH);
-		renderSprite.setScale(1, -1);
-		Global::window.draw(renderSprite);
-		Global::window.display();
+		renderWindow();
 
 		// Update the time
 		Global::time_running += 1.0f / 60.0f;

@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <cmath>
-#include <iostream>
 #include <fstream>
 #include <cstdlib>
 
@@ -103,11 +102,6 @@ float wave(float from, float to, float duration, float offset) {
 	return (float)(from + a4 + a4 * sin((float)(Global::time_running + duration * offset) / duration * 2 * PI));
 }
 
-// Can output debug message
-void debug(std::string message, float value) {
-	std::cout << message << ": " << value << std::endl;
-}
-
 // Idk man that's Benjamins thing
 float bezierCurve(float t) {
 	float x1 = 0;
@@ -138,39 +132,31 @@ float bezierCurve(float t) {
 }
 
 void save(std::string fileName, int score) {
-	if (WINDOWS) {
-		char* pValue;
-		size_t len;
-		_dupenv_s(&pValue, &len, "APPDATA");
-		if (pValue != NULL) {
-			std::string appdata = pValue;
-			std::string folder = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight_Tempo_CPP\\";
-			if (!fileExists(folder)) {
-				std::string command = "mkdir " + folder;
-				system(command.c_str());
-			}
-			fileName = folder + fileName;
+	char* pValue;
+	size_t len;
+	_dupenv_s(&pValue, &len, "APPDATA");
+	if (pValue != NULL) {
+		std::string appdata = pValue;
+		std::string folder = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight_Tempo_CPP\\";
+		if (!fileExists(folder)) {
+			std::string command = "mkdir " + folder;
+			system(command.c_str());
 		}
+		fileName = folder + fileName;
 	}
 	fileName = fileName + ".sav";
 	std::ofstream outFile(fileName, std::ios::trunc);
-	if(!outFile.is_open()){
-		std::cerr << "Error opening file: " << fileName << std::endl;
-		return;
-	}
 	outFile << score;
 	outFile.close();
 }
 
 int load(std::string fileName) {
-	if (WINDOWS) {
-		char* pValue;
-		size_t len;
-		_dupenv_s(&pValue, &len, "APPDATA");
-		if (pValue != NULL) {
-			std::string appdata = pValue;
-			fileName = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight Tempo C++\\" + fileName;
-		}
+	char* pValue;
+	size_t len;
+	_dupenv_s(&pValue, &len, "APPDATA");
+	if (pValue != NULL) {
+		std::string appdata = pValue;
+		fileName = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight_Tempo_CPP\\" + fileName;
 	}
 	fileName = fileName + ".sav";
 	int score;
