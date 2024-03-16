@@ -6,6 +6,7 @@ void createWindow() {
 	// Create and resize windows
 	Global::window.create(sf::VideoMode(Global::RESW * Global::WINDOW_SCALE, Global::RESH * Global::WINDOW_SCALE), "Twilight Tempo", Global::fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 	Global::window.setFramerateLimit(60);
+	Global::window.setMouseCursorVisible(false);
 
 	// Set the window icon
 	sf::Image icon;

@@ -42,7 +42,7 @@ int main() {
 			}
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F4) || sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
 			if (!holdingFullscreen) {
 				toggleFullscreen();
 				holdingFullscreen = true;
