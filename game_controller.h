@@ -7,7 +7,7 @@ void restartGame();
 void deleteAll();
 
 template<typename T>
-void updateObjects(std::vector<std::shared_ptr<T>> objects) {
+void updateObjects(std::vector<std::shared_ptr<T>>& objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		objects[i]->update();
 		if (objects[i]->isDestroyed()) {
@@ -18,7 +18,7 @@ void updateObjects(std::vector<std::shared_ptr<T>> objects) {
 }
 
 template<typename T>
-void drawObjects(std::vector<std::shared_ptr<T>> objects) {
+void drawObjects(std::vector<std::shared_ptr<T>>& objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		objects[i]->draw();
 	}

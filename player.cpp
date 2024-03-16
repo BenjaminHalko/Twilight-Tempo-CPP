@@ -94,7 +94,7 @@ void Player::update() {
 				}
 				else {
 					penalty -= 100;
-					Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y - 10, penalty));
+					Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y - 20, penalty));
 					sf::Sound& shootSound = playSound("player_shoot_fail.ogg", 80);
 					shootSound.setPitch(random_range(0.4f, 0.5f));
 				}
