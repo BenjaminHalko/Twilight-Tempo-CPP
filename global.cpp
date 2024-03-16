@@ -12,7 +12,7 @@ std::vector<std::shared_ptr<Sound>> Global::sounds;
 std::vector<std::shared_ptr<Bullet>> Global::bullets;
 std::vector<std::shared_ptr<Enemy>> Global::enemies;
 std::vector<std::shared_ptr<ScorePopup>> Global::scorePopups;
-std::unique_ptr<Player> Global::player;
+Player Global::player(Global::RESW / 2.0f, Global::RESH / 2.0f);
 
 float Global::time_running = 0;
 int Global::score = 0;

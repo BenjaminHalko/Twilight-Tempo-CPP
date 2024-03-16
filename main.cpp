@@ -20,7 +20,7 @@ static void setupWindow() {
 	
 	// Set the window icon
 	sf::Image icon;
-	icon.loadFromFile("sprites/icon.png");
+	icon.loadFromFile("sprites/icon/icon.png");
 	Global::window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	// Center the window
@@ -80,7 +80,7 @@ int main() {
 			// Update the game
 			BeatController::update();
 			Background::update();
-			Global::player->update();
+			Global::player.update();
 			updateObjects(Global::bullets);
 			updateObjects(Global::enemies);
 			updateObjects(Global::scorePopups);
@@ -90,7 +90,7 @@ int main() {
 			// Draw the game
 			StarGenerator::update();
 			Background::draw();
-			Global::player->draw();
+			Global::player.draw();
 			drawObjects(Global::bullets);
 			drawObjects(Global::enemies);
 			drawObjects(Global::scorePopups);

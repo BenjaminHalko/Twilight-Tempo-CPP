@@ -30,6 +30,7 @@ private:
 	std::vector<std::shared_ptr<DeathParticle>> deathParticles;
 public:
 	Player(float xPos, float yPos);
+	void init();
 	void update();
 	void draw();
 

@@ -164,7 +164,7 @@ void BeatController::update() {
 
 		if (beat != lastBeat) {
 			if (beat % 2 == 0) {
-				Global::player->setCannonMove(2);
+				Global::player.setCannonMove(2);
 				if (!Global::inTutorial)
 					Shadow::setRadius(1);
 			}

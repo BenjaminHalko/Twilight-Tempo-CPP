@@ -23,7 +23,7 @@ public:
 	static std::vector<std::shared_ptr<Bullet>> bullets;
 	static std::vector<std::shared_ptr<Enemy>> enemies;
 	static std::vector<std::shared_ptr<ScorePopup>> scorePopups;
-	static std::unique_ptr<Player> player;
+	static Player player;
 	
 	static float beatTime;
 	static int lives;

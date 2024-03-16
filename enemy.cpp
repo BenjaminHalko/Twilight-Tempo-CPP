@@ -58,10 +58,10 @@ void Enemy::update() {
 	y += lengthdir_y(speed, direction);
 
 	if (!hit && !dead && Global::lives > 0) {
-		if (isColliding(*Global::player)) {
+		if (isColliding(Global::player)) {
 			Global::lives--;
 			hit = true;
-			Global::player->applyShake((int)direction / 90);
+			Global::player.applyShake((int)direction / 90);
 			sf::Sound& hitNoise = playSound("player_hurt.wav", 100);
 			hitNoise.setPitch(random_range(0.8f, 1.2f));
 			GUI::pulseHeart();

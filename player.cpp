@@ -10,6 +10,13 @@
 Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png") {
 	cannonSprite = Sprite("player/cannon.png");
 	cannonSprite().setOrigin(0, 3);
+	// Death particles
+	std::vector<std::shared_ptr<DeathParticle>> deathParticles;
+
+	init();
+}
+
+void Player::init() {
 	dir = 0; // Direction the player is pointing
 	dirDraw = 0; // Allows the sprite to smoothly turn
 	lastDir = -1; // Last known direction by player (SFML detects button being held down)
@@ -22,14 +29,12 @@ Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png")
 	shake[2] = 0;
 	shake[3] = 0;
 	generalShake = 0; // Shake from all directions
-	cannonMove = 0; 
+	cannonMove = 0;
 	penalty = 0; // Current pentaly for missed shots
 	startScale = 0; // Variable to control opening animation
 	// Sprite size
 	xscale = 0;
 	yscale = 0;
-	// Death particles
-	std::vector<std::unique_ptr<DeathParticle>> deathParticles;
 }
 
 void Player::update() {
