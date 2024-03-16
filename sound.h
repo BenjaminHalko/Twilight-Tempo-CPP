@@ -8,8 +8,8 @@ private:
 public:
 	Sound(std::string filename, int volume);
 	~Sound();
-	sf::Sound& operator()();
+	sf::Sound& getSound();
 	bool isPlaying();
 };
-Sound& playSound(std::string filename, int volume);
+sf::Sound& playSound(std::string filename, int volume);
 void checkSounds();

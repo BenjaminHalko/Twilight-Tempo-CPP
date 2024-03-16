@@ -3,32 +3,24 @@
 #include "beat_controller.h"
 #include "player.h"
 #include "bullet.h"
-#include "enemy.h"
 #include "score_popup.h"
 #include "background.h"
 #include "helper.h"
 
-void deleteSounds() {
-	for (size_t i = 0; i < Global::sounds.size(); i++) {
-		delete Global::sounds[i];
-	}
+void deleteAll() {
 	Global::sounds.clear();
+	Global::bullets.clear();
+	Global::enemies.clear();
+	Global::scorePopups.clear();
 	BeatController::stopMusic();
 }
 
-void cleanUp() {
-	deleteObjects(Global::bullets);
-	deleteObjects(Global::enemies);
-	deleteObjects(Global::scorePopups);
-	deleteSounds();
-}
-
 void restartGame() {
-	cleanUp();
+	deleteAll();
 
 	Global::lives = 12 * (1 + Global::practiceMode);
 	Global::score = 0;
-	Global::player = Player(Global::RESW / 2.0, Global::RESH / 2.0);
+	Global::player = std::make_unique<Player>(Global::RESW / 2.0, Global::RESH / 2.0);
 	Background::init();
 	Shadow::setDarkness(!Global::inTutorial);
 }

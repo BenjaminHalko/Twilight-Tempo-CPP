@@ -18,11 +18,12 @@ public:
 
 	static sf::RenderWindow window;
 	static sf::RenderTexture render;
-	static std::vector<Sound*> sounds;
-	static Player player;
-	static std::vector<Bullet*> bullets;
-	static std::vector<Enemy*> enemies;
-	static std::vector<ScorePopup*> scorePopups;
+
+	static std::vector<std::shared_ptr<Sound>> sounds;
+	static std::vector<std::shared_ptr<Bullet>> bullets;
+	static std::vector<std::shared_ptr<Enemy>> enemies;
+	static std::vector<std::shared_ptr<ScorePopup>> scorePopups;
+	static std::unique_ptr<Player> player;
 	
 	static float beatTime;
 	static int lives;

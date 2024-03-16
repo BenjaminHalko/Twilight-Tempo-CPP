@@ -69,7 +69,6 @@ int main() {
 
 			// Debug Restart
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-				Title::clean();
 				Title::goToTitle();
 			}
 		} else {
@@ -81,7 +80,7 @@ int main() {
 			// Update the game
 			BeatController::update();
 			Background::update();
-			Global::player.update();
+			Global::player->update();
 			updateObjects(Global::bullets);
 			updateObjects(Global::enemies);
 			updateObjects(Global::scorePopups);
@@ -91,7 +90,7 @@ int main() {
 			// Draw the game
 			StarGenerator::update();
 			Background::draw();
-			Global::player.draw();
+			Global::player->draw();
 			drawObjects(Global::bullets);
 			drawObjects(Global::enemies);
 			drawObjects(Global::scorePopups);
@@ -109,11 +108,6 @@ int main() {
 		// Update the time
 		Global::time_running += 1.0f / 60.0f;
 	}
-
-	// Clean up
-	StarGenerator::deleteStars();
-	Title::clean();
-	cleanUp();
 
     return 0;
 }

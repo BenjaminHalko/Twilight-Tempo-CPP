@@ -3,16 +3,15 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
-Sound& playSound(std::string filename, int volume) {
-	Sound *s = new Sound(filename, volume);
+sf::Sound& playSound(std::string filename, int volume) {
+	std::shared_ptr<Sound> s = std::make_unique<Sound>(filename, volume);
 	Global::sounds.push_back(s);
-	return *s;
+	return s->getSound();
 }
 
 void checkSounds() {
 	for (size_t i = 0; i < Global::sounds.size(); i++) {
 		if (!Global::sounds[i]->isPlaying()) {
-			delete Global::sounds[i];
 			Global::sounds.erase(Global::sounds.begin() + i);
 		}
 	}
@@ -25,7 +24,7 @@ Sound::Sound(std::string filename, int volume) {
 	sound.play();
 }
 
-sf::Sound& Sound::operator()() {
+sf::Sound& Sound::getSound() {
 	return sound;
 }
 

@@ -14,6 +14,10 @@ Object::Object(float xstart, float ystart, std::string sprite_path, float sprite
 		sprite_width = sprite.getWidth();
 		sprite_height = sprite.getHeight();
 	}
+	else {
+		sprite_width = 0;
+		sprite_height = 0;
+	}
 }
 
 void Object::update() {}

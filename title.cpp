@@ -16,7 +16,7 @@ int Title::timer = 0;
 int Title::lastInput = 0;
 bool Title::lastConfirm = false;
 sf::Music Title::music;
-std::vector<Star*>Title::stars;
+std::vector<std::shared_ptr<Star>>Title::stars;
 Sprite Title::twilight;
 Sprite Title::tempo;
 
@@ -99,7 +99,6 @@ void Title::update() {
 	else if (show) {
 		if (--timer <= 0) {
 			if (selected == 16) {
-				clean();
 				Global::inTitle = false;
 				Global::highScore = load(Global::hardMode ? "hard.sav" : "normal.sav");
 				startGame();
@@ -128,7 +127,7 @@ void Title::update() {
 	}
 
 	if (stars.size() < 150) {
-		Star *s = new Star();
+		std::shared_ptr<Star> s = std::make_unique<Star>();
 		s->alpha1 = random_range(0, 1);
 		s->alpha2 = random_range(0, 1);
 		s->alphaSpd = random_range(1, 5);
@@ -138,11 +137,11 @@ void Title::update() {
 	}
 
 	for (size_t i = 0; i < stars.size(); i++) {
-		Star* s = stars[i];
-		s->x -= s->far * 5 * logoX;
-		if (s->x < 0) {
-			s->x += Global::RESW;
-			s->y = (float)fmod(rand(), Global::RESH);
+		Star &s = *stars[i];
+		s.x -= s.far * 5 * logoX;
+		if (s.x < 0) {
+			s.x += Global::RESW;
+			s.y = (float)fmod(rand(), Global::RESH);
 		}
 	}
 }
@@ -150,11 +149,11 @@ void Title::update() {
 void Title::draw() {
 	Global::render.clear(sf::Color::Black);
 	for (size_t i = 0; i < stars.size(); i++) {
-		Star *s = stars[i];
-		sf::Color c = s->color;
-		c.a = (sf::Uint8)(wave(s->alpha1, s->alpha2, s->alphaSpd, s->alphaOffset) * 255.0f);
+		Star &s = *stars[i];
+		sf::Color c = s.color;
+		c.a = (sf::Uint8)(wave(s.alpha1, s.alpha2, s.alphaSpd, s.alphaOffset) * 255.0f);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
-		rect.setPosition(s->x, s->y);
+		rect.setPosition(s.x, s.y);
 		rect.setFillColor(c);
 		Global::render.draw(rect);
 	}
@@ -181,12 +180,4 @@ void Title::draw() {
 	if (logoX < 1)
 		tem.setTextureRect(sf::IntRect(0, 0, (int)(tempo.getWidth() * logoX), tempo.getHeight()));
 	Global::render.draw(tem);
-}
-
-void Title::clean() {
-	music.stop();
-	for (size_t i = 0; i < stars.size(); i++) {
-		delete stars[i];
-	}
-	deleteSounds();
 }

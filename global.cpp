@@ -1,17 +1,19 @@
 #include "global.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "enemy.h"
 
 sf::RenderWindow Global::window;
 sf::RenderTexture Global::render;
+
 sf::Font Global::pressStart;
 sf::Font Global::m3x6;
-std::vector<Sound*> Global::sounds;
-Player Global::player = Player(0, 0);
-std::vector<Bullet*> Global::bullets;
-std::vector<Enemy*> Global::enemies;
-std::vector<ScorePopup*> Global::scorePopups;
+
+std::vector<std::shared_ptr<Sound>> Global::sounds;
+std::vector<std::shared_ptr<Bullet>> Global::bullets;
+std::vector<std::shared_ptr<Enemy>> Global::enemies;
+std::vector<std::shared_ptr<ScorePopup>> Global::scorePopups;
+std::unique_ptr<Player> Global::player;
+
 float Global::time_running = 0;
 int Global::score = 0;
 int Global::highScore = 0;

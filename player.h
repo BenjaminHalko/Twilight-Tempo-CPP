@@ -27,10 +27,9 @@ private:
 
 	bool dead;
 
-	std::vector<DeathParticle*> deathParticles;
+	std::vector<std::shared_ptr<DeathParticle>> deathParticles;
 public:
 	Player(float xPos, float yPos);
-	~Player();
 	void update();
 	void draw();
 

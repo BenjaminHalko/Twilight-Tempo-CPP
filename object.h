@@ -13,8 +13,8 @@ protected:
 	bool destroyed;
 public:
 	Object(float xstart, float ystart, std::string sprite_path="", float sprite_xoffset = 0.5, float sprite_yoffset = 0.5);
-	void update();
-	void draw();
+	virtual void update();
+	virtual void draw();
 	bool isDestroyed() const;
 	bool isColliding(Object& other);
 };

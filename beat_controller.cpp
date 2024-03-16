@@ -141,7 +141,7 @@ void BeatController::update() {
 				}
 				for (int i = 0; i < BEAT_COUNT; i++) {
 					if (i % 2 == 1) {
-						if (!Global::inTutorial && mode > 1 && extraBeats[i / 2] != -1 && (irandom(1+(int)fmax(0, 8-barNumber)+(extraBeats[i / 2] == 0 || mode == 2)))) {
+						if (!Global::inTutorial && mode > 1 && extraBeats[i / 2] != -1 && (irandom(1+(int)fmax(0, 8-barNumber)+extraBeats[i / 2]) == 0 || mode == 2)) {
 							beats[i] = irandom(4);
 						}
 						else {
@@ -164,7 +164,7 @@ void BeatController::update() {
 
 		if (beat != lastBeat) {
 			if (beat % 2 == 0) {
-				Global::player.setCannonMove(2);
+				Global::player->setCannonMove(2);
 				if (!Global::inTutorial)
 					Shadow::setRadius(1);
 			}
@@ -180,7 +180,7 @@ void BeatController::update() {
 
 		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat-BEAT_COUNT] != 4) {
 			int _dir = 180 + beats[aheadBeat-BEAT_COUNT] * 90;
-			Global::enemies.push_back(new Enemy(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
+			Global::enemies.push_back(std::make_unique<Enemy>(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
 		}
 
 		lastBeat = beat;

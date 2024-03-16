@@ -14,12 +14,11 @@ struct Star {
 };
 class StarGenerator {
 private:
-	static std::vector<Star*> frontStars;
-	static std::vector<Star*> backStars;
+	static std::vector<std::shared_ptr<Star>> frontStars;
+	static std::vector<std::shared_ptr<Star>> backStars;
 public:
 	static void init();
 	static void update();
 	static void drawStarsBack(float alpha);
 	static void drawStarsFront(float alpha);
-	static void deleteStars();
 };

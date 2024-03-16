@@ -29,19 +29,18 @@ Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png")
 	xscale = 0;
 	yscale = 0;
 	// Death particles
-	std::vector<DeathParticle*> deathParticles;
+	std::vector<std::unique_ptr<DeathParticle>> deathParticles;
 }
 
 void Player::update() {
 	if (dead) {
 		for (size_t i = 0; i < deathParticles.size(); i++) {
-			DeathParticle *particle = deathParticles[i];
-			particle->x += lengthdir_x(particle->spd, particle->dir);
-			particle->y += lengthdir_y(particle->spd, particle->dir);
-			particle->time++;
-			particle->spd = approachEase(particle->spd, 0, 0.01f, 0.9f);
-			if (particle->time >= particle->maxTime) {
-				delete deathParticles[i];
+			DeathParticle &particle = *deathParticles[i];
+			particle.x += lengthdir_x(particle.spd, particle.dir);
+			particle.y += lengthdir_y(particle.spd, particle.dir);
+			particle.time++;
+			particle.spd = approachEase(particle.spd, 0, 0.01f, 0.9f);
+			if (particle.time >= particle.maxTime) {
 				deathParticles.erase(deathParticles.begin() + i);
 				i--;
 			}
@@ -85,18 +84,18 @@ void Player::update() {
 				if (hit) {
 					penalty = 0;
 					playSound("enemy_destroy.wav", 33);
-					Sound& shootSound = playSound("player_shoot.wav", 18);
-					shootSound().setPitch(random_range(0.5f, 1.3f));
+					sf::Sound& shootSound = playSound("player_shoot.wav", 18);
+					shootSound.setPitch(random_range(0.5f, 1.3f));
 				}
 				else {
 					penalty -= 100;
-					Global::scorePopups.push_back(new ScorePopup(x, y - 10, penalty));
-					Sound& shootSound = playSound("player_shoot_fail.ogg", 80);
-					shootSound().setPitch(random_range(0.4f, 0.5f));
+					Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y - 10, penalty));
+					sf::Sound& shootSound = playSound("player_shoot_fail.ogg", 80);
+					shootSound.setPitch(random_range(0.4f, 0.5f));
 				}
 
 				// Create bullet
-				Global::bullets.push_back(new Bullet(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
+				Global::bullets.push_back(std::make_unique<Bullet>(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
 
 				if ((dir / 90) % 2 == 0) {
 					xscale = 0.3f;
@@ -120,7 +119,7 @@ void Player::update() {
 				playSound("player_explode.wav", 30);
 				for (int i = 0; i < 32; i++) {
 					for (int j = 0; j < 32; j++) {
-						DeathParticle* particle = new DeathParticle;
+						std::shared_ptr<DeathParticle> particle = std::make_unique<DeathParticle>();
 						particle->i = i - sprite.getWidth() / 2;
 						particle->j = j - sprite.getHeight() / 2;
 						particle->x = x + sprite.getWidth() / 2.0f;
@@ -212,10 +211,4 @@ void Player::setCannonMove(float val) {
 void Player::applyShake(int dir) {
 	shake[dir] = 2;
 	generalShake = 2;
-}
-
-Player::~Player() {
-	for (size_t i = 0; i < deathParticles.size(); i++) {
-		delete deathParticles[i];
-	}
 }

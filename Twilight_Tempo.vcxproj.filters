@@ -31,9 +31,6 @@
     <Filter Include="Source Files\Global">
       <UniqueIdentifier>{c4b921d2-dfac-455c-83d6-c0ce2c90d7b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Particles">
-      <UniqueIdentifier>{1cb53e42-be74-4469-9029-49d12fa0ef20}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

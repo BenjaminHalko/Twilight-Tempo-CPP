@@ -4,15 +4,13 @@
 #include "score_popup.h"
 void startGame();
 void restartGame();
-void deleteSounds();
-void cleanUp();
+void deleteAll();
 
 template<typename T>
-void updateObjects(std::vector<T*>& objects) {
+void updateObjects(std::vector<std::shared_ptr<T>> objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		objects[i]->update();
 		if (objects[i]->isDestroyed()) {
-			delete objects[i];
 			objects.erase(objects.begin() + i);
 			i--;
 		}
@@ -20,16 +18,8 @@ void updateObjects(std::vector<T*>& objects) {
 }
 
 template<typename T>
-void drawObjects(std::vector<T*>& objects) {
+void drawObjects(std::vector<std::shared_ptr<T>> objects) {
 	for (size_t i = 0; i < objects.size(); i++) {
 		objects[i]->draw();
 	}
-}
-
-template<typename T>
-void deleteObjects(std::vector<T*>& objects) {
-	for (size_t i = 0; i < objects.size(); i++) {
-		delete objects[i];
-	}
-	objects.clear();
 }

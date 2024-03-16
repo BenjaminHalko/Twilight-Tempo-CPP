@@ -15,7 +15,7 @@ private:
 	static bool lastConfirm;
 	static const int bpm = 130;
 	static sf::Music music;
-	static std::vector<Star*> stars;
+	static std::vector<std::shared_ptr<Star>> stars;
 	static Sprite twilight;
 	static Sprite tempo;
 public:
@@ -23,5 +23,4 @@ public:
 	static void goToTitle();
 	static void update();
 	static void draw();
-	static void clean();
 };
