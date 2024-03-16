@@ -11,7 +11,7 @@ std::vector<float> GUI::warningPulse(4, 0);
 
 void GUI::init() {
 	for (int i = 0; i < 9; i++) {
-		hearts.push_back(new Sprite("gui/health/" + std::to_string(i) + ".png", 0.55f, 0.55f));
+		hearts.push_back(new Sprite("gui/health/" + std::to_string(i) + ".png", 0.5f, 0.5f));
 	}
 }
 
