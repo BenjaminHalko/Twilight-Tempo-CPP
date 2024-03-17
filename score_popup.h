@@ -1,6 +1,7 @@
 #pragma once
 #include "object.h"
 class ScorePopup : public Object {
+private:
 	std::string points;
 	float alpha;
 public:
