@@ -3,7 +3,6 @@
 #include "enemy.h"
 #include "score_popup.h"
 void startGame();
-void restartGame();
 void deleteAll();
 
 template<typename T>

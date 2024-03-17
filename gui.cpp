@@ -6,6 +6,7 @@
 #include "input.h"
 #include "title.h"
 #include "game_controller.h"
+#include "beat_controller.h"
 #include <SFML/Graphics.hpp>
 
 std::vector<std::shared_ptr<Sprite>> GUI::hearts;
@@ -29,8 +30,10 @@ void GUI::update() {
 		if (gameOverTimer > 20 || inputConfirm()) {
 			if (gameOverTimer > 20 || gameOverChoice)
 				Title::goToTitle();
-			else
-				restartGame();
+			else {
+				startGame();
+				BeatController::resetSong();
+			}
 			gameOverTimer = 0;
 			gameOverChoice = false;
 			timer = 30;
@@ -106,7 +109,7 @@ void GUI::draw() {
 			drawText("NEW RECORD", Global::RESW / 2, 30, true, true, false, sf::Color::Red);
 
 		drawText("CONTINUE?", Global::RESW / 2, Global::RESH / 2, true, true);
-		drawText(std::to_string(20-(int)ceil(gameOverTimer)), Global::RESW / 2, Global::RESH / 2 + 20, true, true);
+		drawText(std::to_string(20-(int)ceil(fmin(20, gameOverTimer))), Global::RESW / 2, Global::RESH / 2 + 20, true, true);
 
 		if (!gameOverChoice) {
 			drawText(">YES", Global::RESW / 2 - 38, Global::RESH / 2 + 40, true, true);

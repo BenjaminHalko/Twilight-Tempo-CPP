@@ -15,7 +15,7 @@ private:
 	float lastY;
 	float waveX;
 	float waveY;
-	int amountOfPoints;
+	float amountOfPoints;
 public:
 	Bullet(float xPos, float yPos, float dir);
 	void update();

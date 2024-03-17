@@ -134,10 +134,9 @@ float bezierCurve(float t) {
 void save(std::string fileName, int score) {
 	char* pValue;
 	size_t len;
-	_dupenv_s(&pValue, &len, "APPDATA");
+	_dupenv_s(&pValue, &len, "LOCALAPPDATA");
 	if (pValue != NULL) {
-		std::string appdata = pValue;
-		std::string folder = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight_Tempo_CPP\\";
+		std::string folder = (std::string)pValue + "\\Twilight_Tempo_CPP\\";
 		if (!fileExists(folder)) {
 			std::string command = "mkdir " + folder;
 			system(command.c_str());
@@ -153,11 +152,9 @@ void save(std::string fileName, int score) {
 int load(std::string fileName) {
 	char* pValue;
 	size_t len;
-	_dupenv_s(&pValue, &len, "APPDATA");
-	if (pValue != NULL) {
-		std::string appdata = pValue;
-		fileName = appdata.substr(0, appdata.length() - 8) + "\\local\\Twilight_Tempo_CPP\\" + fileName;
-	}
+	_dupenv_s(&pValue, &len, "LOCALAPPDATA");
+	if (pValue != NULL)
+		fileName = (std::string)pValue + "\\Twilight_Tempo_CPP\\" + fileName;
 	fileName = fileName + ".sav";
 	int score;
 	std::ifstream inFile;

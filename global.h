@@ -32,6 +32,7 @@ public:
 	static int score;
 	static int highScore;
 	static bool practiceMode;
+	static bool startInTutorial;
 	static bool inTutorial;
 	static bool hardMode;
 	static bool inTitle;

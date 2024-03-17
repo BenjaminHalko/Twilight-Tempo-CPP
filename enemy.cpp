@@ -99,7 +99,7 @@ void Enemy::draw() {
 
 }
 
-void Enemy::killEnemy(int amountOfPoints) {
+void Enemy::killEnemy(float amountOfPoints) {
 	dead = true;
 	speed = 0;
 

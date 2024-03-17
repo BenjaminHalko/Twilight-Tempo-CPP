@@ -40,10 +40,6 @@ void BeatController::resetSong() {
 	music.setLoop(!Global::inTutorial);
 }
 
-BeatController::~BeatController() {
-	music.stop();
-}
-
 void BeatController::setTrackPos(float pos) {
 	music.setPlayingOffset(sf::seconds(pos));
 }

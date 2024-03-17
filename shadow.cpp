@@ -11,6 +11,7 @@ float Shadow::radius = 0;
 
 void Shadow::init() {
 	shadow.create(Global::RESW, Global::RESH);
+	shadow.clear(sf::Color::Black);
 }
 
 void Shadow::update() {

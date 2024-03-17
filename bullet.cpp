@@ -18,7 +18,7 @@ Bullet::Bullet(float xPos, float yPos, float dir) : Object(xPos, yPos, "player/b
 	lastY = y;
 	waveX = x;
 	waveY = y;
-	amountOfPoints = (int)(Global::beatTime * 2) % BeatController::BEAT_COUNT;
+	amountOfPoints = (float)fmod(Global::beatTime * 2.0f, BeatController::BEAT_COUNT);
 }
 
 void Bullet::update() {

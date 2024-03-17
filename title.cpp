@@ -21,9 +21,6 @@ Sprite Title::twilight;
 Sprite Title::tempo;
 
 void Title::init() {
-	music.openFromFile("music/song.ogg");
-	music.setLoop(true);
-	
 	twilight = Sprite("title/twilight.png", 0.5f, 0.5f);
 	tempo = Sprite("title/tempo.png");
 
@@ -68,6 +65,10 @@ void Title::update() {
 				Global::practiceMode = !Global::practiceMode;
 				playSound("blip.ogg", 100);
 			}
+			else if (choice == 3) {
+				Global::startInTutorial = !Global::startInTutorial;
+				playSound("blip.ogg", 100);
+			}
 			else {
 				Global::hardMode = choice;
 				selected = 1;
@@ -86,12 +87,12 @@ void Title::update() {
 		if (input == -1) {
 			choice--;
 			if (choice < 0)
-				choice = 2;
+				choice = 3;
 			playSound("blip.ogg", 100);
 		}
 		else if (input == 1) {
 			choice++;
-			if (choice > 2)
+			if (choice > 3)
 				choice = 0;
 			playSound("blip.ogg", 100);
 		}
@@ -101,6 +102,7 @@ void Title::update() {
 			if (selected == 16) {
 				Global::inTitle = false;
 				Global::highScore = load(Global::hardMode ? "hard.sav" : "normal.sav");
+				Global::inTutorial = Global::startInTutorial;
 				startGame();
 			}
 			selected++;
@@ -123,6 +125,8 @@ void Title::update() {
 
 	if (logoX >= 2 && !show) {
 		show = true;
+		music.openFromFile("music/song.ogg");
+		music.setLoop(true);
 		music.play();
 	}
 
@@ -159,12 +163,13 @@ void Title::draw() {
 	}
 
 	if (show) {
-		drawText(">", 98, 120 + 20 * choice + 10 * (choice == 2));
+		drawText(">", 85, 120 + 15 * choice + 10 * (choice >= 2));
 		if (choice == 1 || selected % 2 == 0)
-			drawText("NORMAL", 113, 120);
+			drawText("NORMAL", 100, 120);
 		if (choice == 0 || selected % 2 == 0)
-			drawText("HARD", 113, 140);
-		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 113, 170);
+			drawText("HARD", 100, 135);
+		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 100, 160);
+		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 100, 175);
 		drawText("© 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
 		drawText("ALL RIGHTS RESERVED", (int)Global::RESW / 2, 210, true);
 	}

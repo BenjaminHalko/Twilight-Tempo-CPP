@@ -26,9 +26,6 @@ int main() {
 	StarGenerator::init();
 	Title::init();
 
-	// Start Game
-	startGame();
-
 	// Check for fullscreen
 	bool holdingFullscreen = false;
 

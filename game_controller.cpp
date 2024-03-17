@@ -11,12 +11,12 @@ void deleteAll() {
 	Global::bullets.clear();
 	Global::enemies.clear();
 	Global::scorePopups.clear();
+	BeatController::stopMusic();
 }
 
-void restartGame() {
+void startGame() {
 	deleteAll();
 
-	BeatController::resetSong();
 	Global::lives = 12 * (1 + Global::practiceMode);
 	Global::score = 0;
 	Global::player.init();
@@ -24,7 +24,3 @@ void restartGame() {
 	Shadow::setDarkness(!Global::inTutorial);
 }
 
-void startGame() {
-	Global::inTutorial = true;
-	restartGame();
-}

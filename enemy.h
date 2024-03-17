@@ -18,7 +18,7 @@ public:
 	Enemy(float xPos, float yPos, float dir);
 	void update();
 	void draw();
-	void killEnemy(int amountOfPoints);
+	void killEnemy(float amountOfPoints);
 	bool isDead() const;
 	float getDirection() const;
 };
