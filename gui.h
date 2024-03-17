@@ -6,12 +6,16 @@
 
 class GUI {
 private:
-	static std::vector<Sprite*> hearts;
+	static std::vector<std::shared_ptr<Sprite>> hearts;
 	static std::vector<float> heartScale;
 	static std::vector<float> warningPulse;
+	static int timer;
+	static float gameOverTimer;
+	static bool gameOverChoice;
+	static int newRecord;
+	static bool menuHeldInput;
 public:
 	static void init();
-	static void clean();
 	static void update();
 	static void draw();
 	static void pulseHeart();

@@ -59,17 +59,7 @@ int main() {
 			// Title
 			Title::update();
 			Title::draw();
-
-			// Debug Restart
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-				Title::goToTitle();
-			}
 		} else {
-			// Debug Restart
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-				restartGame();
-			}
-
 			// Update the game
 			BeatController::update();
 			Background::update();

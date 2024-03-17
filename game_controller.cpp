@@ -8,16 +8,15 @@
 #include "helper.h"
 
 void deleteAll() {
-	Global::sounds.clear();
 	Global::bullets.clear();
 	Global::enemies.clear();
 	Global::scorePopups.clear();
-	BeatController::stopMusic();
 }
 
 void restartGame() {
 	deleteAll();
 
+	BeatController::resetSong();
 	Global::lives = 12 * (1 + Global::practiceMode);
 	Global::score = 0;
 	Global::player.init();

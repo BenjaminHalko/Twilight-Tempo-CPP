@@ -22,7 +22,7 @@ void Player::init() {
 	lastDir = -1; // Last known direction by player (SFML detects button being held down)
 	shootPercent = 1; // Squash and stretch animation for sprite
 	deathSpd = 45;
-	dead = false;
+	destroyed = false;
 	// Amount of shake recieved depending on the direction that the palyer is hit from
 	shake[0] = 0;
 	shake[1] = 0;
@@ -38,7 +38,7 @@ void Player::init() {
 }
 
 void Player::update() {
-	if (dead) {
+	if (destroyed) {
 		for (size_t i = 0; i < deathParticles.size(); i++) {
 			DeathParticle &particle = *deathParticles[i];
 			particle.x += lengthdir_x(particle.spd, particle.dir);
@@ -120,7 +120,7 @@ void Player::update() {
 			generalShake = approach(generalShake, (float)fmin(30, deathSpd) / 15.0f, 0.06f);
 
 			if (deathSpd <= 0.001) {
-				dead = true;
+				destroyed = true;
 				playSound("player_explode.wav", 30);
 				for (int i = 0; i < 32; i++) {
 					for (int j = 0; j < 32; j++) {
@@ -173,7 +173,7 @@ void Player::update() {
 }
 
 void Player::draw() {
-	if (dead) {
+	if (destroyed) {
 		sf::Sprite player = sprite();
 		for (size_t i = 0; i < deathParticles.size(); i++) {
 			DeathParticle particle = *deathParticles[i];

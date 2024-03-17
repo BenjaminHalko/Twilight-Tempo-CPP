@@ -25,8 +25,6 @@ private:
 
 	float startScale;
 
-	bool dead;
-
 	std::vector<std::shared_ptr<DeathParticle>> deathParticles;
 public:
 	Player(float xPos, float yPos);
