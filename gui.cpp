@@ -76,7 +76,7 @@ void GUI::update() {
 
 void GUI::draw() {
 	drawText("SCORE:", 6, 6);
-	drawText("   " + formatScore(Global::score, 4), 6, 15);
+	drawText("  " + formatScore(Global::score, 4), 6, 15);
 	if (Global::inTutorial) {
 		drawText("TUTORIAL", Global::RESW/2, 6, true);
 		drawText("LEVEL", Global::RESW / 2, 15, true);
