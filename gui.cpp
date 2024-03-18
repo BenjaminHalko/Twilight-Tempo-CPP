@@ -9,6 +9,7 @@
 #include "beat_controller.h"
 #include <SFML/Graphics.hpp>
 
+Sprite GUI::warningSprite;
 std::vector<std::shared_ptr<Sprite>> GUI::hearts;
 std::vector<float> GUI::heartScale(3, 1);
 std::vector<float> GUI::warningPulse(4, 0);
@@ -21,6 +22,7 @@ bool GUI::menuHeldInput = false;
 void GUI::init() {
 	for (int i = 0; i < 9; i++) {
 		hearts.push_back(std::make_unique<Sprite>("gui/health/" + std::to_string(i) + ".png", 0.5f, 0.5f));
+		warningSprite = Sprite("gui/warning.png", 0.5f, 0.5f);
 	}
 }
 
@@ -99,6 +101,27 @@ void GUI::draw() {
 		heart.setPosition((float)(Global::RESW - 10 - i * 14), 10);
 		heart.setScale(heartScale[i], heartScale[i]);
 		Global::render.draw(heart);
+	}
+
+	sf::Sprite& warning = warningSprite();
+	sf::Color warningAlpha = sf::Color::White;
+
+	for (int i = 0; i < 4; i++) {
+		if (warningPulse[i] == 0) {
+			continue;
+		}
+
+		float dir = i * 90;
+		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2 - 32, 180 - dir);
+		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2 - 32, 180 + dir);
+
+		// Set position and alpha for the warning sprite
+		warning.setPosition(posX, posY);
+		warningAlpha.a = warningPulse[i] * 255;
+		warning.setColor(warningAlpha);
+
+		// Draw the warning sprite
+		Global::render.draw(warning);
 	}
 
 	// Game over menu

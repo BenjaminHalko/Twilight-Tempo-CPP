@@ -6,6 +6,7 @@
 
 class GUI {
 private:
+	static Sprite warningSprite;
 	static std::vector<std::shared_ptr<Sprite>> hearts;
 	static std::vector<float> heartScale;
 	static std::vector<float> warningPulse;
