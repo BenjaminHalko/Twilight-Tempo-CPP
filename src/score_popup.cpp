@@ -1,4 +1,5 @@
 // https://github.com/BenjaminHalko/Twilight-Tempo/tree/After-Jam/objects/oScore
+#include <cmath>
 #include "score_popup.h"
 #include "global.h"
 #include "helper.h"
@@ -18,5 +19,5 @@ void ScorePopup::update() {
 void ScorePopup::draw() {
 	sf::Color col = sf::Color::White;
 	col.a = (sf::Uint8)(255.0f * alpha);
-	drawText(points, (int)x, (int)(y - floor((1-alpha) * 3)), true, true, true, col);
+	drawText(points, (int)x, (int)(y - std::floor((1-alpha) * 3)), true, true, true, col);
 }

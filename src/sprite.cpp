@@ -1,12 +1,13 @@
 #include "sprite.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
-Sprite::Sprite() {}
+Sprite::Sprite() = default;
 
 // Load in texture from the file name
-Sprite::Sprite(const std::string filename, const float xorigin, const float yorigin) {
-	texture.loadFromFile("sprites/"+filename);
-	sprite.setOrigin((float)round(xorigin * getWidth()), (float)round(yorigin * getHeight()));
+Sprite::Sprite(const std::string& filename, float xorigin, float yorigin) {
+	texture.loadFromFile("resources/sprites/"+filename);
+	sprite.setOrigin(std::round(xorigin * (float)getWidth()), std::round(yorigin * (float)getHeight()));
 }
 
 // Load sprite from a texture

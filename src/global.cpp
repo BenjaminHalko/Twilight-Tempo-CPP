@@ -1,6 +1,7 @@
 #include "global.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 
 sf::RenderWindow Global::window;
 sf::RenderTexture Global::render;

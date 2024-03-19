@@ -1,3 +1,5 @@
+#include <cmath>
+#include <SFML/Graphics.hpp>
 #include "window.h"
 #include "global.h"
 
@@ -10,15 +12,15 @@ void createWindow() {
 
 	// Set the window icon
 	sf::Image icon;
-	icon.loadFromFile("sprites/icon/icon.png");
+	icon.loadFromFile("resources/sprites/icon/icon.png");
 	Global::window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	// Set the window size
 	if (!Global::fullscreen) {
 		sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 		sf::Vector2i windowPosition;
-		windowPosition.x = (desktop.width - Global::window.getSize().x) / 2;
-		windowPosition.y = (desktop.height - Global::window.getSize().y) / 2;
+		windowPosition.x = (int)(desktop.width - Global::window.getSize().x) / 2;
+		windowPosition.y = (int)(desktop.height - Global::window.getSize().y) / 2;
 		Global::window.setPosition(windowPosition);
 		Global::window.clear(sf::Color::Black);
 	}
@@ -34,9 +36,9 @@ void renderWindow() {
 	sf::Sprite renderSprite(Global::render.getTexture());
 	if (Global::fullscreen) {
 		sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-		float scale = (float)fmin((float)desktop.width / Global::RESW, (float)desktop.height / Global::RESH);
+		auto scale = (float)std::fmin((float)desktop.width / Global::RESW, (float)desktop.height / Global::RESH);
 		renderSprite.setScale(scale, -scale);
-		renderSprite.setPosition((desktop.width - Global::RESW * scale) / 2, (desktop.height + Global::RESH * scale) / 2);
+		renderSprite.setPosition(((float)desktop.width - Global::RESW * scale) / 2, ((float)desktop.height + Global::RESH * scale) / 2);
 	}
 	else {
 		renderSprite.setPosition(0, Global::RESH * Global::WINDOW_SCALE);

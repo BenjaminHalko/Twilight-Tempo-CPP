@@ -1,5 +1,6 @@
 // https://github.com/BenjaminHalko/Twilight-Tempo/tree/After-Jam/objects/oBullet
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "bullet.h"
 #include "global.h"
 #include "helper.h"
@@ -11,7 +12,7 @@ Bullet::Bullet(float xPos, float yPos, float dir) : Object(xPos, yPos, "player/b
 	direction = dir;
 	spd = 8;
 	dead = false;
-	time = rand() % 60;
+	time = irandom(60);
 	startdir = -1;
 	length = 0;
 	lastX = x;
@@ -37,12 +38,12 @@ void Bullet::update() {
 		for (i = 0; i < 4; i++) {
 			x += lengthdir_x(spd, direction);
 			y += lengthdir_y(spd, direction);
-			image.push_back(AfterImage(x, y, direction));
+			image.emplace_back(x, y, direction);
 
 			// Hit Enemy
 			for (size_t j = 0; j < Global::enemies.size(); j++) {
 				Enemy &enemy = *Global::enemies[j];
-				if (isColliding(enemy) and !enemy.isDead()) {
+				if (isColliding(enemy) && !enemy.isDead()) {
 					enemy.killEnemy(amountOfPoints);
 					spd = 0;
 				}
@@ -86,7 +87,7 @@ void Bullet::draw() {
 		spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)image[i].alpha));
 		Global::render.draw(spr);
 
-		if (image[i].dir == direction and !Global::inTutorial) {
+		if (image[i].dir == direction && !Global::inTutorial) {
 			for (int j = 0; j < 6; j++) {
 				spr.setScale(1, (float)(2 + j * 2));
 				spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)(image[i].alpha * (1 - j * 0.1))));

@@ -7,7 +7,7 @@ std::vector<std::shared_ptr<Star>> StarGenerator::frontStars;
 
 void StarGenerator::init() {
 	for (int i = 0; i < 120; i++) {
-		std::shared_ptr<Star> s = std::make_unique<Star>();
+		std::shared_ptr<Star> s = std::make_shared<Star>();
 		s->alpha1 = random_range(0, 1);
 		s->alpha2 = random_range(0, 1);
 		s->alphaSpd = random_range(1, 5);
@@ -15,7 +15,7 @@ void StarGenerator::init() {
 		backStars.push_back(s);
 	}
 	for (int i = 0; i < 20; i++) {
-		std::shared_ptr<Star> s = std::make_unique<Star>();
+		std::shared_ptr<Star> s = std::make_shared<Star>();
 		s->alpha1 = random_range(0, 2);
 		s->alphaSpd = random_range(0.005f, 0.01f);
 		frontStars.push_back(s);
@@ -28,8 +28,8 @@ void StarGenerator::update() {
 		s.alpha1 += s.alphaSpd;
 		if (s.alpha1 > 2) {
 			do {
-				s.x = (float)fmod(rand(), Global::RESW);
-				s.y = (float)fmod(rand(), Global::RESH);
+				s.x = random_range(0, Global::RESW);
+				s.y = random_range(0, Global::RESH);
 			} while (point_distance((float)s.x, (float)s.y, Global::RESW / 2.0f, Global::RESH / 2.0f) < 16);
 			s.alpha1 = 0;
 			s.alphaSpd = random_range(0.005f, 0.01f);

@@ -17,8 +17,8 @@ int main() {
 	createWindow();
 
 	// Load the fonts
-	Global::m3x6.loadFromFile("fonts/m3x6.ttf");
-	Global::pressStart.loadFromFile("fonts/press_start.ttf");
+	Global::m3x6.loadFromFile("resources/fonts/m3x6.ttf");
+	Global::pressStart.loadFromFile("resources/fonts/press_start.ttf");
 
 	// Init objects
 	Shadow::init();

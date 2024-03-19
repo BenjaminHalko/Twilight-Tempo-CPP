@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "sprite.h"
 #include "object.h"
 #include "death_particle.h"
@@ -29,9 +30,9 @@ private:
 public:
 	Player(float xPos, float yPos);
 	void init();
-	void update();
-	void draw();
+	void update() override;
+	void draw() override;
 
 	void setCannonMove(float val);
-	void applyShake(int dir);
+	void applyShake(int shakeDir);
 };

@@ -3,9 +3,9 @@
 #include "helper.h"
 #include <SFML/Graphics.hpp>
 struct Star {
-	float x = (float)fmod(rand(), Global::RESW);
-	float y = (float)fmod(rand(), Global::RESH);
-	sf::Color color = (rand() % 2) ? hexColor(0xd2de8e) : hexColor(0x60205a);
+	float x = random_range(0, Global::RESW);
+	float y = random_range(0, Global::RESH);
+	sf::Color color = (irandom(2)) ? hexColor(0xd2de8e) : hexColor(0x60205a);
 	float alpha1 = 0;
 	float alpha2 = 0;
 	float alphaSpd = 0;

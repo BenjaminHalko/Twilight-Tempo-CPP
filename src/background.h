@@ -14,7 +14,6 @@ private:
 	static int timer;
 public:
 	static void init();
-	static void setNight(bool night);
 	static void update();
 	static void draw();
 };

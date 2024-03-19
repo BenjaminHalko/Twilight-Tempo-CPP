@@ -4,14 +4,14 @@
 #include "helper.h"
 #include "global.h"
 #include "beat_controller.h"
-#include <stdlib.h>
+#include <cstdlib>
+#include <memory>
+#include <cmath>
 
 // Creates the player, and sets all values
 Player::Player(float xPos, float yPos) : Object(xPos, yPos, "player/player.png") {
 	cannonSprite = Sprite("player/cannon.png");
 	cannonSprite().setOrigin(0, 3);
-	// Death particles
-	std::vector<std::shared_ptr<DeathParticle>> deathParticles;
 
 	init();
 }
@@ -63,7 +63,7 @@ void Player::update() {
 			// Direction
 			bool shoot = false;
 			if (abs(key_right - key_left) != abs(key_down - key_up)) {
-				dir = (int)point_direction(0, 0, (float)key_right - key_left, (float)key_down - key_up);
+				dir = (int)point_direction(0, 0, (float)(key_right - key_left), (float)(key_down - key_up));
 				if (dir != lastDir) {
 					lastDir = dir;
 					shoot = true;
@@ -75,12 +75,9 @@ void Player::update() {
 
 			// Shooting
 			if (shoot) {
-
 				bool hit = false;
-
-				for (size_t i = 0; i < Global::enemies.size(); i++) {
-					Enemy& enemy = *Global::enemies[i];
-					if (((int)enemy.getDirection() % 360) == (dir + 360) % 360) {
+				for (auto & enemy : Global::enemies) {
+					if (((int)enemy->getDirection() % 360) == (dir + 360) % 360) {
 						hit = true;
 						break;
 					}
@@ -94,13 +91,13 @@ void Player::update() {
 				}
 				else {
 					penalty -= 100;
-					Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y - 20, penalty));
+					Global::scorePopups.push_back(std::make_shared<ScorePopup>(x, y - 20, penalty));
 					sf::Sound& shootSound = playSound("player_shoot_fail.ogg", 80);
 					shootSound.setPitch(random_range(0.4f, 0.5f));
 				}
 
 				// Create bullet
-				Global::bullets.push_back(std::make_unique<Bullet>(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
+				Global::bullets.push_back(std::make_shared<Bullet>(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
 
 				if ((dir / 90) % 2 == 0) {
 					xscale = 0.3f;
@@ -124,11 +121,11 @@ void Player::update() {
 				playSound("player_explode.wav", 30);
 				for (int i = 0; i < 32; i++) {
 					for (int j = 0; j < 32; j++) {
-						std::shared_ptr<DeathParticle> particle = std::make_unique<DeathParticle>();
+						std::shared_ptr<DeathParticle> particle = std::make_shared<DeathParticle>();
 						particle->i = i - sprite.getWidth() / 2;
 						particle->j = j - sprite.getHeight() / 2;
-						particle->x = x + sprite.getWidth() / 2.0f;
-						particle->y = y + sprite.getHeight() / 2.0f;
+						particle->x = x + (float)sprite.getWidth() / 2.0f;
+						particle->y = y + (float)sprite.getHeight() / 2.0f;
 						particle->spd = random_range(0, 4);
 						particle->dir = point_direction(15, 15, (float)i, (float)j) + random_range(-20, 20);
 						particle->time = 0;
@@ -144,8 +141,8 @@ void Player::update() {
 		
 		// Start the game
 		if (startScale == 1.6f) {
-			xscale = approachEase(xscale, 1 + cannonMove / 3.0f * (xscale > 0.75f) + (1 - (float)fmin(30, deathSpd) / 30.0f), 0.05f, 0.3f);
-			yscale = approachEase(yscale, 1 + cannonMove / 3.0f * (yscale > 0.75f) + (1 - (float)fmin(30, deathSpd) / 30.0f), 0.05f, 0.3f);
+			xscale = approachEase(xscale, 1 + cannonMove / 3.0f * (float)(xscale > 0.75f) + (1 - (float)fmin(30, deathSpd) / 30.0f), 0.05f, 0.3f);
+			yscale = approachEase(yscale, 1 + cannonMove / 3.0f * (float)(yscale > 0.75f) + (1 - (float)fmin(30, deathSpd) / 30.0f), 0.05f, 0.3f);
 		}
 		else {
 			startScale = approach(startScale, 1.6f, 0.05f);
@@ -159,15 +156,15 @@ void Player::update() {
 				else {
 					BeatController::resetSong();
 					float trackPositions[] = { 0, 29.53f, 66.46f };
-					float pos = trackPositions[rand() % 3] * 130.0f / BeatController::getBPM();
-					//BeatController::setTrackPos(pos);
+					float pos = trackPositions[irandom(4)] * 130.0f / (float)BeatController::getBPM();
+					BeatController::setTrackPos(pos);
 				}
 			}
 		}
 
 		// Reset shake
-		for (int i = 0; i < 4; i++) {
-			shake[i] = approach(shake[i], 0, 0.06f);
+		for (float & i : shake) {
+			i = approach(i, 0, 0.06f);
 		}
 	}
 }
@@ -175,10 +172,9 @@ void Player::update() {
 void Player::draw() {
 	if (destroyed) {
 		sf::Sprite player = sprite();
-		for (size_t i = 0; i < deathParticles.size(); i++) {
-			DeathParticle particle = *deathParticles[i];
-			player.setTextureRect(sf::IntRect(particle.i, particle.j, 1, 1));
-			player.setPosition(particle.x, particle.y);
+		for (auto & particle : deathParticles) {
+			player.setTextureRect(sf::IntRect(particle->i, particle->j, 1, 1));
+			player.setPosition(particle->x, particle->y);
 			Global::render.draw(player);
 		}
 	}
@@ -213,7 +209,7 @@ void Player::setCannonMove(float val) {
 	cannonMove = val;
 }
 
-void Player::applyShake(int dir) {
-	shake[dir] = 2;
+void Player::applyShake(int shakeDir) {
+	shake[shakeDir] = 2;
 	generalShake = 2;
 }

@@ -8,6 +8,8 @@
 #include "gui.h"
 #include <SFML/Audio.hpp>
 #include <string>
+#include <cmath>
+#include <memory>
 
 sf::Music BeatController::music;
 int BeatController::BPM = 130;
@@ -35,7 +37,7 @@ void BeatController::resetSong() {
 
 	BeatController::BPM = (Global::hardMode) ? 170 : 130;
 
-	music.openFromFile("music/"+song+".ogg");
+	music.openFromFile("resources/music/"+song+".ogg");
 	music.play();
 	music.setLoop(!Global::inTutorial);
 }
@@ -176,7 +178,7 @@ void BeatController::update() {
 
 		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat-BEAT_COUNT] != 4) {
 			int _dir = 180 + beats[aheadBeat-BEAT_COUNT] * 90;
-			Global::enemies.push_back(std::make_unique<Enemy>(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
+			Global::enemies.push_back(std::make_shared<Enemy>(Global::RESW / 2.0f + lengthdir_x(150, (float)_dir), Global::RESH / 2.0f + lengthdir_y(150, (float)_dir), (float)_dir));
 		}
 
 		lastBeat = beat;

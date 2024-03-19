@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "bullet.h"
 #include "enemy.h"
 #include "score_popup.h"

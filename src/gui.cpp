@@ -8,6 +8,7 @@
 #include "game_controller.h"
 #include "beat_controller.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 Sprite GUI::warningSprite;
 std::vector<std::shared_ptr<Sprite>> GUI::hearts;
@@ -96,7 +97,7 @@ void GUI::draw() {
 	}
 
 	for (int i = 0; i < 3; i++) {
-		sf::Sprite heart = (*hearts[(int)clamp((float)(Global::lives - i * 4 * (1 + Global::practiceMode)) * (2 - Global::practiceMode), 0, 8)])();
+		sf::Sprite heart = (*hearts[(int)clamp((float)(Global::lives - i * 4 * (1 + Global::practiceMode)) * (float)(2 - Global::practiceMode), 0, 8)])();
 
 		heart.setPosition((float)(Global::RESW - 10 - i * 14), 10);
 		heart.setScale(heartScale[i], heartScale[i]);
@@ -111,13 +112,13 @@ void GUI::draw() {
 			continue;
 		}
 
-		float dir = i * 90;
-		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2 - 32, 180 - dir);
-		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2 - 32, 180 + dir);
+		int dir = i * 90;
+		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2.0f - 32, 180 - dir);
+		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2.0f - 32, 180 + dir);
 
 		// Set position and alpha for the warning sprite
 		warning.setPosition(posX, posY);
-		warningAlpha.a = warningPulse[i] * 255;
+		warningAlpha.a = (sf::Uint8)warningPulse[i] * 255;
 		warning.setColor(warningAlpha);
 
 		// Draw the warning sprite

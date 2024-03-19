@@ -5,6 +5,7 @@
 #include "star_generator.h"
 #include "beat_controller.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 Sprite Background::backgroundSprite[4] = {
 	Sprite("background/0.png"),
@@ -40,12 +41,8 @@ void Background::init() {
 	timer = 30;
 }
 
-void Background::setNight(bool night) {
-	isNight = night;
-}
-
 void Background::update() {
-	if (Global::inTutorial && Global::enemies.size() == 0 && BeatController::getBarNumber() == 9)
+	if (Global::inTutorial && Global::enemies.empty() && BeatController::getBarNumber() == 9)
 		isNight = true;
 
 	if ((backgroundIndex != isNight * 8 || timer != 30) && --timer <= 0) {
@@ -55,7 +52,7 @@ void Background::update() {
 		}
 		else {
 			if (backgroundIndex >= 4)
-				Shadow::setDarkness((backgroundIndex - 3) / 4.0f);
+				Shadow::setDarkness((float)(backgroundIndex - 3) / 4.0f);
 			backgroundIndex++;
 			timer = 30;
 			if (backgroundIndex == 8) {
@@ -72,7 +69,7 @@ void Background::draw() {
 	Global::render.clear(backgroundColors[(int)fmin(3, backgroundIndex)]);
 
 	if (backgroundIndex != 0) {
-		StarGenerator::drawStarsBack(backgroundIndex / 4.0f);
+		StarGenerator::drawStarsBack((float)backgroundIndex / 4.0f);
 	}
 
 	sf::Sprite cloud = cloudSprite();

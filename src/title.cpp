@@ -1,4 +1,5 @@
 // https://github.com/BenjaminHalko/Twilight-Tempo/tree/After-Jam/objects/oTitl
+#include <cmath>
 #include "title.h"
 #include "global.h"
 #include "helper.h"
@@ -41,7 +42,7 @@ void Title::goToTitle() {
 
 void Title::update() {
 	if (music.getStatus() == sf::Music::Playing) {
-		int _time = (int)floor(music.getPlayingOffset().asSeconds()/60.0f*bpm);
+		int _time = (int)std::floor(music.getPlayingOffset().asSeconds()/60.0f*bpm);
 		if (_time != lastBeat)
 			bounce = 1.2f;
 		lastBeat = _time;
@@ -125,13 +126,13 @@ void Title::update() {
 
 	if (logoX >= 2 && !show) {
 		show = true;
-		music.openFromFile("music/song.ogg");
+		music.openFromFile("resources/music/song.ogg");
 		music.setLoop(true);
 		music.play();
 	}
 
 	if (stars.size() < 150) {
-		std::shared_ptr<Star> s = std::make_unique<Star>();
+		std::shared_ptr<Star> s = std::make_shared<Star>();
 		s->alpha1 = random_range(0, 1);
 		s->alpha2 = random_range(0, 1);
 		s->alphaSpd = random_range(1, 5);
@@ -145,7 +146,7 @@ void Title::update() {
 		s.x -= s.far * 5 * logoX;
 		if (s.x < 0) {
 			s.x += Global::RESW;
-			s.y = (float)fmod(rand(), Global::RESH);
+			s.y = random_range(0, Global::RESH);
 		}
 	}
 }
@@ -170,7 +171,7 @@ void Title::draw() {
 			drawText("HARD", 100, 135);
 		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 100, 160);
 		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 100, 175);
-		drawText("© 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
+		drawText("ï¿½ 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
 		drawText("ALL RIGHTS RESERVED", (int)Global::RESW / 2, 210, true);
 	}
 

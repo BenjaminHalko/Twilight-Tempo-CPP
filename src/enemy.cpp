@@ -8,6 +8,8 @@
 #include "score_popup.h"
 #include "gui.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include <cmath>
 
 Enemy::Enemy(float xPos, float yPos, float dir) : Object(xPos, yPos, "enemy/enemy.png") {
 	direction = dir;
@@ -16,7 +18,7 @@ Enemy::Enemy(float xPos, float yPos, float dir) : Object(xPos, yPos, "enemy/enem
 	hit = false;
 	circlePercent = 0;
 	speed = (float)(- 3 - Global::hardMode);
-	timePoints = (float)fmod((Global::beatTime + BeatController::aheadTime) * 2, BeatController::BEAT_COUNT);
+	timePoints = (float)std::fmod((Global::beatTime + BeatController::aheadTime) * 2, BeatController::BEAT_COUNT);
 	flash = false;
 	flashSprite = Sprite("enemy/enemy_flash.png", 0.5, 0.5);
 	cornerSprite = Sprite("enemy/enemy_spike.png", 0, 0.5);
@@ -77,7 +79,7 @@ void Enemy::draw() {
 	sf::Sprite corner = cornerSprite();
 
 	for(int i = 0; i < 4; i++) {
-		float _length = lerp(wave(4.0f, 6.0f, 0.5f, i / 4.0f), 10, deadPercent);
+		float _length = lerp(wave(4.0f, 6.0f, 0.5f, (float)i / 4.0f), 10, deadPercent);
 		corner.setPosition(x + lengthdir_x(_length, (float)(45 + i * 90)), y + lengthdir_y(_length, (float)(45 + i * 90)));
 		corner.setRotation((float)(45 + i * 90));
 		
@@ -103,8 +105,8 @@ void Enemy::killEnemy(float amountOfPoints) {
 	dead = true;
 	speed = 0;
 
-	int points = (int)floor(fmax(0, 1 - fmin(abs(amountOfPoints - timePoints), abs(amountOfPoints - timePoints - 8)) / 1.5f) * 100.0f);
-	Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y-10, points));
+	int points = (int)floor(fmax(0, 1 - std::fmin(std::abs(amountOfPoints - timePoints), std::abs(amountOfPoints - timePoints - 8)) / 1.5f) * 100.0f);
+	Global::scorePopups.push_back(std::make_shared<ScorePopup>(x, y-10, points));
 }
 
 bool Enemy::isDead() const {

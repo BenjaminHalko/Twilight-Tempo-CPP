@@ -7,6 +7,7 @@
 #include "score_popup.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 class Global {
 public:
 	static const int RESW = 256;
