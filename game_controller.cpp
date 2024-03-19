@@ -23,4 +23,3 @@ void startGame() {
 	Background::init();
 	Shadow::setDarkness(!Global::inTutorial);
 }
-
