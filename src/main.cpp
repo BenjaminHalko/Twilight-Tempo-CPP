@@ -1,19 +1,16 @@
-#include "background.h"
-#include "beat_controller.h"
-#include <SFML/Graphics.hpp>
-#include "game_controller.h"
 #include "global.h"
-#include "object.h"
-#include "sound.h"
+#include <SFML/Graphics.hpp>
+#include "title.h"
 #include "shadow.h"
 #include "gui.h"
-#include "star_generator.h"
-#include "title.h"
+#include "background.h"
+#include "beat_controller.h"
 #include "window.h"
+#include "game_controller.h"
 
 int main() {
 	// Create the window
-	Global::render.create(Global::RESW, Global::RESH);
+    Global::render.create(Global::RESW, Global::RESH);
 	createWindow();
 
 	// Load the fonts
@@ -57,6 +54,12 @@ int main() {
 			Title::update();
 			Title::draw();
 		} else {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				BeatController::stopMusic();
+				Title::goToTitle();
+				continue;
+			}
+
 			// Update the game
 			BeatController::update();
 			Background::update();
@@ -70,11 +73,11 @@ int main() {
 			// Draw the game
 			StarGenerator::update();
 			Background::draw();
-			Global::player.draw();
 			drawObjects(Global::bullets);
 			drawObjects(Global::enemies);
 			drawObjects(Global::scorePopups);
 			Shadow::draw();
+			Global::player.draw();
 			GUI::draw();
 		}
 

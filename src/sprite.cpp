@@ -5,7 +5,7 @@
 Sprite::Sprite() = default;
 
 // Load in texture from the file name
-Sprite::Sprite(const std::string& filename, float xorigin, float yorigin) {
+Sprite::Sprite(std::string filename, float xorigin, float yorigin) {
 	texture.loadFromFile("resources/sprites/"+filename);
 	sprite.setOrigin(std::round(xorigin * (float)getWidth()), std::round(yorigin * (float)getHeight()));
 }

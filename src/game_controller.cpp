@@ -6,6 +6,7 @@
 #include "score_popup.h"
 #include "background.h"
 #include "helper.h"
+#include "shadow.h"
 
 void deleteAll() {
 	Global::bullets.clear();

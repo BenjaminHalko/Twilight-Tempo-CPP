@@ -22,7 +22,7 @@ bool GUI::menuHeldInput = false;
 
 void GUI::init() {
 	for (int i = 0; i < 9; i++) {
-		hearts.push_back(std::make_unique<Sprite>("gui/health/" + std::to_string(i) + ".png", 0.5f, 0.5f));
+		hearts.push_back(std::make_shared<Sprite>("gui/health/" + std::to_string(i) + ".png", 0.5f, 0.5f));
 		warningSprite = Sprite("gui/warning.png", 0.5f, 0.5f);
 	}
 }
@@ -97,7 +97,7 @@ void GUI::draw() {
 	}
 
 	for (int i = 0; i < 3; i++) {
-		sf::Sprite heart = (*hearts[(int)clamp((float)(Global::lives - i * 4 * (1 + Global::practiceMode)) * (float)(2 - Global::practiceMode), 0, 8)])();
+		sf::Sprite heart = (*hearts[(int)clamp((float)(Global::lives - i * 4 * (1 + Global::practiceMode)) * (2 - Global::practiceMode), 0, 8)])();
 
 		heart.setPosition((float)(Global::RESW - 10 - i * 14), 10);
 		heart.setScale(heartScale[i], heartScale[i]);
@@ -113,12 +113,12 @@ void GUI::draw() {
 		}
 
 		int dir = i * 90;
-		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2.0f - 32, 180 - dir);
-		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2.0f - 32, 180 + dir);
+		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2.0f - 32, (float)dir);
+		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2.0f - 32, (float)dir);
 
 		// Set position and alpha for the warning sprite
 		warning.setPosition(posX, posY);
-		warningAlpha.a = (sf::Uint8)warningPulse[i] * 255;
+		warningAlpha.a = (sf::Uint8)(warningPulse[i] * 255.0f);
 		warning.setColor(warningAlpha);
 
 		// Draw the warning sprite

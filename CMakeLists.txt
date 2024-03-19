@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 project(Twilight_Tempo)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc")
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -12,12 +9,30 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-set(SFML_BUILD_NETWORK FALSE)
+## Switched ON to build sfml as dll
+set(BUILD_SHARED_LIBS ON)
+
+# sfml
+set(SFML_BUILD_EXAMPLES OFF)
+set(SFML_BUILD_DOC OFF)
+
+set(SFML_BUILD_NETWORK OFF)
+
+set(SFML_BUILD_AUDIO ON)
+set(SFML_BUILD_GRAPHICS ON)
+set(SFML_BUILD_WINDOW ON)
 
 file(GLOB_RECURSE SOURCES "src/*")
 add_executable(Twilight_Tempo ${SOURCES})
-target_link_libraries(Twilight_Tempo PRIVATE sfml-graphics sfml-audio)
-target_include_directories(Twilight_Tempo PRIVATE fonts )
+target_link_libraries(
+    Twilight_Tempo PRIVATE
+    sfml-graphics
+    sfml-window
+    sfml-system
+    sfml-audio
+    sfml-main
+)
+target_link_options(Twilight_Tempo PRIVATE -mwindows)
 
 if(WIN32)
     add_custom_command(
@@ -27,12 +42,32 @@ if(WIN32)
         VERBATIM)
 endif()
 
-# Create a link to the resources folder, work on Windows and Unix
-add_custom_command(
-    TARGET Twilight_Tempo
-    COMMENT "Link resources folder"
-    POST_BUILD COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:Twilight_Tempo>/resources
-    VERBATIM)
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    # Create a link to the resources folder
+    add_custom_command(
+        TARGET Twilight_Tempo
+        COMMENT "Copy resources folder"
+        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:Twilight_Tempo>/resources
+        VERBATIM)
+else()
+    # Copy the resources folder
+    add_custom_command(
+        TARGET Twilight_Tempo
+        COMMENT "Link resources folder"
+        POST_BUILD COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:Twilight_Tempo>/resources
+        VERBATIM)
+endif()
 
+# Hide console window
+if(MSVC)
+    set_target_properties(
+    Twilight_Tempo
+    PROPERTIES
+        LINK_FLAGS_DEBUG "/SUBSYSTEM:console"
+        LINK_FLAGS_RELEASE "/SUBSYSTEM:windows /ENTRY:mainCRTStartup"
+        LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:windows /ENTRY:mainCRTStartup"
+        LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:windows /ENTRY:mainCRTStartup"
+    )
+endif()
 
 install(TARGETS Twilight_Tempo)

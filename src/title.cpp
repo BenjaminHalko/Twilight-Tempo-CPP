@@ -25,6 +25,8 @@ void Title::init() {
 	twilight = Sprite("title/twilight.png", 0.5f, 0.5f);
 	tempo = Sprite("title/tempo.png");
 
+	Global::startInTutorial = (bool)!load("skipTutorial");
+
 	goToTitle();
 }
 
@@ -69,6 +71,7 @@ void Title::update() {
 			else if (choice == 3) {
 				Global::startInTutorial = !Global::startInTutorial;
 				playSound("blip.ogg", 100);
+				save("skipTutorial", (int)!Global::startInTutorial);
 			}
 			else {
 				Global::hardMode = choice;
@@ -102,7 +105,7 @@ void Title::update() {
 		if (--timer <= 0) {
 			if (selected == 16) {
 				Global::inTitle = false;
-				Global::highScore = load(Global::hardMode ? "hard.sav" : "normal.sav");
+				Global::highScore = load(Global::hardMode ? "hard" : "normal");
 				Global::inTutorial = Global::startInTutorial;
 				startGame();
 			}
@@ -141,37 +144,35 @@ void Title::update() {
 		stars.push_back(s);
 	}
 
-	for (size_t i = 0; i < stars.size(); i++) {
-		Star &s = *stars[i];
-		s.x -= s.far * 5 * logoX;
-		if (s.x < 0) {
-			s.x += Global::RESW;
-			s.y = random_range(0, Global::RESH);
+	for (auto & star : stars) {
+		star->x -= star->far * 5 * logoX;
+		if (star->x < 0) {
+			star->x += Global::RESW;
+			star->y = random_range(0, Global::RESH);
 		}
 	}
 }
 
 void Title::draw() {
 	Global::render.clear(sf::Color::Black);
-	for (size_t i = 0; i < stars.size(); i++) {
-		Star &s = *stars[i];
-		sf::Color c = s.color;
-		c.a = (sf::Uint8)(wave(s.alpha1, s.alpha2, s.alphaSpd, s.alphaOffset) * 255.0f);
+	for (auto & star : stars) {
+		sf::Color c = star->color;
+		c.a = (sf::Uint8)(wave(star->alpha1, star->alpha2, star->alphaSpd, star->alphaOffset) * 255.0f);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
-		rect.setPosition(s.x, s.y);
+		rect.setPosition(star->x, star->y);
 		rect.setFillColor(c);
 		Global::render.draw(rect);
 	}
 
 	if (show) {
-		drawText(">", 85, 120 + 15 * choice + 10 * (choice >= 2));
+		drawText(">", 57, 120 + 15 * choice + 10 * (choice >= 2));
 		if (choice == 1 || selected % 2 == 0)
-			drawText("NORMAL", 100, 120);
+			drawText("NORMAL", 72, 120);
 		if (choice == 0 || selected % 2 == 0)
-			drawText("HARD", 100, 135);
-		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 100, 160);
-		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 100, 175);
-		drawText("ï¿½ 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
+			drawText("HARD", 72, 135);
+		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 72, 160);
+		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 72, 175);
+		drawText("© 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
 		drawText("ALL RIGHTS RESERVED", (int)Global::RESW / 2, 210, true);
 	}
 
@@ -184,6 +185,6 @@ void Title::draw() {
 	sf::Sprite tem = tempo();
 	tem.setPosition(Global::RESW / 2.0f - 10, 50);
 	if (logoX < 1)
-		tem.setTextureRect(sf::IntRect(0, 0, (int)(tempo.getWidth() * logoX), tempo.getHeight()));
+		tem.setTextureRect(sf::IntRect(0, 0, (int)((float)tempo.getWidth() * logoX), tempo.getHeight()));
 	Global::render.draw(tem);
 }

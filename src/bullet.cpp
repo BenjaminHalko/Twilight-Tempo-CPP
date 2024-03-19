@@ -80,17 +80,17 @@ void Bullet::update() {
 
 void Bullet::draw() {
 	sf::Sprite spr = sprite();
-	for (size_t i = 0; i < image.size(); i++) {
+	for (auto & i : image) {
 		spr.setScale(1, 1);
-		spr.setPosition(image[i].x, image[i].y);
-		spr.setRotation(image[i].dir);
-		spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)image[i].alpha));
+		spr.setPosition(i.x, i.y);
+		spr.setRotation(i.dir);
+		spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)i.alpha));
 		Global::render.draw(spr);
 
-		if (image[i].dir == direction && !Global::inTutorial) {
+		if (i.dir == direction && !Global::inTutorial) {
 			for (int j = 0; j < 6; j++) {
 				spr.setScale(1, (float)(2 + j * 2));
-				spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)(image[i].alpha * (1 - j * 0.1))));
+				spr.setColor(sf::Color(255, 255, 255, (sf::Uint8)(i.alpha * (1 - j * 0.1))));
 				Shadow::shadow.draw(spr, Shadow::blendSubtractive);
 			}
 		}

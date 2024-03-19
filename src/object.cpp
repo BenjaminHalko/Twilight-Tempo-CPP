@@ -1,4 +1,3 @@
-#include "global.h"
 #include "object.h"
 #include <SFML/Graphics.hpp>
 
@@ -8,7 +7,7 @@ Object::Object(float xstart, float ystart, std::string sprite_path, float sprite
 	y = ystart;
 	xscale = 1;
 	yscale = 1;
-	if (sprite_path != "") {
+	if (!sprite_path.empty()) {
 		sprite = Sprite(sprite_path, sprite_xoffset, sprite_yoffset);
 		sprite_width = sprite.getWidth();
 		sprite_height = sprite.getHeight();

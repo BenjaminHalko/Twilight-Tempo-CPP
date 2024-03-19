@@ -1,5 +1,6 @@
 #pragma once
 #include "star_generator.h"
+#include "sprite.h"
 #include <SFML/Audio.hpp>
 class Title {
 private:

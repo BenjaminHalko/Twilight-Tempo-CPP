@@ -2,4 +2,8 @@
 /.idea
 /cmake-build-*/
 /out
+/SFML
+/Debug
+/Release
+/Twilight_Tempo
 *.sav

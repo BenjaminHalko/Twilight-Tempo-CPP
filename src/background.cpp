@@ -4,6 +4,7 @@
 #include "global.h"
 #include "star_generator.h"
 #include "beat_controller.h"
+#include "shadow.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
 

@@ -1,11 +1,12 @@
 #include "helper.h"
 #include "global.h"
-#include <cmath>
+#include <SFML/Graphics.hpp>
 #include <string>
 #include <cmath>
 #include <fstream>
 #include <cstdlib>
-#include <SFML/Graphics.hpp>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 // Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
@@ -64,7 +65,7 @@ float approachCircleEase(float value, float target, float maxSpd, float ease) {
 
 // Returns the direction when given two points
 float point_direction(float x1, float y1, float x2, float y2) {
-	return (float)(std::atan2(y2 - y1, x2 - x1) * 180 / PI);
+	return (float)(atan2(y2 - y1, x2 - x1) * 180 / PI);
 }
 
 // Returns the distance when given two points
@@ -126,6 +127,7 @@ float bezierCurve(float t) {
 	float p2x2 = lerp(p1x2, p1x3, t);
 	float p2y2 = lerp(p1y2, p1y3, t);
 
+	float p3x = lerp(p2x1, p2x2, t);
 	float p3y = lerp(p2y1, p2y2, t);
 
 	return p3y;
@@ -138,15 +140,6 @@ bool fileExists(const std::string& fileName) {
 }
 
 void save(std::string fileName, int score) {
-    char* pValue = getenv("LOCALAPPDATA");
-	if (pValue != nullptr) {
-		std::string folder = (std::string)pValue + "\\Twilight_Tempo_CPP\\";
-		if (!fileExists(folder)) {
-			std::string command = "mkdir " + folder;
-			system(command.c_str());
-		}
-		fileName = folder + fileName;
-	}
 	fileName = fileName + ".sav";
 	std::ofstream outFile(fileName, std::ios::trunc);
 	outFile << score;
@@ -154,9 +147,6 @@ void save(std::string fileName, int score) {
 }
 
 int load(std::string fileName) {
-	char* pValue = getenv("LOCALAPPDATA");
-    if (pValue != nullptr)
-		fileName = (std::string)pValue + "\\Twilight_Tempo_CPP\\" + fileName;
 	fileName = fileName + ".sav";
 	int score;
 	std::ifstream inFile;
@@ -185,7 +175,7 @@ void drawText(std::string textString, int x, int y, bool horizCentered, bool ver
 	text.setFont(useM3x6 ? Global::m3x6 : Global::pressStart);
 	text.setString(textString);
 	text.setCharacterSize((useM3x6 ? 16 : 8) * scale);
-	text.setPosition(floor(x - (horizCentered * (text.getGlobalBounds().width / 2))), floor(y - (vertCentered * (text.getGlobalBounds().height / 2))));
+	text.setPosition(std::floor((float)x - ((float)horizCentered * (text.getGlobalBounds().width / 2))), std::floor((float)y - ((float)vertCentered * (text.getGlobalBounds().height / 2))));
 	text.setFillColor(colour); // Set the fill color
 
 	Global::render.draw(text);
