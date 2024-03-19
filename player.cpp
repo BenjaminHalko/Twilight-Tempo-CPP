@@ -160,7 +160,7 @@ void Player::update() {
 					BeatController::resetSong();
 					float trackPositions[] = { 0, 29.53f, 66.46f };
 					float pos = trackPositions[rand() % 3] * 130.0f / BeatController::getBPM();
-					//BeatController::setTrackPos(pos);
+					BeatController::setTrackPos(pos);
 				}
 			}
 		}

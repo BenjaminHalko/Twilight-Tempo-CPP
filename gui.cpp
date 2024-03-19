@@ -111,13 +111,13 @@ void GUI::draw() {
 			continue;
 		}
 
-		float dir = i * 90;
-		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2 - 32, 180 - dir);
-		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2 - 32, 180 + dir);
+		int dir = i * 90;
+		float posX = Global::RESW / 2.0f + lengthdir_x(Global::RESW / 2 - 32, (float)dir);
+		float posY = Global::RESH / 2.0f + lengthdir_y(Global::RESH / 2 - 32, (float)dir);
 
 		// Set position and alpha for the warning sprite
 		warning.setPosition(posX, posY);
-		warningAlpha.a = warningPulse[i] * 255;
+		warningAlpha.a = (sf::Uint8)(warningPulse[i] * 255.0f);
 		warning.setColor(warningAlpha);
 
 		// Draw the warning sprite

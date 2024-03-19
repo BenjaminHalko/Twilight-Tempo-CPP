@@ -24,6 +24,8 @@ void Title::init() {
 	twilight = Sprite("title/twilight.png", 0.5f, 0.5f);
 	tempo = Sprite("title/tempo.png");
 
+	Global::startInTutorial = (bool)!load("skipTutorial");
+
 	goToTitle();
 }
 
@@ -68,6 +70,7 @@ void Title::update() {
 			else if (choice == 3) {
 				Global::startInTutorial = !Global::startInTutorial;
 				playSound("blip.ogg", 100);
+				save("skipTutorial", (int)!Global::startInTutorial);
 			}
 			else {
 				Global::hardMode = choice;
@@ -163,13 +166,13 @@ void Title::draw() {
 	}
 
 	if (show) {
-		drawText(">", 85, 120 + 15 * choice + 10 * (choice >= 2));
+		drawText(">", 57, 120 + 15 * choice + 10 * (choice >= 2));
 		if (choice == 1 || selected % 2 == 0)
-			drawText("NORMAL", 100, 120);
+			drawText("NORMAL", 72, 120);
 		if (choice == 0 || selected % 2 == 0)
-			drawText("HARD", 100, 135);
-		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 100, 160);
-		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 100, 175);
+			drawText("HARD", 72, 135);
+		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 72, 160);
+		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 72, 175);
 		drawText("© 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
 		drawText("ALL RIGHTS RESERVED", (int)Global::RESW / 2, 210, true);
 	}

@@ -8,6 +8,7 @@
 #include "gui.h"
 #include <SFML/Audio.hpp>
 #include <string>
+#include <iostream>
 
 sf::Music BeatController::music;
 int BeatController::BPM = 130;
@@ -16,7 +17,7 @@ int BeatController::aheadLastBeat = 100;
 std::vector<int> BeatController::beats(8, 4);
 std::vector<int> BeatController::extraBeats(4, 0);
 float BeatController::mode = 0;
-const std::string BeatController::dirSounds[4] = {"left.ogg", "up.ogg", "right.ogg", "down.ogg"};
+const std::string BeatController::dirSounds[4] = { "right.ogg", "down.ogg", "left.ogg", "up.ogg"};
 const float BeatController::aheadTime = 0.73f;
 int BeatController::barNumber = 0;
 
@@ -67,9 +68,10 @@ void BeatController::update() {
 		if (musicPos < 0) {
 			musicPos += music.getDuration().asSeconds();
 		}
-		Global::beatTime = (float)(musicPos / 60.0) * BPM;
-		int beat = (int)Global::beatTime % BEAT_COUNT * 2;
-		int aheadBeat = (int)(Global::beatTime + aheadTime) % BEAT_COUNT * 2;
+		Global::beatTime = (float)((musicPos / 60.0f) * BPM);
+		
+		int beat = (int)(fmod(Global::beatTime, BEAT_COUNT) * 2);
+		int aheadBeat = (int)(fmod(Global::beatTime + aheadTime, BEAT_COUNT) * 2);
 
 		if (beat < lastBeat) {
 			if (Global::score >= 40000) {
@@ -126,7 +128,7 @@ void BeatController::update() {
 				return;
 			}
 			else if (barNumber == 8 && Global::inTutorial) {
-				beats = { 2, 4, 3, 4, 0, 4, 1, 4 };
+				beats = { 0, 4, 1, 4, 2, 4, 3, 4 };
 			}
 			else {
 				for (int i = 0; i < 4; i++) {
@@ -136,13 +138,12 @@ void BeatController::update() {
 					extraBeats[j] = temp;
 				}
 				for (int i = 0; i < BEAT_COUNT; i++) {
+					
 					if (i % 2 == 1) {
-						if (!Global::inTutorial && mode > 1 && extraBeats[i / 2] != -1 && (irandom(1+(int)fmax(0, 8-barNumber)+extraBeats[i / 2]) == 0 || mode == 2)) {
+						if (!Global::inTutorial && mode > 1 && extraBeats[i / 2] != -1 && (irandom(1 + (int)fmax(0, 8 - barNumber) + extraBeats[i / 2]) == 0 || mode == 2))
 							beats[i] = irandom(4);
-						}
-						else {
+						else 
 							beats[i] = 4;
-						}
 					}
 					else if (!Global::inTutorial && i % 4 == 2 && mode == 0) {
 						beats[i] = beats[i - 2];
@@ -154,7 +155,7 @@ void BeatController::update() {
 			}
 
 			if (mode == 2) {
-				mode = 2.5;
+				mode = 2.5f;
 			}
 		}
 
@@ -174,8 +175,8 @@ void BeatController::update() {
 			}
 		}
 
-		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat-BEAT_COUNT] != 4) {
-			int _dir = 180 + beats[aheadBeat-BEAT_COUNT] * 90;
+		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat - BEAT_COUNT] != 4) {
+			int _dir = beats[aheadBeat-BEAT_COUNT] * 90;
 			Global::enemies.push_back(std::make_unique<Enemy>(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
 		}
 

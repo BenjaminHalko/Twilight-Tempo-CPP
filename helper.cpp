@@ -5,6 +5,8 @@
 #include <cmath>
 #include <fstream>
 #include <cstdlib>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 // Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
@@ -131,17 +133,25 @@ float bezierCurve(float t) {
 	return p3y;
 }
 
+bool fileExists(const std::string& fileName) {
+	// Returns false if file doesn't exist/can't be opened
+	std::ifstream file(fileName);
+	return file.good();
+}
+
 void save(std::string fileName, int score) {
 	char* pValue;
 	size_t len;
 	_dupenv_s(&pValue, &len, "LOCALAPPDATA");
 	if (pValue != NULL) {
-		std::string folder = (std::string)pValue + "\\Twilight_Tempo_CPP\\";
-		if (!fileExists(folder)) {
+		std::string folder = (std::string)pValue + "\\Twilight_Tempo_CPP";
+		struct stat info;
+		stat(folder.c_str(), &info);
+		if (!(info.st_mode & S_IFDIR)) {
 			std::string command = "mkdir " + folder;
 			system(command.c_str());
 		}
-		fileName = folder + fileName;
+		fileName = folder + "\\" + fileName;
 	}
 	fileName = fileName + ".sav";
 	std::ofstream outFile(fileName, std::ios::trunc);
@@ -165,12 +175,6 @@ int load(std::string fileName) {
 		}
 	}
 	return 0;
-}
-
-bool fileExists(const std::string& fileName) {
-	// Returns false if file doesn't exist/can't be opened
-	std::ifstream file(fileName);
-	return file.good();
 }
 
 std::string formatScore(int score, int stringLength) {
