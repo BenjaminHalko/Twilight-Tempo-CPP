@@ -22,6 +22,10 @@ const float BeatController::aheadTime = 0.73f;
 int BeatController::barNumber = 0;
 
 void BeatController::resetSong() {
+	extraBeats.assign(4, 0);
+	beats.assign(8, 4);
+	lastBeat = 100;
+	aheadLastBeat = 100;
 	barNumber = 0;
 	mode = 0;
 	music.stop();
