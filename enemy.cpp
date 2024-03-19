@@ -104,7 +104,7 @@ void Enemy::killEnemy(float amountOfPoints) {
 	speed = 0;
 
 	int points = (int)floor(fmax(0, 1 - fmin(abs(amountOfPoints - timePoints), abs(amountOfPoints - timePoints - 8)) / 1.5f) * 100.0f);
-	Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y-10, points));
+	Global::scorePopups.push_back(std::make_shared<ScorePopup>(x, y-10, points));
 }
 
 bool Enemy::isDead() const {

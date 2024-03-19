@@ -94,13 +94,13 @@ void Player::update() {
 				}
 				else {
 					penalty -= 100;
-					Global::scorePopups.push_back(std::make_unique<ScorePopup>(x, y - 20, penalty));
+					Global::scorePopups.push_back(std::make_shared<ScorePopup>(x, y - 20, penalty));
 					sf::Sound& shootSound = playSound("player_shoot_fail.ogg", 80);
 					shootSound.setPitch(random_range(0.4f, 0.5f));
 				}
 
 				// Create bullet
-				Global::bullets.push_back(std::make_unique<Bullet>(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
+				Global::bullets.push_back(std::make_shared<Bullet>(x + lengthdir_x(bulletLength, (float)dir), y + lengthdir_y(bulletLength, (float)dir), (float)dir));
 
 				if ((dir / 90) % 2 == 0) {
 					xscale = 0.3f;
@@ -124,7 +124,7 @@ void Player::update() {
 				playSound("player_explode.wav", 30);
 				for (int i = 0; i < 32; i++) {
 					for (int j = 0; j < 32; j++) {
-						std::shared_ptr<DeathParticle> particle = std::make_unique<DeathParticle>();
+						std::shared_ptr<DeathParticle> particle = std::make_shared<DeathParticle>();
 						particle->i = i - sprite.getWidth() / 2;
 						particle->j = j - sprite.getHeight() / 2;
 						particle->x = x + sprite.getWidth() / 2.0f;

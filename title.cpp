@@ -104,7 +104,7 @@ void Title::update() {
 		if (--timer <= 0) {
 			if (selected == 16) {
 				Global::inTitle = false;
-				Global::highScore = load(Global::hardMode ? "hard.sav" : "normal.sav");
+				Global::highScore = load(Global::hardMode ? "hard" : "normal");
 				Global::inTutorial = Global::startInTutorial;
 				startGame();
 			}
@@ -134,7 +134,7 @@ void Title::update() {
 	}
 
 	if (stars.size() < 150) {
-		std::shared_ptr<Star> s = std::make_unique<Star>();
+		std::shared_ptr<Star> s = std::make_shared<Star>();
 		s->alpha1 = random_range(0, 1);
 		s->alpha2 = random_range(0, 1);
 		s->alphaSpd = random_range(1, 5);

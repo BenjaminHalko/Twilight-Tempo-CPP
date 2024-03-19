@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 
 sf::Sound& playSound(std::string filename, int volume) {
-	std::shared_ptr<Sound> s = std::make_unique<Sound>(filename, volume);
+	std::shared_ptr<Sound> s = std::make_shared<Sound>(filename, volume);
 	Global::sounds.push_back(s);
 	return s->getSound();
 }

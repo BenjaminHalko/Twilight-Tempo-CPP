@@ -177,7 +177,7 @@ void BeatController::update() {
 
 		if (aheadBeat != aheadLastBeat && aheadBeat >= BEAT_COUNT && beats[aheadBeat - BEAT_COUNT] != 4) {
 			int _dir = beats[aheadBeat-BEAT_COUNT] * 90;
-			Global::enemies.push_back(std::make_unique<Enemy>(Global::RESW / 2 + lengthdir_x(150, (float)_dir), Global::RESH / 2 + lengthdir_y(150, (float)_dir), (float)_dir));
+			Global::enemies.push_back(std::make_shared<Enemy>(Global::RESW / 2.0f + lengthdir_x(150, (float)_dir), Global::RESH / 2.0f + lengthdir_y(150, (float)_dir), (float)_dir));
 		}
 
 		lastBeat = beat;

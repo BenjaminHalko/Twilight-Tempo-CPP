@@ -57,6 +57,12 @@ int main() {
 			Title::update();
 			Title::draw();
 		} else {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				BeatController::stopMusic();
+				Title::goToTitle();
+				continue;
+			}
+
 			// Update the game
 			BeatController::update();
 			Background::update();
@@ -70,11 +76,11 @@ int main() {
 			// Draw the game
 			StarGenerator::update();
 			Background::draw();
-			Global::player.draw();
 			drawObjects(Global::bullets);
 			drawObjects(Global::enemies);
 			drawObjects(Global::scorePopups);
 			Shadow::draw();
+			Global::player.draw();
 			GUI::draw();
 		}
 

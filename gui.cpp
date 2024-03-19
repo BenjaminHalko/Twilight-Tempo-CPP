@@ -21,7 +21,7 @@ bool GUI::menuHeldInput = false;
 
 void GUI::init() {
 	for (int i = 0; i < 9; i++) {
-		hearts.push_back(std::make_unique<Sprite>("gui/health/" + std::to_string(i) + ".png", 0.5f, 0.5f));
+		hearts.push_back(std::make_shared<Sprite>("gui/health/" + std::to_string(i) + ".png", 0.5f, 0.5f));
 		warningSprite = Sprite("gui/warning.png", 0.5f, 0.5f);
 	}
 }
