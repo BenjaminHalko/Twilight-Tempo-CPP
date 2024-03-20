@@ -20,4 +20,4 @@ void save(std::string fileName, int score);
 int load(std::string fileName);
 bool fileExists(const std::string& fileName);
 std::string formatScore(int score, int stringLength);
-void drawText(std::wstring textString, int x, int y, bool horizCentered=false, bool vertCentered=false, bool useM3x6=false, sf::Color colour = sf::Color::White, int scale = 1);
+void drawText(sf::String textString, int x, int y, bool horizCentered=false, bool vertCentered=false, bool useM3x6=false, sf::Color colour = sf::Color::White, int scale = 1);

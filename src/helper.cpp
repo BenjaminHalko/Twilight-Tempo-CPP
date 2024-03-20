@@ -170,7 +170,7 @@ std::string formatScore(int score, int stringLength) {
 	}
 }
 
-void drawText(std::wstring textString, int x, int y, bool horizCentered, bool vertCentered, bool useM3x6, sf::Color colour, int scale) {
+void drawText(sf::String textString, int x, int y, bool horizCentered, bool vertCentered, bool useM3x6, sf::Color colour, int scale) {
 	sf::Text text;
 	text.setFont(useM3x6 ? Global::m3x6 : Global::pressStart);
 	text.setString(textString);
@@ -179,8 +179,4 @@ void drawText(std::wstring textString, int x, int y, bool horizCentered, bool ve
 	text.setFillColor(colour); // Set the fill color
 
 	Global::render.draw(text);
-}
-
-void drawText(std::string textString, int x, int y, bool horizCentered, bool vertCentered, bool useM3x6, sf::Color colour, int scale) {
-    drawText(std::wstring(textString.begin(), textString.end()), x, y, horizCentered, vertCentered, useM3x6, colour, scale);
 }
