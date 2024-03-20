@@ -1,6 +1,7 @@
 #include "star_generator.h"
 #include "global.h"
 #include "helper.h"
+#include <cmath>
 
 std::vector<std::shared_ptr<Star>> StarGenerator::backStars;
 std::vector<std::shared_ptr<Star>> StarGenerator::frontStars;
@@ -23,27 +24,25 @@ void StarGenerator::init() {
 }
 
 void StarGenerator::update() {
-	for (size_t i = 0; i < frontStars.size(); i++) {
-		Star &s = *frontStars[i];
-		s.alpha1 += s.alphaSpd;
-		if (s.alpha1 > 2) {
+	for (const auto & frontStar : frontStars) {
+		frontStar->alpha1 += frontStar->alphaSpd;
+		if (frontStar->alpha1 > 2) {
 			do {
-				s.x = random_range(0, Global::RESW);
-				s.y = random_range(0, Global::RESH);
-			} while (point_distance((float)s.x, (float)s.y, Global::RESW / 2.0f, Global::RESH / 2.0f) < 16);
-			s.alpha1 = 0;
-			s.alphaSpd = random_range(0.005f, 0.01f);
+				frontStar->x = random_range(0, Global::RESW);
+				frontStar->y = random_range(0, Global::RESH);
+			} while (point_distance((float)frontStar->x, (float)frontStar->y, Global::RESW / 2.0f, Global::RESH / 2.0f) < 16);
+			frontStar->alpha1 = 0;
+			frontStar->alphaSpd = random_range(0.005f, 0.01f);
 		}
 	}
 }
 
 void StarGenerator::drawStarsBack(float alpha) {
-	for (size_t i = 0; i < backStars.size(); i++) {
-		Star& s = *backStars[i];
-		sf::Color c = s.color;
-		c.a = (sf::Uint8)(wave(s.alpha1, s.alpha2, s.alphaSpd, s.alphaOffset) * 255.0f * alpha);
+	for (const auto & backStar : backStars) {
+		sf::Color c = backStar->color;
+		c.a = (sf::Uint8)(wave(backStar->alpha1, backStar->alpha2, backStar->alphaSpd, backStar->alphaOffset) * 255.0f * alpha);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
-		rect.setPosition(s.x, s.y);
+		rect.setPosition(backStar->x, backStar->y);
 		rect.setFillColor(c);
 
 		Global::render.draw(rect);
@@ -54,7 +53,7 @@ void StarGenerator::drawStarsBack(float alpha) {
 void StarGenerator::drawStarsFront(float alpha) {
 	for (auto & frontStar : frontStars) {
 		sf::Color c = frontStar->color;
-		c.a = (sf::Uint8)(1-std::abs(1-frontStar->alpha1) * 255.0f * alpha);
+		c.a = (sf::Uint8)(1-abs(1-frontStar->alpha1) * 255.0f * alpha);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
 		rect.setPosition(frontStar->x, frontStar->y);
 		rect.setFillColor(c);
