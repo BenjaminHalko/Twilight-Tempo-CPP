@@ -24,33 +24,28 @@ set(SFML_BUILD_WINDOW ON)
 
 file(GLOB_RECURSE SOURCES "src/*")
 add_executable(Twilight_Tempo ${SOURCES})
-target_link_libraries(
-    Twilight_Tempo PRIVATE
-    sfml-graphics
-    sfml-window
-    sfml-system
-    sfml-audio
-    sfml-main
-)
-target_link_options(Twilight_Tempo PRIVATE -mwindows)
+set(SFML_FILES sfml-graphics sfml-window sfml-audio sfml-system)
 
 if(WIN32)
+    list(APPEND SFML_FILES sfml-main)
+    target_link_options(Twilight_Tempo PRIVATE -mwindows)
     add_custom_command(
         TARGET Twilight_Tempo
         COMMENT "Copy OpenAL DLL"
         PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:Twilight_Tempo>
         VERBATIM)
 endif()
+target_link_libraries(Twilight_Tempo PRIVATE ${SFML_FILES})
 
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    # Create a link to the resources folder
+if (CMAKE_BUILD_TYPE STREQUAL "Release" OR NOT WIN32)
+    # Copy the resources folder
     add_custom_command(
         TARGET Twilight_Tempo
         COMMENT "Copy resources folder"
         PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:Twilight_Tempo>/resources
         VERBATIM)
 else()
-    # Copy the resources folder
+    # Create a link to the resources folder
     add_custom_command(
         TARGET Twilight_Tempo
         COMMENT "Link resources folder"

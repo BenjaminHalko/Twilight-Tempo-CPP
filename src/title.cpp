@@ -172,7 +172,7 @@ void Title::draw() {
 			drawText("HARD", 72, 135);
 		drawText("PRACTICE: " + (std::string)(Global::practiceMode ? "ON" : "OFF"), 72, 160);
 		drawText("SKIP TUTORIAL: " + (std::string)(Global::startInTutorial ? "NO" : "YES"), 72, 175);
-		drawText("© 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
+		drawText(L"Â© 2024 BENJAMIN & KOBE", (int)Global::RESW / 2, 200, true);
 		drawText("ALL RIGHTS RESERVED", (int)Global::RESW / 2, 210, true);
 	}
 
