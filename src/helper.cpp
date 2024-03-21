@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 #include <cstdlib>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 // Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
@@ -127,6 +129,17 @@ bool fileExists(const std::string& fileName) {
 }
 
 void save(std::string fileName, int score) {
+    std::string localAppdata = std::getenv("LOCALAPPDATA");
+	if (!localAppdata.empty()) {
+		std::string folder = localAppdata + "\\Twilight_Tempo_CPP";
+		struct stat info;
+		stat(folder.c_str(), &info);
+		if (!(info.st_mode & S_IFDIR)) {
+			std::string command = "mkdir " + folder;
+			system(command.c_str());
+		}
+		fileName = folder + "\\" + fileName;
+	}
 	fileName = fileName + ".sav";
 	std::ofstream outFile(fileName, std::ios::trunc);
 	outFile << score;
@@ -134,6 +147,9 @@ void save(std::string fileName, int score) {
 }
 
 int load(std::string fileName) {
+    std::string localAppdata = std::getenv("LOCALAPPDATA");
+	if (!localAppdata.empty())
+		fileName = localAppdata + "\\Twilight_Tempo_CPP\\" + fileName;
 	fileName = fileName + ".sav";
 	int score;
 	std::ifstream inFile;
