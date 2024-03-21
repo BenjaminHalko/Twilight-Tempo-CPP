@@ -40,7 +40,7 @@ void StarGenerator::update() {
 void StarGenerator::drawStarsBack(float alpha) {
 	for (const auto & backStar : backStars) {
 		sf::Color c = backStar->color;
-		c.a = (sf::Uint8)(wave(backStar->alpha1, backStar->alpha2, backStar->alphaSpd, backStar->alphaOffset) * 255.0f * alpha);
+		c.a = (sf::Uint8)clamp(wave(backStar->alpha1, backStar->alpha2, backStar->alphaSpd, backStar->alphaOffset) * 255.0f * alpha, 0, 255);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
 		rect.setPosition(backStar->x, backStar->y);
 		rect.setFillColor(c);
@@ -53,7 +53,7 @@ void StarGenerator::drawStarsBack(float alpha) {
 void StarGenerator::drawStarsFront(float alpha) {
 	for (auto & frontStar : frontStars) {
 		sf::Color c = frontStar->color;
-		c.a = (sf::Uint8)(1-std::abs(1-frontStar->alpha1) * 255.0f * alpha);
+		c.a = (sf::Uint8)clamp((1-std::abs(1-frontStar->alpha1)) * 255.0f * alpha, 0, 255);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
 		rect.setPosition(frontStar->x, frontStar->y);
 		rect.setFillColor(c);
