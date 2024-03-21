@@ -49,7 +49,6 @@ void StarGenerator::drawStarsBack(float alpha) {
 	}
 }
 
-
 void StarGenerator::drawStarsFront(float alpha) {
 	for (auto & frontStar : frontStars) {
 		sf::Color c = frontStar->color;
