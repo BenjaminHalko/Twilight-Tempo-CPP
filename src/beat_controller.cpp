@@ -8,7 +8,6 @@
 #include "gui.h"
 #include <SFML/Audio.hpp>
 #include <string>
-#include <iostream>
 #include <cmath>
 
 sf::Music BeatController::music;
@@ -172,8 +171,7 @@ void BeatController::update() {
 			}
 			if (beat < BEAT_COUNT) {
 				if (beats[beat] != 4) {
-					int dir = beats[beat] * 90;
-					if (Global::inTutorial || Global::practiceMode)
+                    if (Global::inTutorial || Global::practiceMode)
 						GUI::pulseWarning(beats[beat]);
 					playSound(dirSounds[beats[beat]], 100);
 				}

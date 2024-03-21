@@ -7,24 +7,24 @@ class Player : public Object {
 private:
 	Sprite cannonSprite;
 
-	int dir;
-	float dirDraw;
-	int lastDir;
+	int dir{};
+	float dirDraw{};
+	int lastDir{};
 
-	float shootPercent;
+	float shootPercent{};
 	static const int cannonLength = 10;
 	static const int bulletLength = 11;
 
-	float shake[4];
-	float generalShake;
+	float shake[4]{};
+	float generalShake{};
 
-	float cannonMove;
+	float cannonMove{};
 
-	float deathSpd;
+	float deathSpd{};
 
-	int penalty;
+	int penalty{};
 
-	float startScale;
+	float startScale{};
 
 	std::vector<std::shared_ptr<DeathParticle>> deathParticles;
 public:

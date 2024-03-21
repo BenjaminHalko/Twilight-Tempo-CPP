@@ -16,5 +16,5 @@ public:
 	virtual void update();
 	virtual void draw();
 	bool isDestroyed() const;
-	bool isColliding(Object& other);
+	bool isColliding(Object& other) const;
 };

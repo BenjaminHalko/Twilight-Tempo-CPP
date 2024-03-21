@@ -4,14 +4,12 @@
 #include "bullet.h"
 #include "global.h"
 #include "helper.h"
-#include "after_image.h"
 #include "beat_controller.h"
 #include "shadow.h"
 
 Bullet::Bullet(float xPos, float yPos, float dir) : Object(xPos, yPos, "player/bullet.png", 1.0f, 0.5f) {
 	direction = dir;
 	spd = 8;
-	dead = false;
 	time = irandom(60);
 	startdir = -1;
 	length = 0;
@@ -34,17 +32,16 @@ void Bullet::update() {
 	if (spd != 0) {
 		int _from = startdir - 5;
 		int _to = startdir + 5;
-		int i = 0;
+		int i;
 		for (i = 0; i < 4; i++) {
 			x += lengthdir_x(spd, direction);
 			y += lengthdir_y(spd, direction);
 			image.emplace_back(x, y, direction);
 
 			// Hit Enemy
-			for (size_t j = 0; j < Global::enemies.size(); j++) {
-				Enemy &enemy = *Global::enemies[j];
-				if (isColliding(enemy) && !enemy.isDead()) {
-					enemy.killEnemy(amountOfPoints);
+			for (auto & enemy : Global::enemies) {
+				if (isColliding(*enemy) && !enemy->isDead()) {
+					enemy->killEnemy(amountOfPoints);
 					spd = 0;
 				}
 			}
@@ -57,12 +54,12 @@ void Bullet::update() {
 			waveX += lengthdir_x(8, direction);
 			waveY += lengthdir_y(8, direction);
 
-			float _wave = (float)((_from + (_to - _from) * 0.5 + sin(((time / 60.0f + 0.15f * 0.3f) / 0.15f) * (PI * 2.0f)) * (_to - _from) * 0.5f) * fmin(1, time / 2.0f));
+			auto _wave = (float)((_from + (_to - _from) * 0.5 + sin((((float)time / 60.0f + 0.15f * 0.3f) / 0.15f) * (PI * 2.0f)) * (_to - _from) * 0.5f) * fmin(1, (float)time / 2.0f));
 
 			float _x = waveX + lengthdir_x(_wave, direction + 90);
 			float _y = waveY + lengthdir_y(_wave, direction + 90);
 
-			image.push_back(AfterImage(_x, _y, point_direction(lastX, lastY, x, y)));
+			image.emplace_back(_x, _y, point_direction(lastX, lastY, x, y));
 			lastX = _x;
 			lastY = _y;
 
@@ -73,7 +70,7 @@ void Bullet::update() {
 			spd = 0;
 		}
 	}
-	else if (image.size() == 0) {
+	else if (image.empty()) {
 		destroyed = true;
 	}
 }

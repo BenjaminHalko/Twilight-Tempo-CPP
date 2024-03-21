@@ -1,11 +1,7 @@
 #include "game_controller.h"
 #include "global.h"
 #include "beat_controller.h"
-#include "player.h"
-#include "bullet.h"
-#include "score_popup.h"
 #include "background.h"
-#include "helper.h"
 #include "shadow.h"
 
 void deleteAll() {

@@ -29,16 +29,16 @@ void Shadow::draw() {
 	StarGenerator::drawStarsFront(darkness);
 }
 
-void Shadow::drawCircle(float x, float y, float radius, float alpha) {
+void Shadow::drawCircle(float x, float y, float circleRadius, float alpha) {
 	sf::CircleShape circle;
 	for (int i = 0; i < 6; i++) {
-		circle.setRadius(radius + i * 3);
-		circle.setPosition(x - radius - i * 3, y - radius - i * 3);
+		circle.setRadius(circleRadius + (float)i * 3);
+		circle.setPosition(x - circleRadius - (float)i * 3, y - circleRadius - (float)i * 3);
 		circle.setFillColor(sf::Color(0, 0, 0, (sf::Uint8)(255.0f * (0.8 - i * 0.1) * alpha)));
 		shadow.draw(circle, blendSubtractive);
 	}
-	circle.setRadius(radius);
-	circle.setPosition(x - radius, y - radius);
+	circle.setRadius(circleRadius);
+	circle.setPosition(x - circleRadius, y - circleRadius);
 	circle.setFillColor(sf::Color(0, 0, 0, (sf::Uint8)(255.0f * 0)));
 	shadow.draw(circle, blendSubtractive);
 }

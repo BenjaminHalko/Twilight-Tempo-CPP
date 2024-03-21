@@ -10,7 +10,7 @@ public:
 	static void init();
 	static void update();
 	static void draw();
-	static void drawCircle(float x, float y, float radius, float alpha);
+	static void drawCircle(float x, float y, float circleRadius, float alpha);
 	static void setDarkness(float dark);
 	static void setRadius(float rad);
 };

@@ -1,12 +1,10 @@
 #include "helper.h"
 #include "global.h"
 #include <SFML/Graphics.hpp>
-#include <string>
 #include <cmath>
+#include <string>
 #include <fstream>
 #include <cstdlib>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 // Converts hexColor to SFML color
 sf::Color hexColor(int hex) {
@@ -65,7 +63,7 @@ float approachCircleEase(float value, float target, float maxSpd, float ease) {
 
 // Returns the direction when given two points
 float point_direction(float x1, float y1, float x2, float y2) {
-	return (float)(atan2(y2 - y1, x2 - x1) * 180 / PI);
+	return (float)(std::atan2(y2 - y1, x2 - x1) * 180 / PI);
 }
 
 // Returns the distance when given two points
@@ -106,28 +104,17 @@ float wave(float from, float to, float duration, float offset) {
 
 // Idk man that's Benjamins thing
 float bezierCurve(float t) {
-	float x1 = 0;
-	float y1 = 0;
-	float x2 = 0.3f;
 	float y2 = 0;
-	float x3 = 0.318f;
 	float y3 = 1.461f;
-	float x4 = 1;
 	float y4 = 1;
 
-	float p1x1 = lerp(x1, x2, t);
-	float p1y1 = lerp(y1, y2, t);
-	float p1x2 = lerp(x2, x3, t);
+	float p1y1 = 0;
 	float p1y2 = lerp(y2, y3, t);
-	float p1x3 = lerp(x3, x4, t);
 	float p1y3 = lerp(y3, y4, t);
 
-	float p2x1 = lerp(p1x1, p1x2, t);
 	float p2y1 = lerp(p1y1, p1y2, t);
-	float p2x2 = lerp(p1x2, p1x3, t);
 	float p2y2 = lerp(p1y2, p1y3, t);
 
-	float p3x = lerp(p2x1, p2x2, t);
 	float p3y = lerp(p2y1, p2y2, t);
 
 	return p3y;

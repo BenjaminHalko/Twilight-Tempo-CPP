@@ -6,6 +6,6 @@ private:
 	float alpha;
 public:
 	ScorePopup(float x, float y, int points);
-	void update();
-	void draw();
+	void update() override;
+	void draw() override;
 };

@@ -16,8 +16,8 @@ private:
 	float alpha;
 public:
 	Enemy(float xPos, float yPos, float dir);
-	void update();
-	void draw();
+	void update() override;
+	void draw() override;
 	void killEnemy(float amountOfPoints);
 	bool isDead() const;
 	float getDirection() const;

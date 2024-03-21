@@ -53,7 +53,7 @@ void StarGenerator::drawStarsBack(float alpha) {
 void StarGenerator::drawStarsFront(float alpha) {
 	for (auto & frontStar : frontStars) {
 		sf::Color c = frontStar->color;
-		c.a = (sf::Uint8)(1-abs(1-frontStar->alpha1) * 255.0f * alpha);
+		c.a = (sf::Uint8)(1-std::abs(1-frontStar->alpha1) * 255.0f * alpha);
 		sf::RectangleShape rect(sf::Vector2f(1, 1));
 		rect.setPosition(frontStar->x, frontStar->y);
 		rect.setFillColor(c);

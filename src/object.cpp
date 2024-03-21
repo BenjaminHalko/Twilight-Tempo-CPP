@@ -26,9 +26,9 @@ bool Object::isDestroyed() const {
 	return destroyed;
 }
 
-bool Object::isColliding(Object& other) {
-	return (x - sprite_width / 2.0f < other.x + other.sprite_width / 2.0f &&
-				x + sprite_width / 2.0f > other.x - other.sprite_width / 2.0f &&
-				y - sprite_height / 2.0f < other.y + other.sprite_height / 2.0f &&
-				y + sprite_height / 2.0f > other.y - other.sprite_height / 2.0f);
+bool Object::isColliding(Object& other) const {
+	return (x - (float)sprite_width / 2.0f < other.x + (float)other.sprite_width / 2.0f &&
+				x + (float)sprite_width / 2.0f > other.x - (float)other.sprite_width / 2.0f &&
+				y - (float)sprite_height / 2.0f < other.y + (float)other.sprite_height / 2.0f &&
+				y + (float)sprite_height / 2.0f > other.y - (float)other.sprite_height / 2.0f);
 }

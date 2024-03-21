@@ -6,7 +6,7 @@ private:
 	sf::Sprite sprite;
 public:
 	Sprite();
-	Sprite(std::string filename, float xorigin=0, float yorigin=0);
+	explicit Sprite(std::string filename, float xorigin=0, float yorigin=0);
 	sf::Sprite& operator()();
 	int getWidth();
 	int getHeight();

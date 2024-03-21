@@ -6,7 +6,6 @@ class Bullet : public Object {
 private:
 	float direction;
 	float spd;
-	bool dead = false;
 	std::vector<AfterImage> image;
 	int time;
 	int startdir;
@@ -18,6 +17,6 @@ private:
 	float amountOfPoints;
 public:
 	Bullet(float xPos, float yPos, float dir);
-	void update();
-	void draw();
+	void update() override;
+	void draw() override;
 };
