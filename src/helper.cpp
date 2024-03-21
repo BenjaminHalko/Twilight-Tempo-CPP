@@ -129,16 +129,21 @@ bool fileExists(const std::string& fileName) {
 }
 
 void save(std::string fileName, int score) {
-    std::string localAppdata = std::getenv("LOCALAPPDATA");
-	if (!localAppdata.empty()) {
-		std::string folder = localAppdata + "\\Twilight_Tempo_CPP";
-		struct stat info;
+    char* localAppdata = std::getenv("LOCALAPPDATA");
+	if (localAppdata != nullptr) {
+		std::string folder = (std::string)localAppdata + "\\Twilight_Tempo_CPP";
+		struct stat info{};
 		stat(folder.c_str(), &info);
-		if (!(info.st_mode & S_IFDIR)) {
-			std::string command = "mkdir " + folder;
-			system(command.c_str());
-		}
-		fileName = folder + "\\" + fileName;
+
+        if (!(info.st_mode & S_IFDIR)) {
+            std::string command = "mkdir " + folder;
+            int createdFolder = system(command.c_str());
+            if (createdFolder == 0)
+                fileName = folder + "\\" + fileName;
+        }
+        else {
+            fileName = folder + "\\" + fileName;
+        }
 	}
 	fileName = fileName + ".sav";
 	std::ofstream outFile(fileName, std::ios::trunc);
@@ -147,9 +152,9 @@ void save(std::string fileName, int score) {
 }
 
 int load(std::string fileName) {
-    std::string localAppdata = std::getenv("LOCALAPPDATA");
-	if (!localAppdata.empty())
-		fileName = localAppdata + "\\Twilight_Tempo_CPP\\" + fileName;
+    char* localAppdata = std::getenv("LOCALAPPDATA");
+	if (localAppdata != nullptr)
+		fileName = (std::string)localAppdata + "\\Twilight_Tempo_CPP\\" + fileName;
 	fileName = fileName + ".sav";
 	int score;
 	std::ifstream inFile;
